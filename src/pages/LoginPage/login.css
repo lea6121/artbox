@@ -1,0 +1,46 @@
+.login-wrapper{
+  padding-top: 180px;
+  position: relative;
+}
+
+.login-container {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 63px 50px 63px 50px;
+  border: solid 1px #000000;
+}
+
+
+.login-form {
+  font-size: 18px;
+  padding: 10px 0px;
+  text-align: left;
+  font-family: baskerVille;
+
+}
+
+.login-input {
+  font-family: Baskerville, Georgia, 'Times New Roman', Times, serif;
+  font-size: 18px;
+  margin: 20px 0 20px 0;
+  width: 100%;
+  height: 30px;
+}
+
+.login-form > span {
+  font-size: 18px;
+  color:red;
+  font-weight: 600;
+}
+
+.login-submit {
+  margin-top: 10px;
+  width: 100%;
+  border: none;
+  height: 60px;
+  background-image: linear-gradient(to top, #000000, #434343);
+  color: white;
+  font-size: 20px;
+  font-family: Baskerville, Georgia, 'Times New Roman', Times, serif;
+  cursor: pointer;
+}

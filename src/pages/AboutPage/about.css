@@ -1,0 +1,29 @@
+.about-profile {
+  width: 80%;
+  margin: 0px auto;
+  padding: 50px 20px 30px 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px 10px;
+  max-width: 100vw;
+}
+
+.about-profile__pic {
+  margin: 100px 0 40px;
+  border-left: 1px solid black;
+  height: 1000px;
+  width: auto;
+  background-image: url(https://images.unsplash.com/photo-1630283018262-d0df4afc2fef?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80);
+  background-size: contain;
+  background-position-x: 50vw;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.about-profile__info {
+  margin: auto;
+  padding-right: 30px;
+  align-items: center;
+  font-size: 22px;
+  line-height: 3rem;
+}

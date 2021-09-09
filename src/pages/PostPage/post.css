@@ -1,0 +1,72 @@
+.post-wrapper{
+  padding-top: 130px;
+  position: relative;
+}
+
+.post-container {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.post-form {
+  height: auto;
+  padding: 30px 0 10px 0;
+  margin: 30px 30px;
+  text-align: right;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.post-form__title,
+.post-form__editor,
+.post-form__submit {
+  max-width: 800px;
+  margin: 0px auto;
+}
+
+.post-form__title > input {
+  color:grey;
+  font-family: Baskerville, Georgia, 'Times New Roman', Times, serif;
+  font-size: 18px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid rgb(223, 220, 220);
+  border-radius: 3px;
+  margin: 20px 0 20px 0;
+}
+
+.post-form__content > .form-control {
+  border: 1px solid rgb(223, 220, 220);
+  width: 100%;
+  height: 300px;
+  font-size: 18px;
+}
+
+.post-form__content > label {
+  font-size: 19px;
+  color:grey;
+}
+
+.post-form__error{
+  text-align: left;
+  color:red;
+  padding: 20px 0 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.post-form__submit-btn {
+  margin: 0 0 20px;
+  border: 1px solid black;
+  width: 200px;
+  height: 60px;
+  border-radius: 1px;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  font-family: Baskerville, Georgia, 'Times New Roman', Times, serif;
+  cursor: pointer;
+}
+
+
+
+
