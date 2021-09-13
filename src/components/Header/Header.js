@@ -1,53 +1,8 @@
-// import styled from 'styled-components'
-// import { ResetStyle, GlobalStyle } from '../../globalStyle'
 import './header.css'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 // import { setUser } from '../../redux/reducers/userReducer'
 import { setAuthToken } from '../../utils'
-
-// const HeaderContainer = styled.div`
-//   letter-spacing: 1px;
-//   width: 100vw;
-//   display: flex;
-//   align-items: center;
-//   position: fixed;
-//   background-color: white;
-//   justify-content: space-evenly;
-//   z-index: 2;
-//   border-bottom: 1px solid black;
-// `
-
-// const Brand = styled(Link)`
-//   font-size: 50px;
-//   text-decoration: none;
-//   color: #010101;
-// `
-
-// const NavbarList = styled.div`
-//   display: flex;
-//   color: #010101;
-// `
-
-// const Nav = styled(Link)`
-//   border-left: 1px solid black;
-//   box-sizing: border-box;
-//   padding: 35px 40px 35px 40px;
-//   font-size: 20px;
-//   text-align: center;
-//   color: #010101;
-//   display: flex;
-//   transition: all 0.2s ease-in;
-//   cursor: pointer;
-//   text-decoration: none;
-
-//   ${(props) =>
-//     props.$active &&
-//     `
-//     background: rgba(36, 35, 35, 0.9);
-//     color: white;
-//     `};
-// `
 
 export default function Header() {
   const dispatch = useDispatch()
@@ -119,14 +74,16 @@ export default function Header() {
             />
             <div>collections</div>
           </a>
-          <a href="./#/shop?type=tickets">
+
+          {/* <a href="./#/shop?type=tickets">
             <img
               className="icon icon__ticket"
               src="https://www.vippng.com/png/detail/414-4142418_png-file-ticket-vector-icon.png"
               alt="icon"
             />
             <div>buy ticket</div>
-          </a>
+          </a> */}
+
           <a href="./#/shop">
             <img
               className="icon icon__shop"
@@ -135,13 +92,31 @@ export default function Header() {
             />
             <div>shop</div>
           </a>
-          <a href="./#/user">
+          <a href="./#/shop?type=tickets">
             <img
-              className="icon icon__user"
-              src="https://www.pngfind.com/pngs/m/34-349693_circled-user-icon-transparent-background-username-icon-hd.png"
+              className="icon icon__ticket"
+              src="https://www.vippng.com/png/detail/414-4142418_png-file-ticket-vector-icon.png"
               alt="icon"
             />
-            <div>account</div>
+            <div>cart</div>
+          </a>
+
+          <a href="./#/user">
+            <div className="drop">
+              <img
+                className="icon icon__user"
+                src="https://www.pngfind.com/pngs/m/34-349693_circled-user-icon-transparent-background-username-icon-hd.png"
+                alt="icon"
+              />
+              <button>account</button>
+              <div className="dropbox">
+                <a href="./#/Login">LOG IN/JOIN</a>
+                {/* <a href="./#/user?">WISHLIST</a> */}
+                <a href="./#/user?">訂單查詢</a>
+                <a href="./#/user">BACKSTAGE</a>
+                <a href="./#/user">LOG OUT</a>
+              </div>
+            </div>
           </a>
         </nav>
       </div>

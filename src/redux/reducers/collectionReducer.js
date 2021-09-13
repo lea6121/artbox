@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import {
-  getArtworks as getArtworksAPI
+  getCurrentViewCollections as getCurrentViewCollectionsAPI,
+  getSpecificCollections as getSpecificCollectionsAPI,
+  searchCollections as searchCollectionsAPI
+  // searchArtists as searchArtistsAPI
   // getPost as getPostAPI,
   // postNewPost as postNewPostAPI,
   // editPost as editPostAPI,
@@ -9,9 +12,9 @@ import {
 } from '../../WebAPI'
 
 const initialState = {
-  isLoadingArtworks: false,
-  artworks: [],
-  totalArtworksPages: 0
+  isLoadingCollections: false,
+  collections: [],
+  totalCollectionsPages: 0
   // artworksImgID: []
   // isLoadingPost: false,
   // post: null,
@@ -23,20 +26,20 @@ const initialState = {
   // deletePostResponse: null
 }
 
-export const artworkReducer = createSlice({
-  name: 'artwork',
+export const collectionReducer = createSlice({
+  name: 'collection',
   initialState,
   reducers: {
-    setIsLoadingArtworks: (state, action) => {
-      state.isLoadingArtworks = action.payload
+    setIsLoadingCollections: (state, action) => {
+      state.isLoadingCollections = action.payload
     },
 
-    setArtworks: (state, action) => {
-      state.artworks = action.payload
+    setCollections: (state, action) => {
+      state.collections = action.payload
     },
 
-    setTotalArtworksPages: (state, action) => {
-      state.totalArtworksPages = action.payload
+    setTotalCollectionsPages: (state, action) => {
+      state.totalCollectionsPages = action.payload
     }
 
     // setArtworksImgID: (state, action) => {
@@ -78,9 +81,9 @@ export const artworkReducer = createSlice({
 })
 
 export const {
-  setIsLoadingArtworks,
-  setArtworks,
-  setTotalArtworksPages
+  setIsLoadingCollections,
+  setCollections,
+  setTotalCollectionsPages
   // setArtworksImgID
   // setIsLoadingPost,
   // setPost,
@@ -90,21 +93,35 @@ export const {
   // setEditedPostResponse,
   // setIsLoadingDeletePost,
   // setDeletePostResponse
-} = artworkReducer.actions
+} = collectionReducer.actions
 
-export const getArtworks = () => (dispatch) => {
-  dispatch(setIsLoadingArtworks(true))
-  getArtworksAPI().then((data) => {
-    // let arrImgID = []
+export const getCurrentViewCollections = () => (dispatch) => {
+  dispatch(setIsLoadingCollections(true))
+  getCurrentViewCollectionsAPI().then((data) => {
     console.log(data.data)
-    // console.log(data.pagination.total_pages)
-    dispatch(setIsLoadingArtworks(false))
-
-    // dispatch(setArtworksImgID(arrImgID))
-    // console.log(arrImgID)
-    // console.log(data.pagination.total)
+    dispatch(setIsLoadingCollections(false))
     // dispatch(setTotalArtworksPages(data.pagination.total_pages))
-    dispatch(setArtworks(data.data))
+    dispatch(setCollections(data.data))
+  })
+}
+
+export const getSpecificCollections = (department) => (dispatch) => {
+  dispatch(setIsLoadingCollections(true))
+  getSpecificCollectionsAPI(department).then((data) => {
+    // console.log(data.data)
+    dispatch(setIsLoadingCollections(false))
+    // dispatch(setTotalArtworksPages(data.pagination.total_pages))
+    dispatch(setCollections(data.data))
+  })
+}
+
+export const searchCollections = (query) => (dispatch) => {
+  dispatch(setIsLoadingCollections(true))
+  searchCollectionsAPI(query).then((data) => {
+    // console.log(data.data)
+    dispatch(setIsLoadingCollections(false))
+    // dispatch(setTotalArtworksPages(data.pagination.total_pages))
+    dispatch(setCollections(data.data))
   })
 }
 
@@ -150,4 +167,4 @@ export const getArtworks = () => (dispatch) => {
 //   })
 // }
 
-export default artworkReducer.reducer
+export default collectionReducer.reducer

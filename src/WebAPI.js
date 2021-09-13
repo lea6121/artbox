@@ -2,11 +2,14 @@ import { getAuthToken } from './utils'
 
 // const BASE_URL = 'https://api.artic.edu/api/v1'
 
-const BASE_URL = 'https://openaccess-api.clevelandart.org/api/'
-export const getArtworks = () => {
-  let skip = 0
+const BASE_URL = 'https://openaccess-api.clevelandart.org/api'
+const hasImage = 1
+let limit = 40
+let skip = 0
+
+export const getCurrentViewCollections = () => {
   return fetch(
-    `${BASE_URL}/artworks?limit=25&has_image=1&skip=${skip}&recently_acquired`,
+    `${BASE_URL}/artworks?&limit=${limit}&has_image=${hasImage}&skip=${skip}&currently_on_view`,
     {
       method: 'GET',
       headers: {
@@ -14,6 +17,39 @@ export const getArtworks = () => {
       }
     }
   ).then((res) => res.json())
+}
+
+export const getSpecificCollections = (department) => {
+  return fetch(
+    `${BASE_URL}/artworks?limit=${limit}&has_image=${hasImage}&skip=${skip}&department=${department}`,
+    {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+  ).then((res) => res.json())
+}
+
+export const searchCollections = (query) => {
+  return fetch(
+    `${BASE_URL}/artworks?q=${query}&limit=${limit}&has_image=${hasImage}&skip=${skip}`,
+    {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+  ).then((res) => res.json())
+}
+
+export const searchArtists = (name) => {
+  return fetch(`${BASE_URL}/creators?name=${name}`, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json'
+    }
+  }).then((res) => res.json())
 }
 
 export const getProducts = (page) => {

@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import artworkReducer from './reducers/artworkReducer'
+import collectionReducer from './reducers/collectionReducer'
 import userReducer from './reducers/userReducer'
 import productReducer from './reducers/productReducer'
 
 export default configureStore({
   reducer: {
-    artworks: artworkReducer,
+    collections: collectionReducer,
     products: productReducer,
     users: userReducer
   }

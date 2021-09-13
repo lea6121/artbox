@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
-import ShopHomePage from '../../pages/ShopHomePage'
+import CollectionsPage from '../../pages/CollectionsPage'
+// import ShopPage from '../../pages/ShopPage'
 
 // import AboutPage from '../../pages/AboutPage'
 // import PostPage from '../../pages/PostPage'
@@ -17,7 +18,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser, getMe } from '../../redux/reducers/userReducer'
 
 const Root = styled.div`
-  width: 100vw;
+  margin: 0 auto;
+  max-width: 100vw;
   position: relative;
 `
 
@@ -31,7 +33,8 @@ const Loading = styled.div`
   color: white;
   font-size: 72px;
   background: rgba(0, 0, 0, 1);
-  height: 100vh;
+  width: 100vw;
+  height: 100%;
   z-index: 2;
   background-image: url('https://2.bp.blogspot.com/-UFDt9YzEa5I/Vg6tACoYYLI/AAAAAAAAGZc/zpeRoLh3iUI/s1600/all%2Bsides.gif');
   background-position: 50% 50%;
@@ -59,8 +62,8 @@ function App() {
             <Route exact path="/">
               <HomePage />
             </Route>
-            <Route path="/shop">
-              <ShopHomePage />
+            <Route path="/collections">
+              <CollectionsPage />
             </Route>
             {/* <Route path="/new-post">
               <PostPage />
