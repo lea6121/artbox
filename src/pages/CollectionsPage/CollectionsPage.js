@@ -1,85 +1,168 @@
-import './collectionsPage.css'
-import React, { useState, useEffect } from 'react'
+import { css } from '@emotion/css'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import styled from 'styled-components'
-import { ResetStyle, GlobalStyle } from '../../globalStyle'
+import { useDispatch, useSelector } from 'react-redux'
+import Cart from '../../components/Cart'
+import Loading from '../../components/Loading'
 import {
   getCurrentViewCollections,
   getSpecificCollections,
   searchCollections
 } from '../../redux/reducers/collectionReducer'
-import { Loading } from '../../components/App/App'
-import { useDispatch, useSelector, useStore } from 'react-redux'
-// import { getProducts } from '../../WebAPI'
 
-// const Root = styled.div`
-//   width: 80%;
-//   margin: 0 auto;
-//   padding-top: 100px;
-//   position: relative;
-// `
+const collectionsPageContainer = css`
+  box-sizing: border-box;
+  font-family: Baskerville;
 
-// const PostsContainer = styled.div`
-//   border-bottom: 1px solid rgba(0, 12, 34, 0.2);
-//   padding: 40px 10px;
-//   border: 1px solid black;
-//   margin: 20px;
-// `
+  #btn-back-to-top {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    /* display: none; */
+  }
+  .collection {
+    &__banner {
+      width: 100vw;
+      margin: 0 0 50px;
+      position: relative;
+      max-width: 100vw;
+      height: 80vh;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chinese_Painting_-_Flickr_-_Jaykhuang.jpg/1280px-Chinese_Painting_-_Flickr_-_Jaykhuang.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: top;
+      background-attachment: fixed;
 
-// const PostTopContainer = styled.div`
-//   padding-bottom: 30px;
-//   margin: 0px 18px 15px 16px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// `
+      h1 {
+        font-family: Baskerville;
+        background: linear-gradient(#000000, #3e3e3e, rgb(172, 170, 170));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 48px;
+        font-weight: 500;
+        position: absolute;
+        top: 34%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-// const PostTitle = styled(Link)`
-//   font-weight: 600;
-//   line-height: 4rem;
-//   font-size: 24px;
-//   color: #333;
-//   text-decoration: none;
-// `
+      ${
+        '' /* p {
+        color: white;
+        position: absolute;
+        top: 56%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      } */
+      }
 
-// const PostDate = styled.div`
-//   font-size: 14px;
-//   color: rgba(0, 0, 0, 0.8);
-// `
+      .input-group {
+        text-align: center;
+        width: 50%;
+        position: absolute;
+        top: 46%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-// const PostContent = styled.div`
-//   color: rgba(0, 0, 0, 0.8);
-//   margin: 0 18px;
-//   display: -webkit-box;
-//   -webkit-box-orient: vertical;
-//   -webkit-line-clamp: 2;
-//   overflow: hidden;
-//   white-space: pre-line;
-//   font-size: 19px;
-//   line-height: 4rem;
-// `
+      form {
+        width: 100%;
+      }
 
-// const PaginationContainer = styled.div`
-//   ${'' /* display: flex; */}
-//   justify-content: center;
-//   padding: 20px;
-// `
+      .form-control {
+        height: 45px;
+        border-radius: 5px;
+        font-size: 18px;
+      }
+    }
 
-// const Pagination = styled(Link)`
-//   font-weight: 500;
-//   color: rgba(0, 0, 0, 0.7);
-//   text-decoration: none;
-//   margin: 10px 5px;
-//   font-size: 28px;
-//   padding: 10px 18px;
-// `
-// const PageTeller = styled.div`
-//   font-size: 16px;
-//   color: grey;
-//   text-align: center;
-//   padding: 0 0 50px;
-// `
+    &__container {
+      height: auto;
+      max-width: 93%;
+      margin: 0 auto;
+      display: grid;
+      grid-gap: 0 30px;
+      grid-template-columns: 20% auto;
 
+      .left-section {
+        ul {
+          font-family: Baskerville;
+          font-size: 28px;
+          list-style: none;
+          margin-bottom: 30px;
+
+          li {
+            cursor: pointer;
+            font-size: 18px;
+            padding: 15px;
+            background-color: white;
+            border-bottom: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+
+      .right-section {
+        .collections {
+          letter-spacing: 0.1rem;
+          font-family: Georgia, 'Times New Roman', Times, serif;
+          margin: 50px auto;
+          padding: 10px 5px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: auto;
+          grid-gap: 30px 30px;
+          align-items: stretch;
+          text-align: center;
+
+          .collection {
+            text-decoration: none;
+            color: #000000;
+            border-bottom: 1px solid #a8a7a7;
+            padding-bottom: 20px;
+            text-align: start;
+
+            img {
+              transition: all 0.6s ease-out;
+              border-radius: 5px;
+              height: 390px;
+              object-fit: contain;
+              width: 100%;
+              &:hover {
+                transform: scale(1.1);
+              }
+            }
+
+            &__title {
+              font-size: 18px;
+              margin: 20px 0;
+              letter-spacing: 0.05rem;
+            }
+
+            &__artist {
+              color: #3e3e3e;
+              font-style: italic;
+              font-size: 14px;
+            }
+          }
+        }
+        .message {
+          margin: 0 auto;
+          padding: 30px;
+          h1 {
+            text-align: left;
+            margin: 40px 0;
+            font-size: 32px;
+          }
+          ul {
+            padding-left: 0;
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+`
 const categories = [
   'African Art ',
   'American Painting and Sculpture ',
@@ -98,7 +181,6 @@ const categories = [
   'Medieval Art ',
   'Modern European Painting and Sculpture ',
   'Oceania',
-  // 'Performing Arts, Music, & Film ',
   'Photography ',
   'Prints ',
   'Textiles '
@@ -108,10 +190,10 @@ function Collection({ collection }) {
   const location = useLocation()
   return (
     <>
-      <a href={`./#/collections/${collection.id}`} className="artwork">
+      <a href={`./#/collections/${collection.id}`} className="collection">
         {collection.images ? (
           <img
-            className="artwork__photo"
+            className="collection__image"
             src={collection.images.web.url}
             alt="collection"
           />
@@ -122,10 +204,10 @@ function Collection({ collection }) {
           />
         )}
 
-        <div class="artwork__title">{collection.title}</div>
+        <div class="collection__title">{collection.title}</div>
         {collection.creators.length !== 0 &&
           collection.creators.map((creator) => (
-            <div class="artwork__artist">{creator.description}</div>
+            <div class="collection__artist">{creator.description}</div>
           ))}
       </a>
     </>
@@ -133,23 +215,32 @@ function Collection({ collection }) {
 }
 
 export default function CollectionPage() {
-  const [value, setValue] = useState()
+  const dispatch = useDispatch()
+  const collections = useSelector((store) => store.collections.collections)
   const isLoadingCollectionsMsg = useSelector(
     (store) => store.collections.isLoadingCollections
   )
-  // const [currentPage, setCurrentPage] = useState(1)
-  const dispatch = useDispatch()
-
-  const collections = useSelector((store) => store.collections.collections)
-
-  useEffect(() => {
-    dispatch(getCurrentViewCollections())
-  }, [])
-
+  const [value, setValue] = useState()
+  const [currentSearch, setCurrentSearch] = useState('')
   const handleClick = (e) => {
     let category = e.target.innerText
     dispatch(getSpecificCollections(category))
   }
+  const handleInputChange = (e) => {
+    setValue(e.target.value)
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    if (!value) return
+    dispatch(searchCollections(value))
+    setCurrentSearch(value)
+    setValue('')
+  }
+
+  useEffect(() => {
+    dispatch(getCurrentViewCollections())
+  }, [])
 
   function Category() {
     return (
@@ -160,72 +251,29 @@ export default function CollectionPage() {
       </>
     )
   }
-  // const totalPosts = useSelector((store) => store.posts.totalPosts)
-
-  // let page = 4
-  // useEffect(() => {
-  //   dispatch(getCollections(page))
-  // }, [dispatch])
-
-  // console.log(products)
-  // function changePage(e) {
-  //   const currentPageNum = Number(e.target.innerText)
-  //   setCurrentPage(currentPageNum)
-  //   dispatch(getPosts(currentPageNum))
-  // }
-
-  // function RenderPagination() {
-  //   const totalPages = Math.ceil(totalPosts / 5)
-  //   let pageNumbers = []
-  //   for (let i = 1; i <= totalPages; i++) {
-  //     pageNumbers.push(i)
-  //   }
-  //   return (
-  //     <>
-  //       <PaginationContainer>
-  //         {pageNumbers.map((value, index) => (
-  //           <Pagination key={value} onClick={changePage}>
-  //             {value}
-  //           </Pagination>
-  //         ))}
-  //       </PaginationContainer>
-  //       <PageTeller>
-  //         第 {currentPage} 頁 / 共 {totalPages} 頁
-  //       </PageTeller>
-  //     </>
-  //   )
-  // }
-
-  const handleInputChange = (e) => {
-    setValue(e.target.value)
-  }
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault()
-    if (!value) return
-    dispatch(searchCollections(value))
-    setValue('')
-  }
 
   return (
-    <>
+    <div className={collectionsPageContainer}>
       {isLoadingCollectionsMsg && <Loading></Loading>}
       <div className="collection__banner">
-        <h1>Search Collections</h1>
-        <div class="input-group flex-nowrap">
+        <h1>THE COLLECTION</h1>
+        {/* <p>
+          Explore thousands of artworks in the museum’s wide-ranging
+          collection—from our world-renowned icons to lesser-known gems from
+          every corner of the globe—as well as our books, writings, reference
+          materials, and other resources.
+        </p> */}
+        <div className="input-group flex-nowrap">
           <br />
           <form onSubmit={handleFormSubmit}>
             <input
               value={value}
               type="text"
               className="form-control"
-              placeholder="🔍 Search collections..."
+              placeholder="🔍 Search by artists, keywords..."
               onChange={handleInputChange}
             />
           </form>
-          {/* <span className="input-group-text" id="addon-wrapping">
-            Search
-          </span> */}
         </div>
       </div>
       <div className="collection__container">
@@ -237,9 +285,6 @@ export default function CollectionPage() {
         </section>
 
         <section className="right-section">
-          {/* <div className="right-section__banner">
-            <img src="https://openaccess-cdn.clevelandart.org/1970.67/1970.67_web.jpg" />
-          </div> */}
           {collections.length > 0 ? (
             <div className="collections">
               {collections.map((collection) => (
@@ -249,33 +294,32 @@ export default function CollectionPage() {
           ) : (
             <div className="message">
               <h1>Hmmm...</h1>
-              <h1>Looks like we don't have any matches for your search.</h1>
+              <h1>
+                Looks like we don't have any matches for "{currentSearch}".
+              </h1>
               <ul>You might try: </ul>
               <li>
                 Using more generic search terms, or double check your search for
                 any types or spelling errors.
               </li>
               <li>
-                The collection you searching for may be not in our collection
+                The collection you searching for may be not in our collections
                 yet.
               </li>
             </div>
           )}
         </section>
       </div>
-
       <a href="#top">
         <button
           type="button"
-          class="btn btn-dark btn-floating btn-lg"
+          className="btn btn-dark btn-floating btn-lg"
           id="btn-back-to-top"
         >
-          <i class="fas fa-angle-up"></i>
+          <i className="fas fa-angle-up"></i>
         </button>
       </a>
-      {/* <Root>
-        <RenderPagination></RenderPagination>
-      </Root> */}
-    </>
+      <Cart />
+    </div>
   )
 }

@@ -1,105 +1,62 @@
-// import styled from 'styled-components'
-// import { ResetStyle, GlobalStyle } from '../../globalStyle'
-import './footer.css'
-import { useLocation, useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-// import { setUser } from '../../redux/reducers/userReducer'
-import { setAuthToken } from '../../utils'
+import { css } from '@emotion/css'
 
-// const HeaderContainer = styled.div`
-//   letter-spacing: 1px;
-//   width: 100vw;
-//   display: flex;
-//   align-items: center;
-//   position: fixed;
-//   background-color: white;
-//   justify-content: space-evenly;
-//   z-index: 2;
-//   border-bottom: 1px solid black;
-// `
+const footer = css`
+  .footer {
+    width: 100vw;
+    bottom: 0;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 26px 0;
 
-// const Brand = styled(Link)`
-//   font-size: 50px;
-//   text-decoration: none;
-//   color: #010101;
-// `
+    &__content {
+      margin: 0 auto;
+      font-size: 16px;
+      padding: 20px 30px 40px;
+      display: flex;
+      justify-content: space-evenly;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      align-items: center;
 
-// const NavbarList = styled.div`
-//   display: flex;
-//   color: #010101;
-// `
+      a {
+        color: white;
+        text-decoration: none;
+        &:hover {
+          color: white;
+        }
+      }
 
-// const Nav = styled(Link)`
-//   border-left: 1px solid black;
-//   box-sizing: border-box;
-//   padding: 35px 40px 35px 40px;
-//   font-size: 20px;
-//   text-align: center;
-//   color: #010101;
-//   display: flex;
-//   transition: all 0.2s ease-in;
-//   cursor: pointer;
-//   text-decoration: none;
+      ul {
+        list-style: none;
+        margin: 0;
 
-//   ${(props) =>
-//     props.$active &&
-//     `
-//     background: rgba(36, 35, 35, 0.9);
-//     color: white;
-//     `};
-// `
+        li {
+          padding: 10px;
+        }
+      }
 
+      nav img {
+        width: 25px;
+      }
+    }
+
+    &__copyright {
+      border-top: 1px solid white;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-style: italic;
+    }
+  }
+`
 export default function Footer() {
-  const dispatch = useDispatch()
-  const location = useLocation()
-  const history = useHistory()
-  // const user = useSelector((store) => store.users.user)
-
-  // const handleLogout = () => {
-  //   const logoutMsg = window.confirm('確認登出嗎？')
-  //   if (logoutMsg) {
-  //     setAuthToken('')
-  //     dispatch(setUser(null))
-  //     if (location.pathname !== '/') {
-  //       history.push('/')
-  //     }
-  //   }
-  // }
-
   return (
-    //  <HeaderContainer>
-    //    <ResetStyle />
-    //   <GlobalStyle />
-
-    //    <Brand to="/" $active={location.pathname === '/'}>
-    //     ArtBox
-    //   </Brand>
-    //   <NavbarList classNameName="tags">
-    //     <Nav to="/shop" $active={location.pathname === '/shop'}>
-    //       SHOP
-    //     </Nav>
-    //      {user && (
-    //       <Nav to="/new-post" $active={location.pathname === '/new-post'}>
-    //         POST
-    //       </Nav>
-    //     )}
-    //     {!user && (
-    //       <Nav to="/login" $active={location.pathname === '/login'}>
-    //         LOG IN
-    //       </Nav>
-    //     )}
-    //     {user && <Nav onClick={handleLogout}>LOG OUT</Nav>}
-    //     {!user && (
-    //       <Nav to="/register" $active={location.pathname === '/register'}>
-    //         SIGN UP
-    //       </Nav>
-    //     )} *
-    //   </NavbarList>
-    // </HeaderContainer>
     <>
-      <footer>
-        <div class="footer">
-          <div class="footer__content">
+      <footer className={footer}>
+        <div className="footer">
+          <div className="footer__content">
             <ul>
               <a href="./#/about">
                 <li>About Us</li>

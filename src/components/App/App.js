@@ -1,45 +1,22 @@
+import { css } from '@emotion/css'
+import { useEffect } from 'react'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
-import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
 import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
 import CollectionsPage from '../../pages/CollectionsPage'
-// import ShopPage from '../../pages/ShopPage'
+import CollectionPage from '../../pages/CollectionsPage/CollectionsPage'
+import ShopPage from '../../pages/ShopPage'
+import ProductPage from '../../pages/ProductPage'
 
-// import AboutPage from '../../pages/AboutPage'
-// import PostPage from '../../pages/PostPage'
-// import EditPostPage from '../../pages/EditPostPage'
-// import LoginPage from '../../pages/LoginPage'
-// import RegisterPage from '../../pages/RegisterPage'
-// import ArticlePage from '../../pages/ArticlePage'
-import { useEffect } from 'react'
 import { getAuthToken } from '../../utils'
-import { useDispatch, useSelector } from 'react-redux'
 import { setUser, getMe } from '../../redux/reducers/userReducer'
 
-const Root = styled.div`
+const root = css`
   margin: 0 auto;
   max-width: 100vw;
   position: relative;
-`
-
-const Loading = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  left: 0;
-  font-weight: 600;
-  color: white;
-  font-size: 72px;
-  background: rgba(0, 0, 0, 1);
-  width: 100vw;
-  height: 100%;
-  z-index: 2;
-  background-image: url('https://2.bp.blogspot.com/-UFDt9YzEa5I/Vg6tACoYYLI/AAAAAAAAGZc/zpeRoLh3iUI/s1600/all%2Bsides.gif');
-  background-position: 50% 50%;
-  background-size: 160px;
-  background-repeat: no-repeat;
 `
 
 function App() {
@@ -54,40 +31,30 @@ function App() {
   }, [dispatch])
 
   return (
-    <div value={{ user, setUser }}>
-      <Root>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/collections">
-              <CollectionsPage />
-            </Route>
-            {/* <Route path="/new-post">
-              <PostPage />
-            </Route>
-            <Route path="/edit-post/:id">
-              <EditPostPage />
-            </Route>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <Route path="/register">
-              <RegisterPage />
-            </Route>
-            <Route path="/posts/:id">
-              <ArticlePage />
-            </Route> */}
-          </Switch>
-          <Footer />
-        </Router>
-      </Root>
+    <div className={root} value={{ user, setUser }}>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/collections">
+            <CollectionsPage />
+          </Route>
+          <Route path="/collections/:id">
+            <CollectionPage />
+          </Route>
+          <Route path="/shop">
+            <ShopPage />
+          </Route>
+          <Route path="/product/">
+            <ProductPage />
+          </Route>
+        </Switch>
+        <Footer />
+      </Router>
     </div>
   )
 }
-
-export { Loading }
 
 export default App

@@ -16,4 +16,14 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 </body>
+<script type="text/javascript">
+  var counter = 1;
+  setInterval(function () {
+    document.getElementById('radio' + counter).checked = true;
+    counter++;
+    if (counter > 3) {
+      counter = 1;
+    }
+  }, 8000);
+</script>
 </html>

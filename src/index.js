@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
-import { ThemeProvider } from 'styled-components'
+// import { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 
@@ -15,9 +15,9 @@ const theme = {
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    {/* <ThemeProvider theme={theme}> */}
+    <App />
+    {/* </ThemeProvider> */}
   </Provider>,
   document.getElementById('root')
 )
