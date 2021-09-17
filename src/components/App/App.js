@@ -6,7 +6,7 @@ import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
 import CollectionsPage from '../../pages/CollectionsPage'
-import CollectionPage from '../../pages/CollectionsPage/CollectionsPage'
+import ArtworkPage from '../../pages/ArtworkPage'
 import ShopPage from '../../pages/ShopPage'
 import ProductPage from '../../pages/ProductPage'
 
@@ -41,8 +41,8 @@ function App() {
           <Route path="/collections">
             <CollectionsPage />
           </Route>
-          <Route path="/collections/:id">
-            <CollectionPage />
+          <Route path="/collection/:id">
+            <ArtworkPage />
           </Route>
           <Route path="/shop">
             <ShopPage />

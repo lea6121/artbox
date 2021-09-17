@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
+import SimpleReactLightbox from 'simple-react-lightbox'
 // import { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
 import store from './redux/store'
@@ -15,8 +16,10 @@ const theme = {
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <ThemeProvider theme={theme}> */}
-    <App />
+    <SimpleReactLightbox>
+      {/* <ThemeProvider theme={theme}> */}
+      <App />
+    </SimpleReactLightbox>
     {/* </ThemeProvider> */}
   </Provider>,
   document.getElementById('root')

@@ -2,6 +2,9 @@ import { css } from '@emotion/css'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+const cartContainer = css`
+  position: relative;
+`
 const mask = css`
   position: absolute;
   z-index: 3;
@@ -12,7 +15,7 @@ const mask = css`
   left: 0;
 `
 const easeSlow = css`
-  transition: all 500ms ease-in-out;
+  transition: all 460ms ease-in-out;
 `
 
 const menuBtn = css`
@@ -21,49 +24,51 @@ const menuBtn = css`
   bottom: 10px;
   right: 10px;
   cursor: pointer;
+
   i {
     font-size: 24px;
     background: linear-gradient(#000000, rgb(172, 170, 170));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    ${easeSlow};
   }
-  ${easeSlow};
   &.closer {
     i {
-      color: transparent;
-      background: transparent;
+      transform: translateX(-350px);
+      ${'' /* color: transparent; */}
+      ${'' /* background: transparent; */}
     }
   }
 `
-const menuBtnLine = css`
-  position: absolute;
-  top: 50px;
-  right: 30px;
-`
+// const menuBtnLine = css`
+//   position: fixed;
+//   top: 0px;
+//   right: 0px;
+// `
 
-const btnLine = css`
-  position: fixed;
-  z-index: 2;
-  width: 23px;
-  height: 3px;
-  margin: 0 0 5px 0;
-  ${easeSlow};
-  &.closer {
-    z-index: 4;
-    cursor: pointer;
-    background-color: white;
+// const btnLine = css`
+//   position: fixed;
+//   z-index: -1;
+//   width: 23px;
+//   height: 3px;
+//   margin: 0 0 5px 0;
+//   ${easeSlow};
+//   &.closer {
+//     z-index: 4;
+//     cursor: pointer;
+//     background-color: white;
 
-    &:nth-child(1) {
-      transform: rotate(-45deg) translate(-240px, -230px);
-    }
-    &:nth-child(2) {
-      transform: translateX(-338px);
-    }
-    &:nth-child(3) {
-      transform: rotate(45deg) translate(-240px, 230px);
-    }
-  }
-`
+//     &:nth-child(1) {
+//       transform: rotate(-45deg) translate(-240px, -230px);
+//     }
+//     &:nth-child(2) {
+//       transform: translateX(-338px);
+//     }
+//     &:nth-child(3) {
+//       transform: rotate(45deg) translate(-240px, 230px);
+//     }
+//   }
+// `
 const menuOverlay = css`
   z-index: 3;
   position: fixed;
@@ -191,7 +196,7 @@ export default function Cart() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <>
+    <div className={cartContainer}>
       {isMenuOpen && <div className={`${mask}`}></div>}
       <div
         className={`${menuBtn} ${isMenuOpen ? 'closer' : null}`}
@@ -201,7 +206,7 @@ export default function Cart() {
       >
         <i class="fas fa-shopping-cart"></i>
       </div>
-      <div
+      {/* <div
         className={`${menuBtnLine} ${isMenuOpen ? 'closer' : null}`}
         onClick={
           isMenuOpen ? () => setIsMenuOpen(false) : () => setIsMenuOpen(true)
@@ -210,7 +215,7 @@ export default function Cart() {
         <div className={`${btnLine} ${isMenuOpen ? 'closer' : null}`} />
         <div className={`${btnLine} ${isMenuOpen ? 'closer' : null}`} />
         <div className={`${btnLine} ${isMenuOpen ? 'closer' : null}`} />
-      </div>
+      </div> */}
       <div className={`${menuOverlay} ${isMenuOpen ? 'show' : null}`}>
         <nav>
           <h1>Cart</h1>
@@ -330,6 +335,6 @@ export default function Cart() {
           <button className="checkout-btn">CHECKOUT</button>
         </nav>
       </div>
-    </>
+    </div>
   )
 }

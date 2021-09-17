@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import Carousel from 'react-multi-carousel'
+import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import Cart from '../../components/Cart'
 // import {
@@ -22,15 +23,21 @@ const shopPageContainer = css`
     position: fixed;
     bottom: 10px;
     left: 10px;
-    /* display: none; */
   }
 
-  ${
-    '' /* .carousel-item {
-    transition: transform 5s ease-in-out;
-  } */
+  .shop-banner {
+    .carousel-root {
+      margin: 0 auto;
+    }
+
+    img {
+      width: 100%;
+      height: 80vh;
+      padding-bottom: 10px;
+    }
   }
-  .carousels {
+  ${
+    '' /* .carousels {
     margin-bottom: 50px;
     max-height: 600px;
     position: relative;
@@ -38,16 +45,6 @@ const shopPageContainer = css`
     .slider {
       height: 500px;
       overflow: hidden;
-      ${
-        '' /* background-image: url('https://www.tinostone.com/wp-content/uploads/2016/09/Marquina-closeup.jpg'); */
-      }
-
-      ${
-        '' /* background-image: url('https://wallpaperaccess.com/full/130061.png');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center; */
-      };
     }
 
     .slides {
@@ -139,8 +136,8 @@ const shopPageContainer = css`
     #radio3:checked ~ .navigation-auto .auto-btn3 {
       background: rgba(255, 255, 255);
     }
+  } */
   }
-
   .shop-container {
     margin: 0 auto 50px;
     padding: 0 10px;
@@ -150,8 +147,9 @@ const shopPageContainer = css`
       background: rgba(0, 0, 0, 0.8);
     }
 
-    &__title {
-      padding: 30px 0 40px;
+    &__category {
+      margin-top: 20px;
+      padding: 40px 0;
       color: rgba(0, 0, 0, 0.7);
       border-bottom: 1px solid black;
       text-align: center;
@@ -172,15 +170,7 @@ const shopPageContainer = css`
       }
     }
 
-    ${
-      '' /* &__products {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: 20px 10px;
-    } */
-    }
-
-    &__product {
+    .item {
       text-align: center;
       padding: 0 0 60px;
       margin: 20px 0;
@@ -199,9 +189,7 @@ const shopPageContainer = css`
         padding: 3px 20px;
         font-size: 16px;
       }
-    }
 
-    .product {
       &__cover {
         position: absolute;
         bottom: 0;
@@ -209,7 +197,7 @@ const shopPageContainer = css`
         width: 100%;
         height: 100%;
 
-        .product__quick-view {
+        .quick-view-btn {
           position: absolute;
           display: block;
           border: none;
@@ -222,7 +210,7 @@ const shopPageContainer = css`
           transition: 200ms ease-in;
         }
 
-        .product__add-to-cart {
+        .add-to-cart-btn {
           position: absolute;
           display: block;
           border: none;
@@ -235,12 +223,12 @@ const shopPageContainer = css`
         }
 
         &:hover {
-          .product__quick-view {
+          .quick-view-btn {
             color: black;
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
           }
-          .product__add-to-cart {
+          .add-to-cart-btn {
             color: white;
             background: rgba(0, 0, 0, 0.8);
           }
@@ -270,14 +258,52 @@ const responsive = {
   }
 }
 
+const bannerImages = [
+  'https://cdn.shopify.com/s/files/1/2524/0922/files/1915.110_print_1728x.jpg?v=1622211081',
+  'https://cdn.shopify.com/s/files/1/2524/0922/files/1950_cropped_1728x.jpg?v=1588016027',
+  'https://cdn.shopify.com/s/files/1/2524/0922/files/1958.47_print_d6fd88b2-7342-4851-bcba-9d856ff2d0e3.jpg?v=1622209021'
+]
+
+const images = [
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/65050_2_640x864.jpg?v=1620738968',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285929_1_1280x576.jpg?v=1612930379',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059'
+]
+
 export default function ShopPage() {
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const onclick = () => {
+    window.scrollTo(0, 0)
+  }
 
   return (
     <div className={shopPageContainer}>
       {/* {isLoadingCollectionsMsg && <div className={loading}></div>} */}
       <div className="shop-banner">
-        <div class="carousels">
+        <SliderCarousel
+          showStatus={false}
+          showArrows={false}
+          autoPlay={true}
+          width="100%"
+          showThumbs={false}
+          infiniteLoop={true}
+        >
+          <img src={bannerImages[0]} />
+          <img src={bannerImages[1]} />
+          <img src={bannerImages[2]} />
+        </SliderCarousel>
+
+        {/* <div class="carousels">
           <div class="slider">
             <div class="slides">
               <input type="radio" name="radio-btn" id="radio1" />
@@ -322,348 +348,299 @@ export default function ShopPage() {
               <label for="radio3" class="manual-btn"></label>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="shop-container">
-        <div className="shop-container__title">
+        <div className="shop-container__category">
           <h1>ARTWORKS.</h1>
           <a href="./#/artworks">shop now</a>
           <i class="fas fa-chevron-right"></i>
         </div>
 
         <Carousel responsive={responsive}>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773"
-            />
-            <div className="product__cover">
+          <div class="item">
+            <img class="item__image" src={images[0]} />
+            <div className="item__cover">
               <a href="#/product">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173"
-            />
+          <div class="item">
+            <img class="item__image" src={images[1]} />
 
-            <div className="product__cover">
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
-          </div>
-          <div class="shop-container__product">
-            <img
-              className="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188"
-            />
-
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
-              </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
-            </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203"
-            />
-            <div className="product__cover">
+          <div class="item">
+            <img className="item__image" src={images[2]} />
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773"
-            />
-
-            <div className="product__cover">
+          <div class="item">
+            <img class="item__image" src={images[3]} />
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[0]} />
+
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+              <button class="add-to-cart-btn">ADD TO CART</button>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
         </Carousel>
 
-        <div className="shop-container__products"></div>
-
-        <div className="shop-container__title">
+        <div className="shop-container__category">
           <h1>EXCLUSIVES.</h1>
           <a href="./#/exclusives">shop now</a>
           <i class="fas fa-chevron-right"></i>
         </div>
-
         <Carousel responsive={responsive}>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+          <div class="item">
+            <img class="item__image" src={images[4]} />
+            <div className="item__cover">
+              <a href="#/product">
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/65050_2_640x864.jpg?v=1620738968"
-            />
-            <div className="product__cover">
+          <div class="item">
+            <img class="item__image" src={images[5]} />
+
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285929_1_1280x576.jpg?v=1612930379"
-            />
-            <div className="product__cover">
+
+          <div class="item">
+            <img className="item__image" src={images[6]} />
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059"
-            />
-            <div className="product__cover">
+
+          <div class="item">
+            <img class="item__image" src={images[7]} />
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">Bisa Butler Post Card Set</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779"
-            />
-            <div className="product__cover">
+
+          <div class="item">
+            <img class="item__image" src={images[4]} />
+
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
         </Carousel>
 
-        <div className="shop-container__title">
+        <div className="shop-container__category">
           <h1>ACCESSORIES & APPAREL.</h1>
           <a href="./#/accessories">shop now</a>
           <i class="fas fa-chevron-right"></i>
         </div>
 
         <Carousel responsive={responsive}>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+          <div class="item">
+            <img class="item__image" src={images[0]} />
+            <div className="item__cover">
+              <a href="#/product">
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
-          </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
-              </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
-            </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
-          </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
-              </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
-            </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203"
-            />
-            <div className="product__cover">
+          <div class="item">
+            <img class="item__image" src={images[1]} />
+
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773"
-            />
-            <div className="product__cover">
+          <div class="item">
+            <img className="item__image" src={images[2]} />
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[3]} />
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+              <button class="add-to-cart-btn">ADD TO CART</button>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[0]} />
+
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+              <button class="add-to-cart-btn">ADD TO CART</button>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
         </Carousel>
 
-        <div className="shop-container__title">
+        <div className="shop-container__category">
           <h1>BOOKS.</h1>
           <a href="./#/books">shop now</a>
           <i class="fas fa-chevron-right"></i>
         </div>
 
         <Carousel responsive={responsive}>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+          <div class="item">
+            <img class="item__image" src={images[4]} />
+            <div className="item__cover">
+              <a href="#/product">
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
 
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/65050_2_640x864.jpg?v=1620738968"
-            />
-            <div className="product__cover">
+          <div class="item">
+            <img class="item__image" src={images[5]} />
+
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285929_1_1280x576.jpg?v=1612930379"
-            />
-            <div className="product__cover">
+
+          <div class="item">
+            <img className="item__image" src={images[6]} />
+            <div className="item__cover">
               <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
+                <button class="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
-            </div>{' '}
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
-          </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
-              </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
-            </div>{' '}
-            <div class="product__name">Bisa Butler Post Card Set</div>
-            <div class="product__price">TWD. 590</div>
-          </div>
-          <div class="shop-container__product">
-            <img
-              class="product__photo"
-              src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779"
-            />
-            <div className="product__cover">
-              <a href="#">
-                <button class="product__quick-view">QUICK VIEW</button>
-              </a>
-              <button class="product__add-to-cart">ADD TO CART</button>
+              <button class="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="product__name">I'M AN ARTWORK</div>
-            <div class="product__price">TWD. 590</div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[7]} />
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+              <button class="add-to-cart-btn">ADD TO CART</button>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[4]} />
+
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+              <button class="add-to-cart-btn">ADD TO CART</button>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
           </div>
         </Carousel>
       </div>
 
-      <a href="#top">
-        <button
-          type="button"
-          class="btn btn-dark btn-floating btn-lg"
-          id="btn-back-to-top"
-        >
-          <i class="fas fa-angle-up"></i>
-        </button>
-      </a>
+      <button
+        type="button"
+        class="btn btn-dark btn-floating btn-lg"
+        id="btn-back-to-top"
+        onClick={onclick}
+      >
+        <i class="fas fa-angle-up"></i>
+      </button>
+
       <Cart />
     </div>
   )

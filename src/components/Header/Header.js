@@ -37,7 +37,7 @@ const header = css`
         padding: 0px 20px 0px 20px;
         display: flex;
         font-weight: 500;
-        font-family: Baskerville;
+        font-family: Serif;
         &:hover {
           text-decoration: none;
           color: black;
@@ -57,7 +57,7 @@ const header = css`
         text-decoration: none;
         font-size: 18px;
         text-align: center;
-        font-family: Baskerville;
+        font-family: Serif;
         transition: all 0.6s ease-in-out;
 
         &:hover {
@@ -72,7 +72,7 @@ const header = css`
       }
 
       .fas {
-        font-size: 24px;
+        font-size: 26px;
       }
     }
 
@@ -152,7 +152,7 @@ export default function Header() {
         </div>
         <nav className="icons">
           <a href="./#/collections">
-            <i class="fas fa-image"></i>
+            <i className="fas fa-images"></i>
             <div>Collections</div>
           </a>
 
@@ -166,12 +166,12 @@ export default function Header() {
           </a> */}
 
           <a href="./#/shop">
-            <i class="fas fa-store"></i>
+            <i className="fas fa-store"></i>
             <div>Shop</div>
           </a>
           <a href="./#/">
             <div className="drop">
-              <i class="fas fa-user"></i>
+              <i className="fas fa-user"></i>
               <button>Account</button>
               <div className="dropbox">
                 <a href="./#/Login">LOG IN/JOIN</a>

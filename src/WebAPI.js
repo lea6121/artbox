@@ -4,12 +4,12 @@ import { getAuthToken } from './utils'
 
 const BASE_URL = 'https://openaccess-api.clevelandart.org/api'
 const hasImage = 1
-let limit = 40
+let limit = 24
 let skip = 0
 
-export const getCurrentViewCollections = () => {
+export const getCollections = (skip) => {
   return fetch(
-    `${BASE_URL}/artworks?&limit=${limit}&has_image=${hasImage}&skip=${skip}&currently_on_view`,
+    `${BASE_URL}/artworks?&limit=${limit}&has_image=${hasImage}&skip=${skip}`,
     {
       method: 'GET',
       headers: {
@@ -19,7 +19,7 @@ export const getCurrentViewCollections = () => {
   ).then((res) => res.json())
 }
 
-export const getSpecificCollections = (department) => {
+export const getSpecificCollections = (department, skip) => {
   return fetch(
     `${BASE_URL}/artworks?limit=${limit}&has_image=${hasImage}&skip=${skip}&department=${department}`,
     {
@@ -31,7 +31,7 @@ export const getSpecificCollections = (department) => {
   ).then((res) => res.json())
 }
 
-export const searchCollections = (query) => {
+export const searchCollections = (query, skip) => {
   return fetch(
     `${BASE_URL}/artworks?q=${query}&limit=${limit}&has_image=${hasImage}&skip=${skip}`,
     {
@@ -43,17 +43,17 @@ export const searchCollections = (query) => {
   ).then((res) => res.json())
 }
 
-export const searchArtists = (name) => {
-  return fetch(`${BASE_URL}/creators?name=${name}`, {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json'
-    }
-  }).then((res) => res.json())
-}
+// export const searchArtists = (name) => {
+//   return fetch(`${BASE_URL}/creators?name=${name}`, {
+//     method: 'GET',
+//     headers: {
+//       'content-type': 'application/json'
+//     }
+//   }).then((res) => res.json())
+// }
 
-export const getProducts = (page) => {
-  return fetch(`${BASE_URL}/products?page=${page}`, {
+export const getArtwork = (id) => {
+  return fetch(`${BASE_URL}/artworks/${id}`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json'

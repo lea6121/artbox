@@ -17,20 +17,15 @@ const productPageContainer = css`
       background: rgba(0, 0, 0, 0.9);
     }
 
-    &__title {
-      padding: 30px 0 20px;
-      color: rgba(0, 0, 0, 0.7);
+    .title {
       border-top: 1px solid rgba(0, 0, 0, 0.3);
+      padding: 50px 0 50px;
       text-align: center;
-
-      h1 {
-        font-size: 22px;
-        padding-top: 20px;
-        color: black;
-      }
+      font-size: 22px;
+      color: black;
     }
 
-    &__product {
+    .item {
       text-align: center;
       padding: 0 0 60px;
       margin: 20px 0;
@@ -42,6 +37,7 @@ const productPageContainer = css`
         width: 100%;
         height: 400px;
         padding-bottom: 10px;
+        ${'' /* border: 1px solid black; */}
       }
 
       div {
@@ -49,15 +45,14 @@ const productPageContainer = css`
         font-size: 16px;
       }
 
-      .product__cover {
+      &__cover {
         position: absolute;
-        ${'' /* background-color: black; */}
         bottom: 0;
         left: 0;
         width: 100%;
         height: 100%;
 
-        .product__quick-view {
+        .quick-view-btn {
           position: absolute;
           display: block;
           border: none;
@@ -70,27 +65,11 @@ const productPageContainer = css`
           transition: 200ms ease-in;
         }
 
-        .product__add-to-cart {
-          position: absolute;
-          display: block;
-          border: none;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          color: transparent;
-          background: transparent;
-        }
-
         &:hover {
-          .product__quick-view {
+          .quick-view-btn {
             color: black;
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          .product__add-to-cart {
-            color: white;
-            background: rgba(0, 0, 0, 0.8);
           }
         }
       }
@@ -103,17 +82,17 @@ const productContainer = css`
   margin: 60px auto;
   padding: 0 10px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 50% 50%;
   grid-gap: 10px 10px;
   max-width: 100vw;
+  overflow: hidden;
 
   img {
     max-height: 400px;
     object-fit: contain;
   }
 
-  .item {
-    ${'' /* border: 1px solid black; */}
+  .product {
     padding: 0 20px;
     display: flex;
     flex-direction: column;
@@ -144,6 +123,12 @@ const productContainer = css`
       height: 50px;
       background: rgba(0, 0, 0, 0.8);
       color: white;
+      transition: 1s ease-out;
+
+      &:hover {
+        ${'' /* transform: scale(1.1); */}
+        background: rgba(0,0,0,0.6)
+      }
     }
   }
 `
@@ -168,6 +153,17 @@ const responsive = {
   }
 }
 
+const images = [
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/65050_2_640x864.jpg?v=1620738968',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285929_1_1280x576.jpg?v=1612930379',
+  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059'
+]
+
 export default function ProductPage() {
   return (
     <div className={productPageContainer}>
@@ -176,13 +172,14 @@ export default function ProductPage() {
           <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
           <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779" />
           <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
+          <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
         </SliderCarousel>
 
-        <div className="item">
-          <h1 className="item__title">Kinetic Light Blue Green Earrings</h1>
-          <p className="item__price">$ 27.99</p>
-          <p className="item__size">Size</p>
-          <select class="form-select" aria-label="Default select example">
+        <div className="product">
+          <h1 className="product__title">Kinetic Light Blue Green Earrings</h1>
+          <p className="product__price">$ 27.99</p>
+          <p className="product__size">Size</p>
+          <select className="form-select" aria-label="Default select example">
             {/* <option selected>Size</option> */}
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -199,98 +196,78 @@ export default function ProductPage() {
             <span class="input-group-text">+</span>
           </div> */}
 
-          <div className="item__description">
+          <div className="product__description">
             Discover miniature modernist art for your ears! In a truly unique
             combination, translucent dyed resin is suspended on stainless steel,
             placing the focus of these feather-weight earrings on the beauty of
             balance and color. Handmade in the USA.
           </div>
-          <button className="item__add-to-cart">ADD TO CART</button>
+          <button className="product__add-to-cart">ADD TO CART</button>
         </div>
       </div>
 
-      <div className="shop-container__title">
-        <h1>you may also like...</h1>
+      <div className="shop-container">
+        <h1 className="title">you may also like...</h1>
+
+        <Carousel responsive={responsive}>
+          <div class="item">
+            <img class="item__image" src={images[4]} />
+            <div className="item__cover">
+              <a href="#/product">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[5]} />
+
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img className="item__image" src={images[6]} />
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[7]} />
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+
+          <div class="item">
+            <img class="item__image" src={images[4]} />
+
+            <div className="item__cover">
+              <a href="#">
+                <button class="quick-view-btn">QUICK VIEW</button>
+              </a>
+            </div>
+            <div class="item__name">I'M AN ARTWORK</div>
+            <div class="item__price">TWD. 590</div>
+          </div>
+        </Carousel>
       </div>
-
-      <Carousel responsive={responsive}>
-        <div class="shop-container__product">
-          <img
-            class="product__photo"
-            src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773"
-          />
-          <div className="product__cover">
-            <a href="#/product">
-              <button class="product__quick-view">QUICK VIEW</button>
-            </a>
-            {/* <button class="product__add-to-cart">ADD TO CART</button> */}
-          </div>
-          <div class="product__name">I'M AN ARTWORK</div>
-          <div class="product__price">TWD. 590</div>
-        </div>
-
-        <div class="shop-container__product">
-          <img
-            class="product__photo"
-            src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173"
-          />
-
-          <div className="product__cover">
-            <a href="#">
-              <button class="product__quick-view">QUICK VIEW</button>
-            </a>
-            {/* <button class="product__add-to-cart">ADD TO CART</button> */}
-          </div>
-          <div class="product__name">I'M AN ARTWORK</div>
-          <div class="product__price">TWD. 590</div>
-        </div>
-        <div class="shop-container__product">
-          <img
-            className="product__photo"
-            src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188"
-          />
-
-          <div className="product__cover">
-            <a href="#">
-              <button class="product__quick-view">QUICK VIEW</button>
-            </a>
-            {/* <button class="product__add-to-cart">ADD TO CART</button> */}
-          </div>
-          <div class="product__name">I'M AN ARTWORK</div>
-          <div class="product__price">TWD. 590</div>
-        </div>
-
-        <div class="shop-container__product">
-          <img
-            class="product__photo"
-            src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203"
-          />
-          <div className="product__cover">
-            <a href="#">
-              <button class="product__quick-view">QUICK VIEW</button>
-            </a>
-            {/* <button class="product__add-to-cart">ADD TO CART</button> */}
-          </div>
-          <div class="product__name">I'M AN ARTWORK</div>
-          <div class="product__price">TWD. 590</div>
-        </div>
-
-        <div class="shop-container__product">
-          <img
-            class="product__photo"
-            src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773"
-          />
-
-          <div className="product__cover">
-            <a href="#">
-              <button class="product__quick-view">QUICK VIEW</button>
-            </a>
-            {/* <button class="product__add-to-cart">ADD TO CART</button> */}
-          </div>
-          <div class="product__name">I'M AN ARTWORK</div>
-          <div class="product__price">TWD. 590</div>
-        </div>
-      </Carousel>
       <Cart />
     </div>
   )

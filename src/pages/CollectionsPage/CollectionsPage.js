@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
 import {
-  getCurrentViewCollections,
+  getCollections,
   getSpecificCollections,
-  searchCollections
+  searchCollections,
+  setCurrentPageNum
 } from '../../redux/reducers/collectionReducer'
 
 const collectionsPageContainer = css`
@@ -34,7 +35,7 @@ const collectionsPageContainer = css`
       background-attachment: fixed;
 
       h1 {
-        font-family: Baskerville;
+        font-family: Serif;
         background: linear-gradient(#000000, #3e3e3e, rgb(172, 170, 170));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -58,7 +59,7 @@ const collectionsPageContainer = css`
 
       .input-group {
         text-align: center;
-        width: 50%;
+        max-width: 50%;
         position: absolute;
         top: 46%;
         left: 50%;
@@ -86,7 +87,6 @@ const collectionsPageContainer = css`
 
       .left-section {
         ul {
-          font-family: Baskerville;
           font-size: 28px;
           list-style: none;
           margin-bottom: 30px;
@@ -162,6 +162,10 @@ const collectionsPageContainer = css`
       }
     }
   }
+  .pagination-container {
+    margin: 20px auto;
+    text-align: center;
+  }
 `
 const categories = [
   'African Art ',
@@ -174,7 +178,7 @@ const categories = [
   'Egyptian and Ancient Near Eastern Art ',
   'European Painting and Sculpture ',
   'Greek and Roman Art ',
-  'Indian and South East Asian Art ',
+  // 'Indian and South East Asian Art ',
   'Islamic Art ',
   'Japanese Art ',
   'Korean Art ',
@@ -188,14 +192,19 @@ const categories = [
 
 function Collection({ collection }) {
   const location = useLocation()
+  // console.log(location)
   return (
     <>
-      <a href={`./#/collections/${collection.id}`} className="collection">
+      <a
+        href={`/#/collection/${collection.id}`}
+        className="collection"
+        // to={`/collections/${collection.id}`}
+      >
         {collection.images ? (
           <img
             className="collection__image"
             src={collection.images.web.url}
-            alt="collection"
+            alt={collection.title}
           />
         ) : (
           <img
@@ -205,7 +214,8 @@ function Collection({ collection }) {
         )}
 
         <div class="collection__title">{collection.title}</div>
-        {collection.creators.length !== 0 &&
+        {collection.creators &&
+          collection.creators.length !== 0 &&
           collection.creators.map((creator) => (
             <div class="collection__artist">{creator.description}</div>
           ))}
@@ -220,12 +230,20 @@ export default function CollectionPage() {
   const isLoadingCollectionsMsg = useSelector(
     (store) => store.collections.isLoadingCollections
   )
+  const currentSearch = useSelector((store) => store.collections.currentSearch)
+  const currentCategory = useSelector(
+    (store) => store.collections.currentCategory
+  )
+  // const currentPage = useSelector((store) => store.collections.currentPage)
   const [value, setValue] = useState()
-  const [currentSearch, setCurrentSearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+
+  // const [currentSearch, setCurrentSearch] = useState('')
   const handleClick = (e) => {
     let category = e.target.innerText
-    dispatch(getSpecificCollections(category))
+    dispatch(getSpecificCollections(category, 0))
   }
+
   const handleInputChange = (e) => {
     setValue(e.target.value)
   }
@@ -233,14 +251,14 @@ export default function CollectionPage() {
   const handleFormSubmit = (e) => {
     e.preventDefault()
     if (!value) return
-    dispatch(searchCollections(value))
-    setCurrentSearch(value)
+    dispatch(searchCollections(value, 0))
+    // setCurrentSearch(value)
     setValue('')
   }
 
-  useEffect(() => {
-    dispatch(getCurrentViewCollections())
-  }, [])
+  const onclick = () => {
+    window.scrollTo(0, 0)
+  }
 
   function Category() {
     return (
@@ -251,6 +269,59 @@ export default function CollectionPage() {
       </>
     )
   }
+
+  function changePage(e) {
+    const currentPageNum = Number(e.target.innerText)
+    console.log(currentPageNum)
+    setCurrentPage(currentPageNum)
+    if (currentSearch) {
+      dispatch(searchCollections(currentSearch, (currentPageNum - 1) * 24))
+    } else if (currentCategory) {
+      dispatch(
+        getSpecificCollections(currentCategory, (currentPageNum - 1) * 24)
+      )
+    } else {
+      dispatch(getCollections((currentPageNum - 1) * 24))
+    }
+    window.scrollTo(0, 300)
+  }
+
+  function Pagination() {
+    const totalCollections = useSelector(
+      (store) => store.collections.totalCollections
+    )
+    const totalPages = Math.ceil(totalCollections / 24)
+    let pageNumbers = []
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i)
+    }
+    return (
+      <div className="pagination-container">
+        <div className="btn-group me-2" role="group">
+          {pageNumbers.slice(0, 4).map((value, index) => (
+            <button
+              className="btn btn-outline-dark"
+              key={value}
+              onClick={changePage}
+            >
+              {value}
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  useEffect(() => {
+    console.log(currentPage)
+    if (currentSearch) {
+      dispatch(searchCollections(currentSearch, (currentPage - 1) * 24))
+    } else if (currentCategory) {
+      dispatch(getSpecificCollections(currentCategory, (currentPage - 1) * 24))
+    } else {
+      dispatch(getCollections((currentPage - 1) * 24))
+    }
+  }, [])
 
   return (
     <div className={collectionsPageContainer}>
@@ -310,15 +381,17 @@ export default function CollectionPage() {
           )}
         </section>
       </div>
-      <a href="#top">
-        <button
-          type="button"
-          className="btn btn-dark btn-floating btn-lg"
-          id="btn-back-to-top"
-        >
-          <i className="fas fa-angle-up"></i>
-        </button>
-      </a>
+      <Pagination />
+
+      <button
+        type="button"
+        className="btn btn-dark btn-floating btn-lg"
+        id="btn-back-to-top"
+        onClick={onclick}
+      >
+        <i className="fas fa-angle-up"></i>
+      </button>
+
       <Cart />
     </div>
   )

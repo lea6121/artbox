@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
 
 import {
-  getCurrentViewCollections as getCurrentViewCollectionsAPI,
+  getCollections as getCollectionsAPI,
   getSpecificCollections as getSpecificCollectionsAPI,
-  searchCollections as searchCollectionsAPI
+  searchCollections as searchCollectionsAPI,
+  getArtwork as getArtworkAPI
   // searchArtists as searchArtistsAPI
   // getPost as getPostAPI,
   // postNewPost as postNewPostAPI,
@@ -14,7 +16,11 @@ import {
 const initialState = {
   isLoadingCollections: false,
   collections: [],
-  totalCollectionsPages: 0
+  currentSearch: '',
+  currentCategory: '',
+  currentPage: 1,
+  totalCollections: 0,
+  artwork: []
   // artworksImgID: []
   // isLoadingPost: false,
   // post: null,
@@ -38,8 +44,24 @@ export const collectionReducer = createSlice({
       state.collections = action.payload
     },
 
-    setTotalCollectionsPages: (state, action) => {
-      state.totalCollectionsPages = action.payload
+    setCurrentCategory: (state, action) => {
+      state.currentCategory = action.payload
+    },
+
+    setCurrentSearch: (state, action) => {
+      state.currentSearch = action.payload
+    },
+
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+
+    setTotalCollections: (state, action) => {
+      state.totalCollections = action.payload
+    },
+
+    setArtwork: (state, action) => {
+      state.artwork = action.payload
     }
 
     // setArtworksImgID: (state, action) => {
@@ -83,7 +105,11 @@ export const collectionReducer = createSlice({
 export const {
   setIsLoadingCollections,
   setCollections,
-  setTotalCollectionsPages
+  setCurrentCategory,
+  setCurrentSearch,
+  setCurrentPage,
+  setTotalCollections,
+  setArtwork
   // setArtworksImgID
   // setIsLoadingPost,
   // setPost,
@@ -95,34 +121,54 @@ export const {
   // setDeletePostResponse
 } = collectionReducer.actions
 
-export const getCurrentViewCollections = () => (dispatch) => {
+export const getCollections = (skip, collections) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
-  getCurrentViewCollectionsAPI().then((data) => {
-    console.log(data.data)
+  getCollectionsAPI(skip).then((data) => {
+    console.log(data)
+    dispatch(setTotalCollections(data.info.total))
+    dispatch(setIsLoadingCollections(false))
+    dispatch(setCollections(data.data))
+  })
+}
+
+export const getSpecificCollections = (department, skip) => (dispatch) => {
+  dispatch(setIsLoadingCollections(true))
+  getSpecificCollectionsAPI(department, skip).then((data) => {
+    console.log(data.info.total)
+    dispatch(setCurrentCategory(department))
+    dispatch(setCurrentSearch(''))
+    dispatch(setTotalCollections(data.info.total))
     dispatch(setIsLoadingCollections(false))
     // dispatch(setTotalArtworksPages(data.pagination.total_pages))
     dispatch(setCollections(data.data))
   })
 }
 
-export const getSpecificCollections = (department) => (dispatch) => {
+export const searchCollections = (query, skip) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
-  getSpecificCollectionsAPI(department).then((data) => {
-    // console.log(data.data)
+  searchCollectionsAPI(query, skip).then((data) => {
+    console.log(data.info.total)
+    dispatch(setTotalCollections(data.info.total))
+    dispatch(setCurrentSearch(query))
+    dispatch(setCurrentCategory(''))
     dispatch(setIsLoadingCollections(false))
     // dispatch(setTotalArtworksPages(data.pagination.total_pages))
     dispatch(setCollections(data.data))
   })
 }
 
-export const searchCollections = (query) => (dispatch) => {
+export const getArtwork = (id) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
-  searchCollectionsAPI(query).then((data) => {
-    // console.log(data.data)
+  getArtworkAPI(id).then((data) => {
+    // console.log(data)
+    dispatch(setArtwork([]))
     dispatch(setIsLoadingCollections(false))
-    // dispatch(setTotalArtworksPages(data.pagination.total_pages))
-    dispatch(setCollections(data.data))
+    dispatch(setArtwork(data.data))
   })
+}
+
+export const setCurrentPageNum = (num) => (dispatch) => {
+  dispatch(setCurrentPage(num))
 }
 
 // export const getPost = (id) => (dispatch) => {
