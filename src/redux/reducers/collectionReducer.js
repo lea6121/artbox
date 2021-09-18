@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   getCollections as getCollectionsAPI,
@@ -18,7 +18,7 @@ const initialState = {
   collections: [],
   currentSearch: '',
   currentCategory: '',
-  currentPage: 1,
+  currentPage: 0,
   totalCollections: 0,
   artwork: []
   // artworksImgID: []
@@ -124,8 +124,11 @@ export const {
 export const getCollections = (skip, collections) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
   getCollectionsAPI(skip).then((data) => {
-    console.log(data)
+    // console.log(data)
     dispatch(setTotalCollections(data.info.total))
+    dispatch(setCurrentSearch(''))
+    dispatch(setCurrentCategory(''))
+    dispatch(setCurrentPage(1))
     dispatch(setIsLoadingCollections(false))
     dispatch(setCollections(data.data))
   })

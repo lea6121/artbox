@@ -62,7 +62,7 @@ const header = css`
 
         &:hover {
           text-decoration: underline;
-          transform: scale(1.05);
+          transform: scale(1.01);
         }
       }
 
@@ -84,7 +84,7 @@ const header = css`
       }
 
       .dropbox {
-        width: 150px;
+        width: 130px;
         display: none;
         background-color: white;
         position: absolute;
@@ -94,15 +94,10 @@ const header = css`
         a {
           text-align: left;
           padding: 10px;
-          font-size: 14px;
+          font-size: 16px;
           display: block;
           border-bottom: 1px solid rgba(0, 0, 0, 0.2);
           margin: 0;
-
-          &:hover {
-            color: rgba(0, 0, 0, 0.8);
-            transform: scale(1.05);
-          }
         }
       }
     }
@@ -169,12 +164,12 @@ export default function Header() {
             <i className="fas fa-store"></i>
             <div>Shop</div>
           </a>
-          <a href="./#/">
+          <a href="./#/login">
             <div className="drop">
               <i className="fas fa-user"></i>
-              <button>Account</button>
+              <button>Log In</button>
               <div className="dropbox">
-                <a href="./#/Login">LOG IN/JOIN</a>
+                {/* <a href="/#/login">LOG IN</a> */}
                 {/* <a href="./#/user?">WISHLIST</a> */}
                 {/* <a href="./#/user?">訂單查詢</a> */}
                 <a href="./#/user">BACKSTAGE</a>

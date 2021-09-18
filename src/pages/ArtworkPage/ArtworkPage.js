@@ -17,18 +17,6 @@ const artworkPageContainer = css`
   background-repeat: no-repeat;
   position: relative;
   font-size: 20px;
-
-  ${
-    '' /* .artwork-cover {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-    }  */
-  }
 `
 
 const artworkContainer = css`
@@ -49,7 +37,7 @@ const artworkContainer = css`
   justify-content: center;
 
   img {
-    border: 1px solid white;
+    ${'' /* border: 1px solid white; */}
     max-height: 700px;
     width: 600px;
     object-fit: contain;
@@ -120,7 +108,7 @@ const artworkContainer = css`
 
       &__content {
         overflow-y: auto;
-        height: 200px;
+        max-height: 200px;
         padding: 10px 0;
       }
     }
@@ -138,35 +126,11 @@ const artworkContainer = css`
         padding: 10px 0;
         font-size: 18px;
         overflow-y: auto;
-        height: 200px;
+        max-height: 200px;
       }
     }
   }
 `
-
-// const responsive = {
-//   superLargeDesktop: {
-//     // the naming can be any, depends on you.
-//     breakpoint: { max: 4000, min: 3000 },
-//     items: 5
-//   },
-//   desktop: {
-//     breakpoint: { max: 3000, min: 1024 },
-//     items: 4
-//   },
-//   tablet: {
-//     breakpoint: { max: 1024, min: 464 },
-//     items: 2
-//   },
-//   mobile: {
-//     breakpoint: { max: 464, min: 0 },
-//     items: 1
-//   }
-// }
-
-// const images = [
-//   'https://openaccess-cdn.clevelandart.org/1998.78.14/1998.78.14_print.jpg'
-// ]
 
 export default function CollectionPage() {
   const dispatch = useDispatch()

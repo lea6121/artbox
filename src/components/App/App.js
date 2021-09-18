@@ -2,13 +2,17 @@ import { css } from '@emotion/css'
 import { useEffect } from 'react'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
 import CollectionsPage from '../../pages/CollectionsPage'
 import ArtworkPage from '../../pages/ArtworkPage'
 import ShopPage from '../../pages/ShopPage'
+import ProductsPage from '../../pages/ProductsPage'
 import ProductPage from '../../pages/ProductPage'
+import LoginPage from '../../pages/LoginPage'
+import RegisterPage from '../../pages/RegisterPage'
 
 import { getAuthToken } from '../../utils'
 import { setUser, getMe } from '../../redux/reducers/userReducer'
@@ -47,8 +51,17 @@ function App() {
           <Route path="/shop">
             <ShopPage />
           </Route>
-          <Route path="/product/">
+          <Route path="/products">
+            <ProductsPage />
+          </Route>
+          <Route path="/product">
             <ProductPage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage />
           </Route>
         </Switch>
         <Footer />

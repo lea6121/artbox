@@ -47,16 +47,6 @@ const collectionsPageContainer = css`
         transform: translate(-50%, -50%);
       }
 
-      ${
-        '' /* p {
-        color: white;
-        position: absolute;
-        top: 56%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      } */
-      }
-
       .input-group {
         text-align: center;
         max-width: 50%;
@@ -103,10 +93,19 @@ const collectionsPageContainer = css`
       }
 
       .right-section {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+
+        & > h1 {
+          text-align: left;
+          margin: 30px;
+          font-size: 28px;
+          font-style: italic;
+          color: rgba(0, 0, 0, 0.8);
+        }
+
         .collections {
           letter-spacing: 0.1rem;
-          font-family: Georgia, 'Times New Roman', Times, serif;
-          margin: 50px auto;
+          margin: 20px auto;
           padding: 10px 5px;
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -162,6 +161,7 @@ const collectionsPageContainer = css`
       }
     }
   }
+
   .pagination-container {
     margin: 20px auto;
     text-align: center;
@@ -242,6 +242,7 @@ export default function CollectionPage() {
   const handleClick = (e) => {
     let category = e.target.innerText
     dispatch(getSpecificCollections(category, 0))
+    window.scrollTo(0, 700)
   }
 
   const handleInputChange = (e) => {
@@ -254,10 +255,6 @@ export default function CollectionPage() {
     dispatch(searchCollections(value, 0))
     // setCurrentSearch(value)
     setValue('')
-  }
-
-  const onclick = () => {
-    window.scrollTo(0, 0)
   }
 
   function Category() {
@@ -295,10 +292,11 @@ export default function CollectionPage() {
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i)
     }
+
     return (
       <div className="pagination-container">
         <div className="btn-group me-2" role="group">
-          {pageNumbers.slice(0, 4).map((value, index) => (
+          {pageNumbers.slice(0, 5).map((value, index) => (
             <button
               className="btn btn-outline-dark"
               key={value}
@@ -356,17 +354,12 @@ export default function CollectionPage() {
         </section>
 
         <section className="right-section">
-          {collections.length > 0 ? (
-            <div className="collections">
-              {collections.map((collection) => (
-                <Collection key={collection.id} collection={collection} />
-              ))}
-            </div>
-          ) : (
+          {(currentSearch || currentCategory) && collections.length <= 0 && (
             <div className="message">
               <h1>Hmmm...</h1>
               <h1>
-                Looks like we don't have any matches for "{currentSearch}".
+                Looks like we don't have any matches for "
+                {currentSearch || currentCategory}".
               </h1>
               <ul>You might try: </ul>
               <li>
@@ -379,6 +372,16 @@ export default function CollectionPage() {
               </li>
             </div>
           )}
+          {/* ) : (
+            <h1>The results for "{currentSearch || currentCategory}"</h1>
+          )} */}
+          {collections.length > 0 && (
+            <div className="collections">
+              {collections.map((collection) => (
+                <Collection key={collection.id} collection={collection} />
+              ))}
+            </div>
+          )}
         </section>
       </div>
       <Pagination />
@@ -387,7 +390,9 @@ export default function CollectionPage() {
         type="button"
         className="btn btn-dark btn-floating btn-lg"
         id="btn-back-to-top"
-        onClick={onclick}
+        onClick={() => {
+          window.scrollTo(0, 0)
+        }}
       >
         <i className="fas fa-angle-up"></i>
       </button>

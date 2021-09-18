@@ -354,7 +354,7 @@ export default function ShopPage() {
       <div className="shop-container">
         <div className="shop-container__category">
           <h1>ARTWORKS.</h1>
-          <a href="./#/artworks">shop now</a>
+          <a href="./#/products">shop now</a>
           <i class="fas fa-chevron-right"></i>
         </div>
 

@@ -76,6 +76,7 @@ const menuOverlay = css`
   right: 0;
   background-color: white;
   height: 100vh;
+  ${'' /* overflow-y: auto; */}
   width: 400px;
   transform: translateX(100%);
   transition: all 450ms ease-in-out;
@@ -113,9 +114,9 @@ const menuOverlay = css`
       padding: 20px;
       font-family: Arial;
       border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-      height: 63vh;
-      overflow-y: auto;
       font-size: 14px;
+      height: 73vh;
+      overflow-y: auto;
 
       i {
         cursor: pointer;
@@ -204,7 +205,7 @@ export default function Cart() {
           isMenuOpen ? () => setIsMenuOpen(false) : () => setIsMenuOpen(true)
         }
       >
-        <i class="fas fa-shopping-cart"></i>
+        <i className="fas fa-shopping-cart"></i>
       </div>
       {/* <div
         className={`${menuBtnLine} ${isMenuOpen ? 'closer' : null}`}
@@ -242,7 +243,27 @@ export default function Cart() {
               </div>
               <i className="fa fa-trash"></i>
             </div>
-
+            <div className="cart__item">
+              <a href="#">
+                <img
+                  className="cart__pic"
+                  src="https://artwork.wallartprints.com/media/catalog/product/cache/98550ffb3d2e4312eec927763b7e3a7e/2/7/275049723_original.jpg"
+                  alt="want to buy"
+                />
+              </a>
+              <div className="cart__details">
+                <div>
+                  <a href="#">Alone in the snow</a>
+                </div>
+                <div>
+                  <p>45cm x 30cm (18" x 12")</p>
+                </div>
+                <div className="cart__quantity">
+                  <p>1 * $44.99 </p>
+                </div>
+              </div>
+              <i className="fa fa-trash"></i>
+            </div>
             <div className="cart__item">
               <a href="#">
                 <img
@@ -264,7 +285,6 @@ export default function Cart() {
               </div>
               <i className="fa fa-trash"></i>
             </div>
-
             <div className="cart__item">
               <a href="#">
                 <img
@@ -286,7 +306,6 @@ export default function Cart() {
               </div>
               <i className="fa fa-trash"></i>
             </div>
-
             <div className="cart__item">
               <a href="#">
                 <img
@@ -308,7 +327,6 @@ export default function Cart() {
               </div>
               <i className="fa fa-trash"></i>
             </div>
-
             <div className="cart__item">
               <a href="#">
                 <img
@@ -331,8 +349,12 @@ export default function Cart() {
               <i className="fa fa-trash"></i>
             </div>
           </div>
-          <button className="view-cart-btn">VIEW CART</button>
-          <button className="checkout-btn">CHECKOUT</button>
+          {/* <a href="./#/cart">
+            <button className="view-cart-btn">VIEW CART</button>
+          </a> */}
+          <a href="./#/cart">
+            <button className="checkout-btn">CHECKOUT</button>
+          </a>
         </nav>
       </div>
     </div>

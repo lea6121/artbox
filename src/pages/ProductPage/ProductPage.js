@@ -1,5 +1,6 @@
 import { css } from '@emotion/css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
+import { useState, useEffect } from 'react'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import Carousel from 'react-multi-carousel'
 import Cart from '../../components/Cart'
@@ -75,6 +76,21 @@ const productPageContainer = css`
       }
     }
   }
+  .quantity {
+    margin: 10px 0;
+    width: 26%;
+
+    &__count {
+      width: 60%;
+      height: 100%;
+      text-align: center;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      margin-bottom: 0;
+      font-size: 18px;
+      padding: 6px 0;
+    }
+  }
 `
 
 const productContainer = css`
@@ -109,7 +125,12 @@ const productContainer = css`
     }
 
     &__size {
-      font-size: 24px;
+      font-size: 20px;
+    }
+
+    &__quantity {
+      font-size: 20px;
+      margin-top: 20px;
     }
 
     &__description {
@@ -164,6 +185,43 @@ const images = [
   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059'
 ]
 
+function Counter() {
+  // Set the initial count state to zero, 0
+  const [count, setCount] = useState(1)
+
+  // Create handleIncrement event handler
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1)
+  }
+
+  //Create handleDecrement event handler
+  const handleDecrement = () => {
+    if (count > 1) {
+      setCount((prevCount) => prevCount - 1)
+    }
+  }
+  return (
+    <div className="btn-group quantity" role="group">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        onClick={handleDecrement}
+      >
+        -
+      </button>
+      {/* {count} */}
+      <p className="quantity__count">{count}</p>
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        onClick={handleIncrement}
+      >
+        +
+      </button>
+    </div>
+  )
+}
+
 export default function ProductPage() {
   return (
     <div className={productPageContainer}>
@@ -178,13 +236,16 @@ export default function ProductPage() {
         <div className="product">
           <h1 className="product__title">Kinetic Light Blue Green Earrings</h1>
           <p className="product__price">$ 27.99</p>
+
           <p className="product__size">Size</p>
           <select className="form-select" aria-label="Default select example">
             {/* <option selected>Size</option> */}
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">15*15 cm</option>
+            <option value="2">30*30 cm</option>
+            <option value="3">100*100 cm</option>
           </select>
+          <p className="product__quantity">Quantity</p>
+          <Counter />
 
           {/* <div class="input-group mb-3">
             <span class="input-group-text">-</span>
