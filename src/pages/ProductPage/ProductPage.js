@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import Carousel from 'react-multi-carousel'
 import Cart from '../../components/Cart'
+import { setCartProduct } from '../../redux/reducers/cartReducer'
 
 const productPageContainer = css`
   font-family: Baskerville;
