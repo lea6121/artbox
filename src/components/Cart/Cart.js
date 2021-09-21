@@ -352,7 +352,7 @@ export default function Cart() {
           {/* <a href="./#/cart">
             <button className="view-cart-btn">VIEW CART</button>
           </a> */}
-          <a href="./#/cart">
+          <a href="./#/checkout">
             <button className="checkout-btn">CHECKOUT</button>
           </a>
         </nav>

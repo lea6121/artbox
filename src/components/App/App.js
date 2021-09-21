@@ -13,7 +13,7 @@ import ProductsPage from '../../pages/ProductsPage'
 import ProductPage from '../../pages/ProductPage'
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
-import CartPage from '../../pages/CartPage'
+import CheckoutPage from '../../pages/CheckoutPage'
 
 import { getAuthToken } from '../../utils'
 import { setUser, getMe } from '../../redux/reducers/userReducer'
@@ -64,8 +64,8 @@ function App() {
           <Route path="/register">
             <RegisterPage />
           </Route>
-          <Route path="/cart">
-            <CartPage />
+          <Route path="/checkout">
+            <CheckoutPage />
           </Route>
         </Switch>
         <Footer />

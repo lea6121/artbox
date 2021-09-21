@@ -59,8 +59,7 @@ const loginPageContainer = css`
       font-size: 18px;
 
       &:hover {
-        ${'' /* transform: scale(1.1); */}
-        border: 1px solid rgba(0,0,0,0.9)
+        border: 1px solid rgba(0, 0, 0, 0.9);
       }
     }
 
@@ -116,14 +115,13 @@ const loginPageContainer = css`
         height: 20px;
         border: none;
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-        padding: 5px 10px;
+        padding: 15px 5px;
         outline: none;
       }
 
       .login-form > span {
-        font-size: 18px;
+        font-size: 16px;
         color: red;
-        font-weight: 600;
       }
 
       .login-submit {
@@ -156,14 +154,39 @@ export default function LoginPage() {
       [e.target.name]: e.target.value
     })
   }
+  const [errors, setErrors] = useState('')
+  const { emailMsg, passwordMsg } = errors
   const history = useHistory()
   const dispatch = useDispatch()
   const isLoadingMsg = useSelector((store) => store.users.isLoading)
   const errorMsg = useSelector((store) => store.users.loginError)
 
+  function formValidation() {
+    let errors = {}
+    let formIsValid = true
+
+    // 信箱驗證
+    const isEmail = /^([\w]+)(.[\w]+)*@([\w]+)(.[\w]{2,3}){1,2}$/
+
+    if (!isEmail.test(email)) {
+      formIsValid = false
+      errors['emailMsg'] = 'Please enter your email.'
+    }
+
+    if (password.trim() === '' || password.length < 8) {
+      formIsValid = false
+      errors['passwordMsg'] = 'Please enter your password.'
+    }
+
+    setErrors(errors)
+    return formIsValid
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(login({ email, password, history }))
+    if (formValidation()) {
+      dispatch(login({ email, password, history }))
+    }
   }
 
   const [showLoginForm, setShowLoginForm] = useState(false)
@@ -176,49 +199,6 @@ export default function LoginPage() {
   //     dispatch(setLoginError(null))
   //   }
   // }, [dispatch])
-
-  const LoginForm = () => (
-    <div className="login-container">
-      <form onSubmit={handleSubmit}>
-        <div className="login-form">
-          Email
-          <br />
-          <input
-            className="login-input"
-            type="text"
-            name="email"
-            value={email}
-            onChange={(e) => updateFormData(e)}
-            required
-          />
-          <br />
-        </div>
-        <div className="login-form">
-          Password
-          <br />
-          <input
-            className="login-input"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => updateFormData(e)}
-            required
-          />
-          <br />
-          <span>{errorMsg}</span>
-        </div>
-        <div>
-          <input className="login-submit" type="submit" value="Log In" />
-        </div>
-        <div class="strike">
-          <span>or log in with</span>
-        </div>
-        <a href="#">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfNMnsU2cUDDcDoi_Uz9Y1v-3_WviVMLM1TrroFFHJtaqiqS2yXFHNNqWHXE_yWUvP6E&usqp=CAU" />
-        </a>
-      </form>
-    </div>
-  )
 
   return (
     <div className={loginPageContainer}>
@@ -233,7 +213,45 @@ export default function LoginPage() {
         </p>
 
         {showLoginForm ? (
-          <LoginForm />
+          <div className="login-container">
+            <form onSubmit={handleSubmit}>
+              <div className="login-form">
+                Email
+                <br />
+                <input
+                  className="login-input"
+                  type="text"
+                  name="email"
+                  value={email}
+                  onChange={(e) => updateFormData(e)}
+                />
+                <br />
+                <span>{emailMsg}</span>
+              </div>
+              <div className="login-form">
+                Password
+                <br />
+                <input
+                  className="login-input"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => updateFormData(e)}
+                />
+                <br />
+                <span>{passwordMsg}</span>
+              </div>
+              <div>
+                <input className="login-submit" type="submit" value="Log In" />
+              </div>
+              <div class="strike">
+                <span>or log in with</span>
+              </div>
+              <a href="#">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfNMnsU2cUDDcDoi_Uz9Y1v-3_WviVMLM1TrroFFHJtaqiqS2yXFHNNqWHXE_yWUvP6E&usqp=CAU" />
+              </a>
+            </form>
+          </div>
         ) : (
           <>
             <button className="login-with-google">

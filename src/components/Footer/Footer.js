@@ -8,15 +8,16 @@ const footer = css`
     background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 26px 0;
+    letter-spacing: 0.05rem;
 
     &__content {
       margin: 0 auto;
-      font-size: 16px;
+      font-size: 18px;
       padding: 20px 30px 40px;
       display: flex;
       justify-content: space-evenly;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Gill Sans';
+      font-weight: 300;
       align-items: center;
 
       a {
@@ -120,7 +121,7 @@ export default function Footer() {
               </a>
             </nav>
           </div>
-          <div class="footer__copyright">
+          <div className="footer__copyright">
             The website is only for amateur project and not for commercial use.
             © 2021 By ArtBox
           </div>
