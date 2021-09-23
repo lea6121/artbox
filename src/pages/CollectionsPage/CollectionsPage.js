@@ -213,11 +213,11 @@ function Collection({ collection }) {
           />
         )}
 
-        <div class="collection__title">{collection.title}</div>
+        <div className="collection__title">{collection.title}</div>
         {collection.creators &&
           collection.creators.length !== 0 &&
           collection.creators.map((creator) => (
-            <div class="collection__artist">{creator.description}</div>
+            <div className="collection__artist">{creator.description}</div>
           ))}
       </a>
     </>

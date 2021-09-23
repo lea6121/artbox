@@ -303,14 +303,14 @@ export default function ShopPage() {
           <img src={bannerImages[2]} />
         </SliderCarousel>
 
-        {/* <div class="carousels">
-          <div class="slider">
-            <div class="slides">
+        {/* <div className="carousels">
+          <div className="slider">
+            <div className="slides">
               <input type="radio" name="radio-btn" id="radio1" />
               <input type="radio" name="radio-btn" id="radio2" />
               <input type="radio" name="radio-btn" id="radio3" />
 
-              <div class="slide first">
+              <div className="slide first">
                 <a href="#/shop/">
                   <img
                     src="https://cdn.shopify.com/s/files/1/2524/0922/files/1915.110_print_1728x.jpg?v=1622211081"
@@ -318,7 +318,7 @@ export default function ShopPage() {
                   />
                 </a>
               </div>
-              <div class="slide">
+              <div className="slide">
                 <a href="#/shop/">
                   <img
                     src="https://cdn.shopify.com/s/files/1/2524/0922/files/1950_cropped_1728x.jpg?v=1588016027"
@@ -326,7 +326,7 @@ export default function ShopPage() {
                   />
                 </a>
               </div>
-              <div class="slide">
+              <div className="slide">
                 <a href="./product.html?id=201902191242">
                   <img
                     src="https://cdn.shopify.com/s/files/1/2524/0922/files/1958.47_print_d6fd88b2-7342-4851-bcba-9d856ff2d0e3.jpg?v=1622209021"
@@ -335,17 +335,17 @@ export default function ShopPage() {
                 </a>
               </div>
 
-              <div class="navigation-auto">
-                <div class="auto-btn1"></div>
-                <div class="auto-btn2"></div>
-                <div class="auto-btn3"></div>
+              <div className="navigation-auto">
+                <div className="auto-btn1"></div>
+                <div className="auto-btn2"></div>
+                <div className="auto-btn3"></div>
               </div>
             </div>
 
-            <div class="navigation-manual">
-              <label for="radio1" class="manual-btn"></label>
-              <label for="radio2" class="manual-btn"></label>
-              <label for="radio3" class="manual-btn"></label>
+            <div className="navigation-manual">
+              <label for="radio1" className="manual-btn"></label>
+              <label for="radio2" className="manual-btn"></label>
+              <label for="radio3" className="manual-btn"></label>
             </div>
           </div>
         </div> */}
@@ -355,290 +355,290 @@ export default function ShopPage() {
         <div className="shop-container__category">
           <h1>ARTWORKS.</h1>
           <a href="./#/products">shop now</a>
-          <i class="fas fa-chevron-right"></i>
+          <i className="fas fa-chevron-right"></i>
         </div>
 
         <Carousel responsive={responsive}>
-          <div class="item">
-            <img class="item__image" src={images[0]} />
+          <div className="item">
+            <img className="item__image" src={images[0]} />
             <div className="item__cover">
               <a href="#/product">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[1]} />
+          <div className="item">
+            <img className="item__image" src={images[1]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
+          <div className="item">
             <img className="item__image" src={images[2]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[3]} />
+          <div className="item">
+            <img className="item__image" src={images[3]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[0]} />
+          <div className="item">
+            <img className="item__image" src={images[0]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
         </Carousel>
 
         <div className="shop-container__category">
           <h1>EXCLUSIVES.</h1>
           <a href="./#/exclusives">shop now</a>
-          <i class="fas fa-chevron-right"></i>
+          <i className="fas fa-chevron-right"></i>
         </div>
         <Carousel responsive={responsive}>
-          <div class="item">
-            <img class="item__image" src={images[4]} />
+          <div className="item">
+            <img className="item__image" src={images[4]} />
             <div className="item__cover">
               <a href="#/product">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[5]} />
+          <div className="item">
+            <img className="item__image" src={images[5]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
+          <div className="item">
             <img className="item__image" src={images[6]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[7]} />
+          <div className="item">
+            <img className="item__image" src={images[7]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[4]} />
+          <div className="item">
+            <img className="item__image" src={images[4]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
         </Carousel>
 
         <div className="shop-container__category">
           <h1>ACCESSORIES & APPAREL.</h1>
           <a href="./#/accessories">shop now</a>
-          <i class="fas fa-chevron-right"></i>
+          <i className="fas fa-chevron-right"></i>
         </div>
 
         <Carousel responsive={responsive}>
-          <div class="item">
-            <img class="item__image" src={images[0]} />
+          <div className="item">
+            <img className="item__image" src={images[0]} />
             <div className="item__cover">
               <a href="#/product">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[1]} />
+          <div className="item">
+            <img className="item__image" src={images[1]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
+          <div className="item">
             <img className="item__image" src={images[2]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[3]} />
+          <div className="item">
+            <img className="item__image" src={images[3]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[0]} />
+          <div className="item">
+            <img className="item__image" src={images[0]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
         </Carousel>
 
         <div className="shop-container__category">
           <h1>BOOKS.</h1>
           <a href="./#/books">shop now</a>
-          <i class="fas fa-chevron-right"></i>
+          <i className="fas fa-chevron-right"></i>
         </div>
 
         <Carousel responsive={responsive}>
-          <div class="item">
-            <img class="item__image" src={images[4]} />
+          <div className="item">
+            <img className="item__image" src={images[4]} />
             <div className="item__cover">
               <a href="#/product">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[5]} />
+          <div className="item">
+            <img className="item__image" src={images[5]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
+          <div className="item">
             <img className="item__image" src={images[6]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[7]} />
+          <div className="item">
+            <img className="item__image" src={images[7]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[4]} />
+          <div className="item">
+            <img className="item__image" src={images[4]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
-              <button class="add-to-cart-btn">ADD TO CART</button>
+              <button className="add-to-cart-btn">ADD TO CART</button>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
         </Carousel>
       </div>
 
       <button
         type="button"
-        class="btn btn-dark btn-floating btn-lg"
+        className="btn btn-dark btn-floating btn-lg"
         id="btn-back-to-top"
         onClick={onclick}
       >
-        <i class="fas fa-angle-up"></i>
+        <i className="fas fa-angle-up"></i>
       </button>
 
       <Cart />

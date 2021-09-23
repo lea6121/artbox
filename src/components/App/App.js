@@ -16,24 +16,35 @@ import RegisterPage from '../../pages/RegisterPage'
 import CheckoutPage from '../../pages/CheckoutPage'
 
 import { getAuthToken } from '../../utils'
-import { setUser, getMe } from '../../redux/reducers/userReducer'
+import { setUser, getUser } from '../../redux/reducers/userReducer'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const root = css`
   margin: 0 auto;
   max-width: 100vw;
   position: relative;
+  height: 100vh;
 `
+const auth = getAuth()
 
 function App() {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.users.user)
 
-  useEffect(() => {
-    // 有 token 才 call api
-    if (getAuthToken()) {
-      dispatch(getMe())
+  // useEffect(() => {
+  //   // 有 token 才 call api
+  //   if (getAuthToken()) {
+  //     dispatch(getUser())
+  //   }
+  // }, [])
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      dispatch(setUser(user.uid))
+    } else {
+      console.log('has log out')
     }
-  }, [dispatch])
+  })
+  const user = useSelector((state) => state.users.user)
 
   return (
     <div className={root} value={{ user, setUser }}>

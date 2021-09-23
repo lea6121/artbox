@@ -205,7 +205,7 @@ function Counter() {
     <div className="btn-group quantity" role="group">
       <button
         type="button"
-        class="btn btn-outline-dark"
+        className="btn btn-outline-dark"
         onClick={handleDecrement}
       >
         -
@@ -214,7 +214,7 @@ function Counter() {
       <p className="quantity__count">{count}</p>
       <button
         type="button"
-        class="btn btn-outline-dark"
+        className="btn btn-outline-dark"
         onClick={handleIncrement}
       >
         +
@@ -248,14 +248,14 @@ export default function ProductPage() {
           <p className="product__quantity">Quantity</p>
           <Counter />
 
-          {/* <div class="input-group mb-3">
-            <span class="input-group-text">-</span>
+          {/* <div className="input-group mb-3">
+            <span className="input-group-text">-</span>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               aria-label="Amount (to the nearest dollar)"
             />
-            <span class="input-group-text">+</span>
+            <span className="input-group-text">+</span>
           </div> */}
 
           <div className="product__description">
@@ -269,64 +269,64 @@ export default function ProductPage() {
       </div>
 
       <div className="shop-container">
-        <h1 className="title">you may also like...</h1>
+        <h1 className="title">See More...</h1>
 
         <Carousel responsive={responsive}>
-          <div class="item">
-            <img class="item__image" src={images[4]} />
+          <div className="item">
+            <img className="item__image" src={images[4]} />
             <div className="item__cover">
               <a href="#/product">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[5]} />
+          <div className="item">
+            <img className="item__image" src={images[5]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
+          <div className="item">
             <img className="item__image" src={images[6]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[7]} />
+          <div className="item">
+            <img className="item__image" src={images[7]} />
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
 
-          <div class="item">
-            <img class="item__image" src={images[4]} />
+          <div className="item">
+            <img className="item__image" src={images[4]} />
 
             <div className="item__cover">
               <a href="#">
-                <button class="quick-view-btn">QUICK VIEW</button>
+                <button className="quick-view-btn">QUICK VIEW</button>
               </a>
             </div>
-            <div class="item__name">I'M AN ARTWORK</div>
-            <div class="item__price">TWD. 590</div>
+            <div className="item__name">I'M AN ARTWORK</div>
+            <div className="item__price">TWD. 590</div>
           </div>
         </Carousel>
       </div>

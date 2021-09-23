@@ -3,7 +3,6 @@ import { css } from '@emotion/css'
 const footer = css`
   .footer {
     width: 100vw;
-    bottom: 0;
     margin: 0 auto;
     background: rgba(0, 0, 0, 0.9);
     color: white;
@@ -54,8 +53,8 @@ const footer = css`
 `
 export default function Footer() {
   return (
-    <>
-      <footer className={footer}>
+    <div className={footer}>
+      <footer>
         <div className="footer">
           <div className="footer__content">
             <ul>
@@ -127,6 +126,6 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   )
 }

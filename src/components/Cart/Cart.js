@@ -1,6 +1,7 @@
 import { css } from '@emotion/css'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const cartContainer = css`
   position: relative;
@@ -165,6 +166,13 @@ const menuOverlay = css`
       padding: 18px;
       font-family: Baskerville;
       font-size: 16px;
+
+      a {
+        color: unset;
+        &:hover {
+          color: unset;
+        }
+      }
     }
 
     .view-cart-btn {
@@ -195,7 +203,15 @@ export default function Cart() {
   const dispatch = useDispatch()
   const cartItemCounter = useSelector((store) => store.collections.collections)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const user = useSelector((store) => store.users.user)
+  const history = useHistory()
 
+  const handleCheckout = () => {
+    if (!user) {
+      alert('Please log in first.')
+      history.push('/login')
+    }
+  }
   return (
     <div className={cartContainer}>
       {isMenuOpen && <div className={`${mask}`}></div>}
@@ -352,9 +368,10 @@ export default function Cart() {
           {/* <a href="./#/cart">
             <button className="view-cart-btn">VIEW CART</button>
           </a> */}
-          <a href="./#/checkout">
-            <button className="checkout-btn">CHECKOUT</button>
-          </a>
+
+          <button className="checkout-btn" onClick={handleCheckout}>
+            <a href="./#/checkout">CHECKOUT</a>
+          </button>
         </nav>
       </div>
     </div>

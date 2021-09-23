@@ -2,11 +2,15 @@ import { css } from '@emotion/css'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import Loading from '../../components/Loading'
-import { login, setLoginError } from '../../redux/reducers/userReducer'
+import {
+  loginWithGoogle,
+  loginWithEmail,
+  setLoginError
+} from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const loginPageContainer = css`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   position: relative;
   text-align: center;
@@ -102,6 +106,11 @@ const loginPageContainer = css`
         width: 40px;
       }
 
+      button {
+        border: none;
+        background: transparent;
+      }
+
       .login-form {
         font-size: 18px;
         padding: 10px 0px;
@@ -160,7 +169,10 @@ export default function LoginPage() {
   const dispatch = useDispatch()
   const isLoadingMsg = useSelector((store) => store.users.isLoading)
   const errorMsg = useSelector((store) => store.users.loginError)
-
+  const user = useSelector((state) => state.users.user)
+  if (user !== null) {
+    history.push('/')
+  }
   function formValidation() {
     let errors = {}
     let formIsValid = true
@@ -175,7 +187,8 @@ export default function LoginPage() {
 
     if (password.trim() === '' || password.length < 8) {
       formIsValid = false
-      errors['passwordMsg'] = 'Please enter your password.'
+      errors['passwordMsg'] =
+        'Please enter your password. Passwords must be at least 8 characters long.'
     }
 
     setErrors(errors)
@@ -185,8 +198,12 @@ export default function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (formValidation()) {
-      dispatch(login({ email, password, history }))
+      dispatch(loginWithEmail({ email, password, history }))
     }
+  }
+
+  const handleGoogle = () => {
+    dispatch(loginWithGoogle({ history }))
   }
 
   const [showLoginForm, setShowLoginForm] = useState(false)
@@ -240,21 +257,27 @@ export default function LoginPage() {
                 />
                 <br />
                 <span>{passwordMsg}</span>
+                <span>{errorMsg}</span>
               </div>
               <div>
-                <input className="login-submit" type="submit" value="Log In" />
+                <input
+                  className="login-submit"
+                  type="submit"
+                  value="Log In"
+                  onClick={handleSubmit}
+                />
               </div>
               <div class="strike">
                 <span>or log in with</span>
               </div>
-              <a href="#">
+              <button onClick={handleGoogle}>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfNMnsU2cUDDcDoi_Uz9Y1v-3_WviVMLM1TrroFFHJtaqiqS2yXFHNNqWHXE_yWUvP6E&usqp=CAU" />
-              </a>
+              </button>
             </form>
           </div>
         ) : (
           <>
-            <button className="login-with-google">
+            <button className="login-with-google" onClick={handleGoogle}>
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfNMnsU2cUDDcDoi_Uz9Y1v-3_WviVMLM1TrroFFHJtaqiqS2yXFHNNqWHXE_yWUvP6E&usqp=CAU" />
               Log in with Google
             </button>

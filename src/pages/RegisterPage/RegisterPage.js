@@ -2,11 +2,15 @@ import { css } from '@emotion/css'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import Loading from '../../components/Loading'
-import { register, setregisterError } from '../../redux/reducers/userReducer'
+import {
+  register,
+  loginWithGoogle,
+  setregisterError
+} from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const registerPageContainer = css`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   position: relative;
   text-align: center;
@@ -104,6 +108,10 @@ const registerPageContainer = css`
         width: 40px;
       }
 
+      button {
+        border: none;
+        background: transparent;
+      }
       .register-form {
         font-size: 18px;
         padding: 10px 0px;
@@ -162,7 +170,16 @@ export default function RegisterPage() {
   const history = useHistory()
   const dispatch = useDispatch()
   // const isLoadingMsg = useSelector((store) => store.users.isLoading)
-  // const errorMsg = useSelector((store) => store.users.registerError)
+  const errorMsg = useSelector((store) => store.users.registerError)
+  const user = useSelector((state) => state.users.user)
+
+  if (user !== null) {
+    history.push('/')
+  }
+  const handleGoogle = () => {
+    dispatch(loginWithGoogle({ history }))
+  }
+
   function formValidation() {
     let errors = {}
     let formIsValid = true
@@ -243,25 +260,27 @@ export default function RegisterPage() {
                 />
                 <br />
                 <span>{passwordMsg}</span>
+                <span>{errorMsg}</span>
               </div>
               <div>
                 <input
                   className="register-submit"
                   type="submit"
                   value="Sign Up"
+                  onClick={handleSubmit}
                 />
               </div>
               <div class="strike">
                 <span>or sign up with</span>
               </div>
-              <a href="#">
+              <button onClick={handleGoogle}>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfNMnsU2cUDDcDoi_Uz9Y1v-3_WviVMLM1TrroFFHJtaqiqS2yXFHNNqWHXE_yWUvP6E&usqp=CAU" />
-              </a>
+              </button>
             </form>
           </div>
         ) : (
           <>
-            <button className="register-with-google">
+            <button className="register-with-google" onClick={handleGoogle}>
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfNMnsU2cUDDcDoi_Uz9Y1v-3_WviVMLM1TrroFFHJtaqiqS2yXFHNNqWHXE_yWUvP6E&usqp=CAU" />
               Sign up with Google
             </button>

@@ -138,7 +138,7 @@ export default function HomePage() {
         <video
           src={trailer}
           poster="https://uploads4.wikiart.org/images/claude-monet/the-sea-at-pourville.jpg!Large.jpg"
-          preload
+          preload="true"
           controls
         ></video>
       </div>
@@ -156,25 +156,25 @@ export default function HomePage() {
             </div>
           </a>
 
-          <a href="./#/shop?type=tickets" class="contents__tag">
-            <div class="content__card">
+          <a href="./#/shop?type=tickets" className="contents__tag">
+            <div className="content__card">
               <img
-                class="content__photo"
+                className="content__photo"
                 src="http://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/5992729/0/637630960939200000?v=1"
                 alt="item"
               />
-              <div class="content__mask">buy exhibition tickets.</div>
+              <div className="content__mask">buy exhibition tickets.</div>
             </div>
           </a>
 
-          <a href="./#/shop" class="contents__tag">
-            <div class="content__card">
+          <a href="./#/shop" className="contents__tag">
+            <div className="content__card">
               <img
-                class="content__photo"
+                className="content__photo"
                 src="https://live.staticflickr.com/1567/23650403730_3b766eec9f_b.jpg"
                 alt="content"
               />
-              <div class="content__mask">shop online store.</div>
+              <div className="content__mask">shop online store.</div>
             </div>
           </a>
 

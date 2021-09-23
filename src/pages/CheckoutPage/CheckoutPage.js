@@ -544,11 +544,8 @@ export default function CheckoutPage() {
   }
 
   const handleStepDecrement = () => {
-    if (step === 3) {
-      setStep((prevStep) => prevStep - 1)
-    } else if (step === 2 && formValidation()) {
-      setStep((prevStep) => prevStep - 1)
-    }
+    setErrors('')
+    setStep((prevStep) => prevStep - 1)
   }
 
   const CartContent = () => (
@@ -669,7 +666,7 @@ export default function CheckoutPage() {
 
       <div className="confirm-btns">
         <button className="previous-btn" onClick={handleStepDecrement}>
-          <i class="fas fa-chevron-left"></i>
+          <i className="fas fa-chevron-left"></i>
           Previous
         </button>
 
@@ -678,7 +675,7 @@ export default function CheckoutPage() {
           className="next-btn"
           onClick={handleStepIncrement}
         >
-          Submit orders<i class="fas fa-chevron-right"></i>
+          Submit orders<i className="fas fa-chevron-right"></i>
         </button>
       </div>
     </div>
@@ -747,7 +744,10 @@ export default function CheckoutPage() {
                         onChange={(e) => updateFormData(e)}
                         id="paymentRadio1"
                       />
-                      <label className="form-check-label" for="paymentRadio1">
+                      <label
+                        className="form-check-label"
+                        htmlFor="paymentRadio1"
+                      >
                         Collect on delivery
                       </label>
                       <span className="checkout__error">{paymentTypeMsg}</span>
@@ -817,7 +817,7 @@ export default function CheckoutPage() {
 
               <div className="checkout-btns">
                 <button className="previous-btn" onClick={handleStepDecrement}>
-                  <i class="fas fa-chevron-left"></i>
+                  <i className="fas fa-chevron-left"></i>
                   Previous
                 </button>
 
@@ -826,7 +826,7 @@ export default function CheckoutPage() {
                   className="next-btn"
                   onClick={handleStepIncrement}
                 >
-                  Next <i class="fas fa-chevron-right"></i>
+                  Next <i className="fas fa-chevron-right"></i>
                 </button>
               </div>
             </form>
@@ -851,7 +851,7 @@ export default function CheckoutPage() {
           {/* <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/thank-you-for-your-order-design-template-d56ea122db50ee6c2fe9cef22da510a2_screen.jpg?ts=1608779634" /> */}
           {/* <img src="https://brandlokstore.com/store/wp-content/uploads/2021/01/dffs.png" /> */}
           <h1>
-            <i class="fas fa-check-circle"></i>
+            <i className="fas fa-check-circle"></i>
             {/* <img
               src="https://i.pinimg.com/originals/70/a5/52/70a552e8e955049c8587b2d7606cd6a6.gif"
               loop="false"

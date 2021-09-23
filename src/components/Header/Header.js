@@ -3,6 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../../redux/reducers/userReducer'
 import { setAuthToken } from '../../utils'
+import { logoutGoogle } from '../../redux/reducers/userReducer'
 
 const header = css`
   ${'' /* letter-spacing: 0.1rem; */}
@@ -53,7 +54,7 @@ const header = css`
       a {
         display: inline-block;
         margin: 0 8px;
-        color: black;
+        color: rgba(0, 0, 0, 0.9);
         text-decoration: none;
         font-size: 18px;
         text-align: center;
@@ -61,8 +62,7 @@ const header = css`
         transition: all 0.6s ease-in-out;
 
         &:hover {
-          text-decoration: underline;
-          transform: scale(1.01);
+          color: rgba(0, 0, 0, 0.6);
         }
       }
 
@@ -99,6 +99,13 @@ const header = css`
           border-bottom: 1px solid rgba(0, 0, 0, 0.2);
           margin: 0;
         }
+
+        .logout-btn {
+          padding: 10px;
+          &:hover {
+            color: rgba(0, 0, 0, 0.6);
+          }
+        }
       }
     }
 
@@ -117,31 +124,31 @@ export default function Header() {
   const dispatch = useDispatch()
   const location = useLocation()
   const history = useHistory()
-  // const user = useSelector((store) => store.users.user)
+  const user = useSelector((store) => store.users.user)
 
-  // const handleLogout = () => {
-  //   const logoutMsg = window.confirm('確認登出嗎？')
-  //   if (logoutMsg) {
-  //     setAuthToken('')
-  //     dispatch(setUser(null))
-  //     if (location.pathname !== '/') {
-  //       history.push('/')
-  //     }
-  //   }
-  // }
+  const handleLogout = () => {
+    const logoutMsg = window.confirm('確認登出嗎？')
+
+    if (logoutMsg) {
+      dispatch(logoutGoogle({ history }))
+      setAuthToken('')
+      dispatch(setUser(null))
+      history.push('/')
+    }
+  }
 
   return (
     <div className={header}>
       <div className="header-top">
         <div className="tags">
-          <a href="./">
+          <a href="./#">
             <img
               id="site-logo"
               src="https://64.media.tumblr.com/add0f153b2b9d647ddd2773b8612fe3d/tumblr_ozqqsgf3Bl1u0ccv7o1_1280.gifv"
               alt="site-logo"
             />
           </a>
-          <a href="./" className="site-name">
+          <a href="./#" className="site-name">
             ArtBox
           </a>
         </div>
@@ -150,7 +157,6 @@ export default function Header() {
             <i className="fas fa-images"></i>
             <div>Collections</div>
           </a>
-
           {/* <a href="./#/shop?type=tickets">
             <img
               className="icon icon__ticket"
@@ -159,24 +165,34 @@ export default function Header() {
             />
             <div>buy ticket</div>
           </a> */}
-
           <a href="./#/shop">
             <i className="fas fa-store"></i>
             <div>Shop</div>
           </a>
-          <a href="./#/login">
-            <div className="drop">
-              <i className="fas fa-user"></i>
-              <button>Log In</button>
-              <div className="dropbox">
-                {/* <a href="/#/login">LOG IN</a> */}
-                {/* <a href="./#/user?">WISHLIST</a> */}
-                {/* <a href="./#/user?">訂單查詢</a> */}
-                <a href="./#/user">BACKSTAGE</a>
-                <a href="./#/user">LOG OUT</a>
+          {!user && (
+            <a href="./#/login">
+              <div className="drop">
+                <i className="fas fa-user"></i>
+                <button>Log In</button>
               </div>
-            </div>
-          </a>
+            </a>
+          )}
+          {user && (
+            <a href="./#/user">
+              <div className="drop">
+                <i className="fas fa-user"></i>
+                <button>User</button>
+                <div className="dropbox">
+                  <a href="./#/user?">WISHLIST</a>
+                  <a href="./#/user?">訂單查詢</a>
+                  {/* <a href="./#/user">BACKSTAGE</a> */}
+                  <button className="logout-btn" onClick={handleLogout}>
+                    LOG OUT
+                  </button>
+                </div>
+              </div>
+            </a>
+          )}
         </nav>
       </div>
     </div>
