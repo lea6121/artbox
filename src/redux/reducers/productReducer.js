@@ -1,11 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import { app } from '../../firebaseConfig'
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  query,
+  equalTo,
+  onValue,
+  orderByChild
+} from 'firebase/database'
 // import { getProducts as getProductsAPI } from '../../WebAPI'
 
 const initialState = {
   isLoadingProducts: false,
   products: [],
-  totalProductsPages: 0
+  product: []
 }
 
 export const productReducer = createSlice({
@@ -20,14 +30,32 @@ export const productReducer = createSlice({
       state.products = action.payload
     },
 
-    setTotalProductsPages: (state, action) => {
-      state.totalProductsPages = action.payload
+    setProduct: (state, action) => {
+      state.product = action.payload
     }
   }
 })
 
-export const { setIsLoadingProducts, setProducts, setTotalProductsPages } =
+export const { setIsLoadingProducts, setProducts, setProduct } =
   productReducer.actions
+
+export const getProducts = () => (dispatch) => {
+  const dbRef = ref(getDatabase())
+  dispatch(setIsLoadingProducts(true))
+  get(child(dbRef, 'products'))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val())
+        dispatch(setIsLoadingProducts(false))
+        dispatch(setProducts(snapshot.val()))
+      } else {
+        console.log('No data available')
+      }
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
 
 // export const getProducts = () => (dispatch) => {
 //   dispatch(setIsLoadingProducts(true))
@@ -40,6 +68,44 @@ export const { setIsLoadingProducts, setProducts, setTotalProductsPages } =
 //     dispatch(setProducts(data.data))
 //   })
 // }
+
+export const getProduct = (id, category) => (dispatch) => {
+  dispatch(setIsLoadingProducts(true))
+  const dbRef = getDatabase()
+  console.log(id, category)
+  const product = query(
+    ref(dbRef, `products/${category}`),
+    orderByChild('id'),
+    equalTo(Number(id))
+  )
+
+  onValue(product, (snapshot) => {
+    const data = snapshot.val()
+    let arr = []
+    console.log('data', data)
+
+    //有用 orderByChild 時要用 for 迴圈取資料
+    snapshot.forEach(function (item) {
+      arr.push(item.val())
+    })
+    console.log('item', arr)
+    dispatch(setIsLoadingProducts(false))
+    dispatch(setProduct(arr))
+  })
+  // get(child(dbRef, 'products'))
+  //   .then((snapshot) => {
+  //     if (snapshot.exists()) {
+  //       console.log(snapshot.val())
+  //       dispatch(setIsLoadingProducts(false))
+  //       dispatch(setProducts(snapshot.val()))
+  //     } else {
+  //       console.log('No data available')
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error(error)
+  //   })
+}
 
 // export const getPost = (id) => (dispatch) => {
 //   dispatch(setIsLoadingPost(true))

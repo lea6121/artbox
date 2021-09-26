@@ -6,12 +6,8 @@ import Carousel from 'react-multi-carousel'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import Cart from '../../components/Cart'
-// import {
-//   getCurrentViewCollections,
-//   getSpecificCollections,
-//   searchCollections
-// } from '../../redux/reducers/collectionReducer'
-// import { loading } from '../../components/App/App'
+import Loading from '../../components/Loading'
+import { getProducts } from '../../redux/reducers/productReducer'
 
 const shopPageContainer = css`
   width: 100vw;
@@ -285,7 +281,7 @@ export default function ShopPage() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // window.scrollTo(0, 0)
+    dispatch(getProducts())
   }, [])
 
   return (

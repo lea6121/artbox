@@ -1,10 +1,14 @@
 import { css } from '@emotion/css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import Carousel from 'react-multi-carousel'
 import Cart from '../../components/Cart'
+import Loading from '../../components/Loading'
 import { setCartProduct } from '../../redux/reducers/cartReducer'
+import { getProduct } from '../../redux/reducers/productReducer'
 
 const productPageContainer = css`
   font-family: Baskerville;
@@ -224,31 +228,52 @@ function Counter() {
 }
 
 export default function ProductPage() {
+  const dispatch = useDispatch()
+  const product = useSelector((store) => store.products.product)
+  const params = useParams()
+  const isLoadingProductsMsg = useSelector(
+    (store) => store.products.isLoadingProducts
+  )
+
+  useEffect(() => {
+    dispatch(getProduct(params.id, params.category))
+    window.scrollTo(0, 0)
+  }, [params.id, params.category, dispatch])
+
+  if (product) {
+    console.log(product['3'])
+  }
+
   return (
     <div className={productPageContainer}>
-      <div className={productContainer}>
-        <SliderCarousel showArrows={false} showStatus={false}>
-          <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
+      {isLoadingProductsMsg && <Loading></Loading>}
+      {product.length !== 0 && (
+        <div className={productContainer}>
+          <SliderCarousel showArrows={false} showStatus={false}>
+            {/* {product.images.map((images) => (
+              <img src={images} />
+            ))} */}
+            {/* <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
           <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779" />
           <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
-          <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" />
-        </SliderCarousel>
+          <img src="https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203" /> */}
+          </SliderCarousel>
 
-        <div className="product">
-          <h1 className="product__title">Kinetic Light Blue Green Earrings</h1>
-          <p className="product__price">$ 27.99</p>
+          <div className="product">
+            <h1 className="product__title">{product[0].title}</h1>
+            <p className="product__price">{product[0].price}</p>
 
-          <p className="product__size">Size</p>
-          <select className="form-select" aria-label="Default select example">
-            {/* <option selected>Size</option> */}
-            <option value="1">15*15 cm</option>
-            <option value="2">30*30 cm</option>
-            <option value="3">100*100 cm</option>
-          </select>
-          <p className="product__quantity">Quantity</p>
-          <Counter />
+            <p className="product__size">Size</p>
+            <select className="form-select" aria-label="Default select example">
+              {/* <option selected>Size</option> */}
+              <option value="1">15*15 cm</option>
+              <option value="2">30*30 cm</option>
+              <option value="3">100*100 cm</option>
+            </select>
+            <p className="product__quantity">Quantity</p>
+            <Counter />
 
-          {/* <div className="input-group mb-3">
+            {/* <div className="input-group mb-3">
             <span className="input-group-text">-</span>
             <input
               type="text"
@@ -258,15 +283,11 @@ export default function ProductPage() {
             <span className="input-group-text">+</span>
           </div> */}
 
-          <div className="product__description">
-            Discover miniature modernist art for your ears! In a truly unique
-            combination, translucent dyed resin is suspended on stainless steel,
-            placing the focus of these feather-weight earrings on the beauty of
-            balance and color. Handmade in the USA.
+            <div className="product__description">{product[0].description}</div>
+            <button className="product__add-to-cart">ADD TO CART</button>
           </div>
-          <button className="product__add-to-cart">ADD TO CART</button>
         </div>
-      </div>
+      )}
 
       <div className="shop-container">
         <h1 className="title">See More...</h1>
