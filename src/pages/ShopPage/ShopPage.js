@@ -1,13 +1,13 @@
 import { css } from '@emotion/css'
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import Carousel from 'react-multi-carousel'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
-import { getProducts } from '../../redux/reducers/productReducer'
+import { getAllProducts } from '../../redux/reducers/productReducer'
 
 const shopPageContainer = css`
   width: 100vw;
@@ -77,12 +77,10 @@ const shopPageContainer = css`
         width: 100%;
         height: 400px;
         padding-bottom: 10px;
-        ${'' /* border: 1px solid black; */}
       }
 
       div {
         padding: 3px 10px;
-        ${'' /* height: 50px; */}
         font-size: 16px;
       }
 
@@ -96,6 +94,15 @@ const shopPageContainer = css`
         left: 0;
         width: 100%;
         height: 100%;
+
+        .fa-heart {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 24px;
+          color: transparent;
+          transition: 200ms ease-in;
+        }
 
         .quick-view-btn {
           position: absolute;
@@ -123,6 +130,11 @@ const shopPageContainer = css`
         }
 
         &:hover {
+          .fa-heart {
+            color: rgba(0, 0, 0, 0.8);
+            cursor: pointer;
+          }
+
           .quick-view-btn {
             color: black;
             background: rgba(255, 255, 255, 0.9);
@@ -164,48 +176,56 @@ const bannerImages = [
   'https://cdn.shopify.com/s/files/1/2524/0922/files/1958.47_print_d6fd88b2-7342-4851-bcba-9d856ff2d0e3.jpg?v=1622209021'
 ]
 
-// const images = [
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/65050_2_640x864.jpg?v=1620738968',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285929_1_1280x576.jpg?v=1612930379',
-//   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059'
-// ]
-
 function Product({ product }) {
+  const history = useHistory()
+  const user = useSelector((store) => store.users.user)
+  const [isActive, setActive] = useState('false')
+
+  const handleToggle = () => {
+    if (user) {
+      setActive(!isActive)
+    } else {
+      alert('Please log in first.')
+      history.push('/login')
+    }
+  }
   return (
-    <div className="item">
-      <img className="item__image" src={product.images[0]} />
-      <div className="item__cover">
-        <a href={`/#/product/${product.category}/${product.id}`}>
-          <button className="quick-view-btn">QUICK VIEW</button>
-        </a>
-        <button className="add-to-cart-btn">ADD TO CART</button>
+    <>
+      <div className="item">
+        <img className="item__image" src={product.images[0]} />
+        <div className="item__cover">
+          <i
+            className={isActive ? 'far fa-heart' : 'fas fa-heart'}
+            onClick={handleToggle}
+          ></i>
+          <a href={`/#/product/${product.category}/${product.id}`}>
+            <button className="quick-view-btn">QUICK VIEW</button>
+          </a>
+          <button className="add-to-cart-btn">ADD TO CART</button>
+        </div>
+        <div className="item__name">{product.title}</div>
+        <div className="item__price">{product.price}</div>
       </div>
-      <div className="item__name">{product.title}</div>
-      <div className="item__price">{product.price}</div>
-    </div>
+    </>
   )
 }
 
 export default function ShopPage() {
   const dispatch = useDispatch()
-  const products = useSelector((store) => store.products.products)
+  const products = useSelector((store) => store.products.allProducts)
   const isLoadingProductsMsg = useSelector(
     (store) => store.products.isLoadingProducts
   )
 
   useEffect(() => {
-    dispatch(getProducts())
+    dispatch(getAllProducts())
     window.scrollTo(0, 0)
   }, [])
 
   return (
     <div className={shopPageContainer}>
       {isLoadingProductsMsg && <Loading />}
+
       <div className="shop-banner">
         <SliderCarousel
           showStatus={false}
@@ -221,76 +241,74 @@ export default function ShopPage() {
         </SliderCarousel>
       </div>
 
-      <div className="shop-container">
-        <div className="shop-container__category">
-          <h1>PRINTS.</h1>
-          <a href="./#/products">shop now</a>
-          <i className="fas fa-chevron-right"></i>
-        </div>
-
-        {products.prints && (
+      {products.length !== 0 && (
+        <div className="shop-container">
+          <div className="shop-container__category">
+            <h1>{products.prints[0].category.toUpperCase()}.</h1>
+            <a
+              href={`./#/products/${products.prints[0].category}`}
+              data-key={products.prints[0].category}
+            >
+              shop now
+            </a>
+            <i className="fas fa-chevron-right"></i>
+          </div>
           <Carousel responsive={responsive}>
             {products.prints.map((print) => (
               <Product key={print.id} product={print} />
             ))}
           </Carousel>
-        )}
-
-        <div className="shop-container__category">
-          <h1>BOOKS.</h1>
-          <a href="./#/exclusives">shop now</a>
-          <i className="fas fa-chevron-right"></i>
-        </div>
-        {products.books && (
+          <div className="shop-container__category">
+            <h1>{products.books[0].category.toUpperCase()}.</h1>
+            <a href={`./#/products/${products.books[0].category}`}>shop now</a>
+            <i className="fas fa-chevron-right"></i>
+          </div>
           <Carousel responsive={responsive}>
             {products.books.map((book) => (
               <Product key={book.id} product={book} />
             ))}
           </Carousel>
-        )}
-
-        <div className="shop-container__category">
-          <h1>ACCESSORIES.</h1>
-          <a href="./#/accessories">shop now</a>
-          <i className="fas fa-chevron-right"></i>
-        </div>
-
-        {products.accessories && (
+          <div className="shop-container__category">
+            <h1>{products.accessories[0].category.toUpperCase()}.</h1>
+            <a href={`./#/products/${products.accessories[0].category}`}>
+              shop now
+            </a>
+            <i className="fas fa-chevron-right"></i>
+          </div>
           <Carousel responsive={responsive}>
             {products.accessories.map((accessories) => (
               <Product key={accessories.id} product={accessories} />
             ))}
           </Carousel>
-        )}
-
-        <div className="shop-container__category">
-          <h1>DESK ACCESSORIES.</h1>
-          <a href="./#/books">shop now</a>
-          <i className="fas fa-chevron-right"></i>
-        </div>
-
-        {products['desk accessories'] && (
+          <div className="shop-container__category">
+            <h1>{products['desk accessories'][0].category.toUpperCase()}.</h1>
+            <a
+              href={`./#/products/${products['desk accessories'][0].category}`}
+            >
+              shop now
+            </a>
+            <i className="fas fa-chevron-right"></i>
+          </div>
           <Carousel responsive={responsive}>
             {products['desk accessories'].map((deskAccessories) => (
               <Product key={deskAccessories.id} product={deskAccessories} />
             ))}
           </Carousel>
-        )}
-
-        <div className="shop-container__category">
-          <h1>GAME & PUZZLES.</h1>
-          <a href="./#/books">shop now</a>
-          <i className="fas fa-chevron-right"></i>
-        </div>
-
-        {products['games & puzzles'] && (
+          <div className="shop-container__category">
+            <h1>{products['games & puzzles'][0].category.toUpperCase()}.</h1>
+            <a href={`./#/products/${products['games & puzzles'][0].category}`}>
+              shop now
+            </a>
+            <i className="fas fa-chevron-right"></i>
+          </div>
+          (
           <Carousel responsive={responsive}>
             {products['games & puzzles'].map((gamesAndPuzzles) => (
               <Product key={gamesAndPuzzles.id} product={gamesAndPuzzles} />
             ))}
           </Carousel>
-        )}
-      </div>
+        </div>
+      )}
 
       <button
         type="button"

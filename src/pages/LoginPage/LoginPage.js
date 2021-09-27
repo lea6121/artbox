@@ -211,11 +211,9 @@ export default function LoginPage() {
   const onclickShowLoginFormBtn = () =>
     showLoginForm ? setShowLoginForm(false) : setShowLoginForm(true)
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(setLoginError(null))
-  //   }
-  // }, [dispatch])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [dispatch])
 
   return (
     <div className={loginPageContainer}>

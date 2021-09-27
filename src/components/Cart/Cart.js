@@ -41,35 +41,6 @@ const menuBtn = css`
     }
   }
 `
-// const menuBtnLine = css`
-//   position: fixed;
-//   top: 0px;
-//   right: 0px;
-// `
-
-// const btnLine = css`
-//   position: fixed;
-//   z-index: -1;
-//   width: 23px;
-//   height: 3px;
-//   margin: 0 0 5px 0;
-//   ${easeSlow};
-//   &.closer {
-//     z-index: 4;
-//     cursor: pointer;
-//     background-color: white;
-
-//     &:nth-child(1) {
-//       transform: rotate(-45deg) translate(-240px, -230px);
-//     }
-//     &:nth-child(2) {
-//       transform: translateX(-338px);
-//     }
-//     &:nth-child(3) {
-//       transform: rotate(45deg) translate(-240px, 230px);
-//     }
-//   }
-// `
 const menuOverlay = css`
   z-index: 3;
   position: fixed;

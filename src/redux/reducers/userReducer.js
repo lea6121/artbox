@@ -162,7 +162,7 @@ export const logoutGoogle = (data) => (dispatch) => {
   signOut(auth)
     .then(() => {
       dispatch(setUser(null))
-      alert('Logout successful.')
+      alert('Log out successful.')
       data.history.push('/')
     })
     .catch((error) => {

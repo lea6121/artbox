@@ -318,6 +318,7 @@ export default function CollectionPage() {
       dispatch(getSpecificCollections(currentCategory, (currentPage - 1) * 24))
     } else {
       dispatch(getCollections((currentPage - 1) * 24))
+      window.scrollTo(0, 0)
     }
   }, [])
 

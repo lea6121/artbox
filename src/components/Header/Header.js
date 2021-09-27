@@ -1,4 +1,7 @@
 import { css } from '@emotion/css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Modal, Button } from 'react-bootstrap'
+import { useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../../redux/reducers/userReducer'
@@ -6,7 +9,6 @@ import { setAuthToken } from '../../utils'
 import { logoutGoogle } from '../../redux/reducers/userReducer'
 
 const header = css`
-  ${'' /* letter-spacing: 0.1rem; */}
   box-sizing: border-box;
 
   .header-top {
@@ -102,6 +104,10 @@ const header = css`
 
         .logout-btn {
           padding: 10px;
+          margin: 0;
+          font-size: 16px;
+          cursor: pointer;
+
           &:hover {
             color: rgba(0, 0, 0, 0.6);
           }
@@ -110,31 +116,62 @@ const header = css`
     }
 
     button {
-      letter-spacing: 0.05rem;
+      cursor: unset;
       display: block;
       background: inherit;
       border: none;
       padding: 0;
-      margin: 0;
+      margin: 0 8px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 18px;
+      text-align: center;
+      font-family: Serif;
+      transition: all 0.6s ease-in-out;
+
+      &:hover {
+        color: rgba(0, 0, 0, 0.6);
+      }
     }
   }
 `
 
 export default function Header() {
   const dispatch = useDispatch()
-  const location = useLocation()
   const history = useHistory()
   const user = useSelector((store) => store.users.user)
 
   const handleLogout = () => {
-    const logoutMsg = window.confirm('確認登出嗎？')
+    dispatch(logoutGoogle({ history }))
+    setAuthToken('')
+    dispatch(setUser(null))
+    history.push('/')
+  }
 
-    if (logoutMsg) {
-      dispatch(logoutGoogle({ history }))
-      setAuthToken('')
-      dispatch(setUser(null))
-      history.push('/')
-    }
+  function LogoutBtn() {
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+    return (
+      <>
+        <button className="logout-btn" variant="primary" onClick={handleShow}>
+          LOGOUT
+        </button>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Do you really want to log out?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleLogout}>
+              Confirm
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
   }
 
   return (
@@ -178,20 +215,17 @@ export default function Header() {
             </a>
           )}
           {user && (
-            <a href="./#/user">
+            <button>
               <div className="drop">
                 <i className="fas fa-user"></i>
                 <button>User</button>
                 <div className="dropbox">
                   <a href="./#/user?">WISHLIST</a>
                   <a href="./#/user?">訂單查詢</a>
-                  {/* <a href="./#/user">BACKSTAGE</a> */}
-                  <button className="logout-btn" onClick={handleLogout}>
-                    LOG OUT
-                  </button>
+                  <LogoutBtn />
                 </div>
               </div>
-            </a>
+            </button>
           )}
         </nav>
       </div>

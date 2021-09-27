@@ -156,14 +156,14 @@ export default function HomePage() {
             </div>
           </a>
 
-          <a href="./#/shop?type=tickets" className="contents__tag">
+          <a href="./#/products/prints" className="contents__tag">
             <div className="content__card">
               <img
                 className="content__photo"
-                src="http://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/5992729/0/637630960939200000?v=1"
+                src="https://live.staticflickr.com/1567/23650403730_3b766eec9f_b.jpg"
                 alt="item"
               />
-              <div className="content__mask">buy exhibition tickets.</div>
+              <div className="content__mask">buy prints.</div>
             </div>
           </a>
 
@@ -171,7 +171,7 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://live.staticflickr.com/1567/23650403730_3b766eec9f_b.jpg"
+                src="http://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/5992729/0/637630960939200000?v=1"
                 alt="content"
               />
               <div className="content__mask">shop online store.</div>

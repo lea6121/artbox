@@ -10,12 +10,13 @@ import {
   onValue,
   orderByChild
 } from 'firebase/database'
-// import { getProducts as getProductsAPI } from '../../WebAPI'
 
 const initialState = {
   isLoadingProducts: false,
-  products: [],
-  product: []
+  allProducts: [],
+  specificProducts: [],
+  product: [],
+  suggestProducts: []
 }
 
 export const productReducer = createSlice({
@@ -26,28 +27,40 @@ export const productReducer = createSlice({
       state.isLoadingProducts = action.payload
     },
 
-    setProducts: (state, action) => {
-      state.products = action.payload
+    setAllProducts: (state, action) => {
+      state.allProducts = action.payload
+    },
+
+    setSpecificProducts: (state, action) => {
+      state.specificProducts = action.payload
     },
 
     setProduct: (state, action) => {
       state.product = action.payload
+    },
+
+    setSuggestProducts: (state, action) => {
+      state.suggestProducts = action.payload
     }
   }
 })
 
-export const { setIsLoadingProducts, setProducts, setProduct } =
-  productReducer.actions
+export const {
+  setIsLoadingProducts,
+  setAllProducts,
+  setSpecificProducts,
+  setProduct,
+  setSuggestProducts
+} = productReducer.actions
 
-export const getProducts = () => (dispatch) => {
+export const getAllProducts = () => (dispatch) => {
   const dbRef = ref(getDatabase())
   dispatch(setIsLoadingProducts(true))
   get(child(dbRef, 'products'))
     .then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val())
         dispatch(setIsLoadingProducts(false))
-        dispatch(setProducts(snapshot.val()))
+        dispatch(setAllProducts(snapshot.val()))
       } else {
         console.log('No data available')
       }
@@ -57,17 +70,22 @@ export const getProducts = () => (dispatch) => {
     })
 }
 
-// export const getProducts = () => (dispatch) => {
-//   dispatch(setIsLoadingProducts(true))
-//   getProductsAPI().then((data) => {
-//     // console.log(data)
-//     // console.log(data.pagination.total_pages)
-//     // console.log(data.data)
-//     dispatch(setTotalProductsPages(data.pagination.total_pages))
-//     dispatch(setIsLoadingProducts(false))
-//     dispatch(setProducts(data.data))
-//   })
-// }
+export const getSpecificProducts = (category) => (dispatch) => {
+  dispatch(setIsLoadingProducts(true))
+  const dbRef = getDatabase()
+  const product = query(ref(dbRef, `products/${category}`), orderByChild('id'))
+
+  onValue(product, (snapshot) => {
+    // const data = snapshot.val()
+    let arr = []
+    //有用 orderByChild 時要用 for 迴圈取資料
+    snapshot.forEach(function (item) {
+      arr.push(item.val())
+    })
+    dispatch(setIsLoadingProducts(false))
+    dispatch(setSpecificProducts(arr))
+  })
+}
 
 export const getProduct = (id, category) => (dispatch) => {
   dispatch(setIsLoadingProducts(true))
@@ -80,40 +98,50 @@ export const getProduct = (id, category) => (dispatch) => {
   )
 
   onValue(product, (snapshot) => {
-    const data = snapshot.val()
+    // const data = snapshot.val()
     let arr = []
-    console.log('data', data)
-
     //有用 orderByChild 時要用 for 迴圈取資料
     snapshot.forEach(function (item) {
       arr.push(item.val())
     })
-    console.log('item', arr)
     dispatch(setIsLoadingProducts(false))
     dispatch(setProduct(arr))
   })
-  // get(child(dbRef, 'products'))
-  //   .then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       console.log(snapshot.val())
-  //       dispatch(setIsLoadingProducts(false))
-  //       dispatch(setProducts(snapshot.val()))
-  //     } else {
-  //       console.log('No data available')
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error(error)
-  //   })
 }
 
-// export const getPost = (id) => (dispatch) => {
-//   dispatch(setIsLoadingPost(true))
-//   getPostAPI(id).then((article) => {
-//     dispatch(setPost(article))
-//     dispatch(setIsLoadingPost(false))
-//   })
-// }
+export const getSuggestProduct = (category) => (dispatch) => {
+  dispatch(setIsLoadingProducts(true))
+  const dbRef = getDatabase()
+  const product = query(ref(dbRef, `products/${category}`), orderByChild('id'))
+
+  onValue(product, (snapshot) => {
+    const data = snapshot.val()
+    let suggestionArr = []
+    let numbers = [] // new empty array
+
+    var min, max, r, n, p
+
+    min = 1
+    max = data.length - 1
+    r = 4 // how many numbers you want to extract
+
+    for (let i = 0; i < r; i++) {
+      do {
+        n = Math.floor(Math.random() * (max - min + 1)) + min
+        p = numbers.includes(n)
+        if (!p) {
+          numbers.push(Number(n))
+        }
+      } while (p)
+    }
+
+    console.log(numbers)
+    numbers.forEach((element) => suggestionArr.push(data[element]))
+    console.log('items', suggestionArr)
+    dispatch(setIsLoadingProducts(false))
+    dispatch(setSuggestProducts(suggestionArr))
+  })
+}
 
 // export const postNewPost = (data) => (dispatch) => {
 //   dispatch(setIsLoadingNewPost(true))
