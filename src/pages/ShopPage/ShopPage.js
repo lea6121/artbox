@@ -1,9 +1,10 @@
 import { css } from '@emotion/css'
 import { useState, useEffect } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import Carousel from 'react-multi-carousel'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
+import { Modal, Button } from 'react-bootstrap'
 import 'react-multi-carousel/lib/styles.css'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
@@ -180,6 +181,7 @@ function Product({ product }) {
   const history = useHistory()
   const user = useSelector((store) => store.users.user)
   const [isActive, setActive] = useState('false')
+  const [modalShow, setModalShow] = useState(false)
 
   const handleToggle = () => {
     if (user) {
@@ -189,6 +191,71 @@ function Product({ product }) {
       history.push('/login')
     }
   }
+
+  function handleAddToCart(item) {
+    let data = JSON.parse(localStorage.getItem('cartData')) || []
+
+    let duplicateData
+    const itemExists = data.some((data) => {
+      if (data.id === item.id) {
+        duplicateData = data
+      }
+      return duplicateData
+    })
+
+    if (itemExists) {
+      let items = JSON.parse(localStorage.cartData)
+      for (let i = 0; i < items.length; i++) {
+        if (duplicateData.id === items[i].id) {
+          items[i].quantity += 1
+          break
+        }
+      }
+      localStorage.setItem('cartData', JSON.stringify(items))
+    } else {
+      data.push({
+        id: item.id,
+        title: item.title,
+        image: item.images[0],
+        price: item.price,
+        category: item.category,
+        size: item.stock[0].size,
+        quantity: 1
+      })
+      localStorage.setItem('cartData', JSON.stringify(data))
+    }
+    window.location.reload()
+    setModalShow(true)
+  }
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal {...props} centered>
+        <Modal.Header>
+          <Modal.Title
+            id="contained-modal-title-vcenter"
+            style={{ 'font-family': 'Gill Sans', alignItems: 'center' }}
+          >
+            <i
+              className="fas fa-clipboard-check"
+              style={{ margin: '0 10px', color: 'green', 'font-size': '26px' }}
+            ></i>
+            Add to cart successfully!
+          </Modal.Title>
+          <Button
+            onClick={props.onHide}
+            style={{
+              background: 'rgba(0,0,0,0.8)',
+              'border-color': '#343a40'
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Header>
+      </Modal>
+    )
+  }
+
   return (
     <>
       <div className="item">
@@ -201,7 +268,16 @@ function Product({ product }) {
           <a href={`/#/product/${product.category}/${product.id}`}>
             <button className="quick-view-btn">QUICK VIEW</button>
           </a>
-          <button className="add-to-cart-btn">ADD TO CART</button>
+          <button
+            className="add-to-cart-btn"
+            onClick={() => handleAddToCart(product)}
+          >
+            ADD TO CART
+          </button>
+          <MyVerticallyCenteredModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
         </div>
         <div className="item__name">{product.title}</div>
         <div className="item__price">{product.price}</div>

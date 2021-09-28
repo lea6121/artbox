@@ -1,13 +1,14 @@
 import { css } from '@emotion/css'
+import { Modal, Button } from 'react-bootstrap'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import Carousel from 'react-multi-carousel'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
-import { setCartProduct } from '../../redux/reducers/cartReducer'
+// import { setCartProduct } from '../../redux/reducers/cartReducer'
 import {
   getProduct,
   getSuggestProduct
@@ -34,6 +35,9 @@ const productPageContainer = css`
       color: black;
       font-style: italic;
       font-family: Georgia;
+      i {
+        margin-right: 10px;
+      }
     }
 
     .item {
@@ -218,20 +222,29 @@ function Product({ product }) {
 }
 
 export default function ProductPage() {
+  const history = useHistory()
   const dispatch = useDispatch()
   const params = useParams()
+  const user = useSelector((store) => store.users.user)
   const product = useSelector((store) => store.products.product)
   const suggestProducts = useSelector((store) => store.products.suggestProducts)
   const isLoadingProductsMsg = useSelector(
     (store) => store.products.isLoadingProducts
   )
   const [isActive, setActive] = useState('false')
+  const [count, setCount] = useState(1)
+  const [modalShow, setModalShow] = useState(false)
 
   const handleToggle = () => {
-    setActive(!isActive)
+    if (user) {
+      setActive(!isActive)
+    } else {
+      alert('Please log in first.')
+      history.push('/login')
+    }
   }
-  const [count, setCount] = useState(1)
 
+  console.log(product.images)
   function Counter() {
     // Set the initial count state to zero, 0
     console.log(product[0].stock[0].quantity)
@@ -267,6 +280,74 @@ export default function ProductPage() {
           +
         </button>
       </div>
+    )
+  }
+
+  function handleAddToCart(item) {
+    let data = JSON.parse(localStorage.getItem('cartData')) || []
+
+    let duplicateData
+    const itemExists = data.some((data) => {
+      if (data.id === item.id) {
+        duplicateData = data
+      }
+      return duplicateData
+    })
+
+    if (itemExists) {
+      let items = JSON.parse(localStorage.cartData)
+      for (let i = 0; i < items.length; i++) {
+        if (duplicateData.id === items[i].id) {
+          items[i].quantity += count
+          break
+        }
+      }
+      localStorage.setItem('cartData', JSON.stringify(items))
+    } else {
+      data.push({
+        id: item.id,
+        title: item.title,
+        image: item.images[0],
+        price: item.price,
+        category: item.category,
+        size: item.stock[0].size,
+        quantity: count
+      })
+      localStorage.setItem('cartData', JSON.stringify(data))
+    }
+    window.location.reload()
+    setModalShow(true)
+  }
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal {...props} centered>
+        <Modal.Header>
+          <Modal.Title
+            id="contained-modal-title-vcenter"
+            style={{ 'font-family': 'Gill Sans', alignItems: 'center' }}
+          >
+            <i
+              className="fas fa-clipboard-check"
+              style={{
+                margin: '0 10px',
+                color: 'green',
+                'font-size': '26px'
+              }}
+            ></i>
+            Add to cart successfully!
+          </Modal.Title>
+          <Button
+            onClick={props.onHide}
+            style={{
+              background: 'rgba(0,0,0,0.8)',
+              'border-color': '#343a40'
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Header>
+      </Modal>
     )
   }
 
@@ -310,12 +391,23 @@ export default function ProductPage() {
               <div className="product__description">
                 {window.HTMLReactParser(product[0].description)}
               </div>
-              <button className="product__add-to-cart">ADD TO CART</button>{' '}
+              <button
+                className="product__add-to-cart"
+                onClick={() => handleAddToCart(product[0])}
+              >
+                ADD TO CART
+              </button>
+              <MyVerticallyCenteredModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
             </div>
           </div>
 
           <div className="shop-container">
-            <h1 className="title">See More...</h1>
+            <h1 className="title">
+              <i class="far fa-eye"></i>See More...
+            </h1>
             <Carousel responsive={responsive}>
               {suggestProducts.map((suggestion) => (
                 <Product key={suggestion.id} product={suggestion} />

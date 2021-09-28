@@ -95,6 +95,7 @@ const homePageContainer = css`
           position: relative;
           height: 400px;
         }
+
         &__photo {
           width: 100%;
           object-fit: contain;
@@ -105,17 +106,45 @@ const homePageContainer = css`
             transform: scale(1.2, 1.2);
           }
         }
+
         &__mask {
-          padding: 5px 0;
+          padding: 8px 0;
           font-weight: 500;
           color: white;
-          font-size: 38px;
+          font-size: 36px;
           background: rgba(0, 0, 0, 0.6);
           position: absolute;
           width: 100%;
           top: 92%;
           left: 50%;
           transform: translate(-50%, -50%);
+        }
+
+        &__cover {
+          position: absolute;
+          font-size: 38px;
+          width: 100%;
+          height: 100%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: transparent;
+          transition: all 0.4s ease-out;
+
+          h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            font-family: 'Snell Roundhand';
+            font-weight: 700;
+          }
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.4);
+            color: black;
+          }
         }
       }
     }
@@ -155,29 +184,6 @@ export default function HomePage() {
               <div className="content__mask">search collections.</div>
             </div>
           </a>
-
-          <a href="./#/products/prints" className="contents__tag">
-            <div className="content__card">
-              <img
-                className="content__photo"
-                src="https://live.staticflickr.com/1567/23650403730_3b766eec9f_b.jpg"
-                alt="item"
-              />
-              <div className="content__mask">buy prints.</div>
-            </div>
-          </a>
-
-          <a href="./#/shop" className="contents__tag">
-            <div className="content__card">
-              <img
-                className="content__photo"
-                src="http://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/5992729/0/637630960939200000?v=1"
-                alt="content"
-              />
-              <div className="content__mask">shop online store.</div>
-            </div>
-          </a>
-
           <a href="./#/about" className="contents__tag">
             <div className="content__card">
               <img
@@ -186,6 +192,33 @@ export default function HomePage() {
                 alt="content"
               />
               <div className="content__mask">about.</div>
+            </div>
+          </a>
+          <a href="./#/products/prints" className="contents__tag">
+            <div className="content__card">
+              <img
+                className="content__photo"
+                src="https://live.staticflickr.com/1567/23650403730_3b766eec9f_b.jpg"
+                alt="item"
+              />
+              <div className="content__mask">shop online store.</div>
+            </div>
+          </a>
+          <a
+            href="javascript:void(0)"
+            style={{ cursor: 'default' }}
+            className="contents__tag"
+          >
+            <div className="content__card">
+              <img
+                className="content__photo"
+                src="http://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/5992729/0/637630960939200000?v=1"
+                alt="content"
+              />
+              <div className="content__cover">
+                <h1>Coming Soon</h1>
+              </div>
+              <div className="content__mask">visit online exhibition.</div>
             </div>
           </a>
         </div>

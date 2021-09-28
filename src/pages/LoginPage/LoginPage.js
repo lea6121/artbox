@@ -219,9 +219,6 @@ export default function LoginPage() {
     <div className={loginPageContainer}>
       {isLoadingMsg && <Loading></Loading>}
       <div className="login-wrapper">
-        {/* <button className="cross-btn">
-          <i class="fas fa-times"></i>
-        </button> */}
         <h1>Log In</h1>
         <p>
           New to this site? <a href="./#/register">Sign Up</a>

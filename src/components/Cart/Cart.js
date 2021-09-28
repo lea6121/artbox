@@ -2,6 +2,7 @@ import { css } from '@emotion/css'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { Modal, Button } from 'react-bootstrap'
 
 const cartContainer = css`
   position: relative;
@@ -33,11 +34,24 @@ const menuBtn = css`
     -webkit-text-fill-color: transparent;
     ${easeSlow};
   }
+
+  p {
+    font-family: 'Helvetica';
+    position: absolute;
+    top: -14px;
+    right: -6px;
+    background: red;
+    color: white;
+    padding: 0 6px;
+    font-size: 14px;
+    border-radius: 50%;
+    ${easeSlow};
+  }
+
   &.closer {
-    i {
+    i,
+    p {
       transform: translateX(-350px);
-      ${'' /* color: transparent; */}
-      ${'' /* background: transparent; */}
     }
   }
 `
@@ -48,7 +62,6 @@ const menuOverlay = css`
   right: 0;
   background-color: white;
   height: 100vh;
-  ${'' /* overflow-y: auto; */}
   width: 400px;
   transform: translateX(100%);
   transition: all 450ms ease-in-out;
@@ -102,18 +115,19 @@ const menuOverlay = css`
         margin: 0;
       }
 
-      &__pic {
-        max-width: 100px;
-        max-height: 100px;
-      }
-
       &__item {
-        margin: 0 auto 8px;
+        margin: 0 auto 10px;
         display: grid;
         grid-template-columns: 32% 58% 10%;
+        grid-gap: 3px 5px;
         justify-content: center;
         align-items: center;
-        height: 100px;
+        max-height: 150px;
+      }
+
+      &__pic {
+        width: 100%;
+        max-height: 100%;
       }
 
       &__details {
@@ -146,7 +160,8 @@ const menuOverlay = css`
       }
     }
 
-    .view-cart-btn {
+    ${
+      '' /* .view-cart-btn {
       border: 1px solid black;
       color: black;
       background: rgba(255, 255, 255, 0);
@@ -156,7 +171,9 @@ const menuOverlay = css`
         color: white;
         background: black;
       }
+    } */
     }
+
     .checkout-btn {
       border: none;
       color: white;
@@ -171,18 +188,88 @@ const menuOverlay = css`
 `
 
 export default function Cart() {
-  const dispatch = useDispatch()
-  const cartItemCounter = useSelector((store) => store.collections.collections)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const user = useSelector((store) => store.users.user)
+  const cartItem = useSelector((store) => store.carts.cartProduct)
+  const dispatch = useDispatch()
   const history = useHistory()
-
-  const handleCheckout = () => {
-    if (!user) {
-      alert('Please log in first.')
-      history.push('/login')
-    }
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const handleLogin = () => {
+    history.push('/login')
   }
+  const data = JSON.parse(localStorage.getItem('cartData'))
+
+  function CheckoutBtn() {
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => {
+      if (!user) {
+        setShow(true)
+      } else {
+        history.push('/checkout')
+      }
+    }
+    return (
+      <>
+        <button className="checkout-btn" variant="primary" onClick={handleShow}>
+          CHECKOUT
+        </button>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Body>Please log in first.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleLogin}>
+              Confirm
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
+  }
+
+  function CartItem({ cartItem }) {
+    function deleteItem() {
+      for (let i = 0; i < data.length; i++) {
+        if (cartItem.id === data[i].id) {
+          data.splice(i, 1)
+          console.log(data)
+          localStorage.setItem('cartData', JSON.stringify(data))
+        }
+      }
+      window.location.reload()
+    }
+
+    return (
+      <div className="cart__item">
+        <a href={`/#/product/${cartItem.category}/${cartItem.id}`}>
+          <img className="cart__pic" src={cartItem.image} alt="want to buy" />
+        </a>
+        <div className="cart__details">
+          <div>
+            <a href={`/#/product/${cartItem.category}/${cartItem.id}`}>
+              {cartItem.title}
+            </a>
+          </div>
+          <div>
+            <p>{cartItem.size}</p>
+          </div>
+          <div className="cart__quantity">
+            <p>
+              {cartItem.quantity} * {cartItem.price}
+            </p>
+          </div>
+        </div>
+        <i
+          className="fa fa-trash"
+          onClick={() => {
+            deleteItem()
+          }}
+        ></i>
+      </div>
+    )
+  }
+
   return (
     <div className={cartContainer}>
       {isMenuOpen && <div className={`${mask}`}></div>}
@@ -193,156 +280,21 @@ export default function Cart() {
         }
       >
         <i className="fas fa-shopping-cart"></i>
+        <p>{data.length}</p>
       </div>
-      {/* <div
-        className={`${menuBtnLine} ${isMenuOpen ? 'closer' : null}`}
-        onClick={
-          isMenuOpen ? () => setIsMenuOpen(false) : () => setIsMenuOpen(true)
-        }
-      >
-        <div className={`${btnLine} ${isMenuOpen ? 'closer' : null}`} />
-        <div className={`${btnLine} ${isMenuOpen ? 'closer' : null}`} />
-        <div className={`${btnLine} ${isMenuOpen ? 'closer' : null}`} />
-      </div> */}
       <div className={`${menuOverlay} ${isMenuOpen ? 'show' : null}`}>
         <nav>
           <h1>Cart</h1>
 
           <div className="cart">
-            <div className="cart__item">
-              <a href="#">
-                <img
-                  className="cart__pic"
-                  src="https://artwork.wallartprints.com/media/catalog/product/cache/98550ffb3d2e4312eec927763b7e3a7e/2/7/275049723_original.jpg"
-                  alt="want to buy"
-                />
-              </a>
-              <div className="cart__details">
-                <div>
-                  <a href="#">Alone in the snow</a>
-                </div>
-                <div>
-                  <p>45cm x 30cm (18" x 12")</p>
-                </div>
-                <div className="cart__quantity">
-                  <p>1 * $44.99 </p>
-                </div>
-              </div>
-              <i className="fa fa-trash"></i>
-            </div>
-            <div className="cart__item">
-              <a href="#">
-                <img
-                  className="cart__pic"
-                  src="https://artwork.wallartprints.com/media/catalog/product/cache/98550ffb3d2e4312eec927763b7e3a7e/2/7/275049723_original.jpg"
-                  alt="want to buy"
-                />
-              </a>
-              <div className="cart__details">
-                <div>
-                  <a href="#">Alone in the snow</a>
-                </div>
-                <div>
-                  <p>45cm x 30cm (18" x 12")</p>
-                </div>
-                <div className="cart__quantity">
-                  <p>1 * $44.99 </p>
-                </div>
-              </div>
-              <i className="fa fa-trash"></i>
-            </div>
-            <div className="cart__item">
-              <a href="#">
-                <img
-                  className="cart__pic"
-                  src="https://artwork.wallartprints.com/media/catalog/product/cache/2b69841aa3d261a0927b12ac5c995383/1/1/116547795_stretchedcanvas.jpg"
-                  alt="want to buy"
-                />
-              </a>
-              <div className="cart__details">
-                <div>
-                  <a href="#">Alone in the snow</a>
-                </div>
-                <div>
-                  <p>45cm x 30cm (18" x 12")</p>
-                </div>
-                <div className="cart__quantity">
-                  <p>1 * $44.99 </p>
-                </div>
-              </div>
-              <i className="fa fa-trash"></i>
-            </div>
-            <div className="cart__item">
-              <a href="#">
-                <img
-                  className="cart__pic"
-                  src="https://static.wixstatic.com/media/27af89_cad6213a03394f3c974df2d47583cdcd~mv2.jpg/v1/fill/w_96,h_96,q_85,usm_0.66_1.00_0.01/27af89_cad6213a03394f3c974df2d47583cdcd~mv2.webp"
-                  alt="want to buy"
-                />
-              </a>
-              <div className="cart__details">
-                <div>
-                  <a href="#">I am a artwork</a>
-                </div>
-                <div>
-                  <p>45cm x 30cm (18" x 12")</p>
-                </div>
-                <div className="cart__quantity">
-                  <p>1 * $44.99 </p>
-                </div>
-              </div>
-              <i className="fa fa-trash"></i>
-            </div>
-            <div className="cart__item">
-              <a href="#">
-                <img
-                  className="cart__pic"
-                  src="https://static.wixstatic.com/media/27af89_cad6213a03394f3c974df2d47583cdcd~mv2.jpg/v1/fill/w_96,h_96,q_85,usm_0.66_1.00_0.01/27af89_cad6213a03394f3c974df2d47583cdcd~mv2.webp"
-                  alt="want to buy"
-                />
-              </a>
-              <div className="cart__details">
-                <div>
-                  <a href="#">I am a artwork</a>
-                </div>
-                <div>
-                  <p>45cm x 30cm (18" x 12")</p>
-                </div>
-                <div className="cart__quantity">
-                  <p>1 * $44.99 </p>
-                </div>
-              </div>
-              <i className="fa fa-trash"></i>
-            </div>
-            <div className="cart__item">
-              <a href="#">
-                <img
-                  className="cart__pic"
-                  src="https://static.wixstatic.com/media/27af89_cad6213a03394f3c974df2d47583cdcd~mv2.jpg/v1/fill/w_96,h_96,q_85,usm_0.66_1.00_0.01/27af89_cad6213a03394f3c974df2d47583cdcd~mv2.webp"
-                  alt="want to buy"
-                />
-              </a>
-              <div className="cart__details">
-                <div>
-                  <a href="#">I am a artwork</a>
-                </div>
-                <div>
-                  <p>45cm x 30cm (18" x 12")</p>
-                </div>
-                <div className="cart__quantity">
-                  <p>1 * $44.99 </p>
-                </div>
-              </div>
-              <i className="fa fa-trash"></i>
-            </div>
+            {data.map((item) => (
+              <CartItem key={item.id} cartItem={item} />
+            ))}
           </div>
           {/* <a href="./#/cart">
             <button className="view-cart-btn">VIEW CART</button>
           </a> */}
-
-          <button className="checkout-btn" onClick={handleCheckout}>
-            <a href="./#/checkout">CHECKOUT</a>
-          </button>
+          <CheckoutBtn />
         </nav>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useDispatch, useSelector } from 'react-redux'
 
 const initialState = {
   cartProduct: []
@@ -10,7 +9,7 @@ export const cartReducer = createSlice({
   initialState,
   reducers: {
     setCartProduct: (state, action) => {
-      state.collections = action.payload
+      state.cartProduct = action.payload
     }
   }
 })

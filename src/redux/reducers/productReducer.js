@@ -134,47 +134,11 @@ export const getSuggestProduct = (category) => (dispatch) => {
         }
       } while (p)
     }
-
-    console.log(numbers)
     numbers.forEach((element) => suggestionArr.push(data[element]))
     console.log('items', suggestionArr)
     dispatch(setIsLoadingProducts(false))
     dispatch(setSuggestProducts(suggestionArr))
   })
 }
-
-// export const postNewPost = (data) => (dispatch) => {
-//   dispatch(setIsLoadingNewPost(true))
-//   postNewPostAPI(data).then((res) => {
-//     dispatch(setNewPostResponse(res))
-//     dispatch(setIsLoadingNewPost(false))
-//   })
-// }
-
-// export const editPost = (data) => (dispatch) => {
-//   dispatch(setIsLoadingEditPost(true))
-//   editPostAPI(data).then((res) => {
-//     dispatch(setEditedPostResponse(res))
-//     dispatch(setIsLoadingEditPost(false))
-//   })
-// }
-
-// export const deletePost = (id) => (dispatch) => {
-//   dispatch(setIsLoadingDeletePost(true))
-//   deletePostAPI(id).then((res) => {
-//     dispatch(setDeletePostResponse(res))
-//     dispatch(setIsLoadingDeletePost(false))
-//     let page = 1
-//     getPostsAPI(page)
-//       .then((data) => {
-//         dispatch(setIsLoadingPosts(false))
-//         dispatch(setTotalPosts(data.totalPosts))
-//         return data.posts
-//       })
-//       .then((posts) => {
-//         dispatch(setPosts(posts))
-//       })
-//   })
-// }
 
 export default productReducer.reducer
