@@ -1,6 +1,12 @@
 import { css } from '@emotion/css'
 import { useState, useEffect } from 'react'
-import { setCartProduct } from '../../redux/reducers/cartReducer'
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setCartProduct,
+  setCartTotal
+  // calculateCartTotal
+} from '../../redux/reducers/cartReducer'
 
 const container = css`
   max-width: 1180px;
@@ -34,6 +40,12 @@ const cartPageContainer = css`
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding: 30px 0;
     font-size: 24px;
+  }
+
+  .reminder {
+    font-size: 18px;
+    font-family: Arial;
+    padding-top: 10px;
   }
 
   .cart__product {
@@ -94,7 +106,6 @@ const cartPageContainer = css`
       }
 
       button {
-        ${'' /* font-size: 18px; */}
         border: none;
         background: none;
         padding: 10px;
@@ -258,7 +269,6 @@ const checkoutPageContainer = css`
       border: none;
       background: rgba(255, 222, 3, 0.7);
       margin: 10px;
-      ${'' /* text-align: right; */}
 
       i {
         margin: 0 0 0 30px;
@@ -380,7 +390,6 @@ const orderDoneContent = css`
   margin: 80px auto;
   padding-bottom: 20px;
   text-align: center;
-  ${'' /* border: 1px solid black; */}
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3);
   max-width: 90%;
 
@@ -413,34 +422,12 @@ const images = [
   'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059'
 ]
 
-function Counter() {
-  const [count, setCount] = useState(1)
-
-  // Create handleIncrement event handler
-  const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1)
-  }
-
-  //Create handleDecrement event handler
-  const handleDecrement = () => {
-    if (count > 1) {
-      setCount((prevCount) => prevCount - 1)
-    }
-  }
-  return (
-    <div className="btn-group quantity" role="group">
-      <button type="button" onClick={handleDecrement}>
-        -
-      </button>
-      <p className="quantity__count">{count}</p>
-      <button type="button" onClick={handleIncrement}>
-        +
-      </button>
-    </div>
-  )
-}
-
 export default function CheckoutPage() {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const cartItem = useSelector((store) => store.carts.cartProduct)
+  const subTotal = useSelector((store) => store.carts.cartTotal)
+
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: '',
@@ -450,9 +437,7 @@ export default function CheckoutPage() {
     shippingType: '',
     paymentType: ''
   })
-
   const [errors, setErrors] = useState('')
-
   const updateFormData = (e) => {
     setFormData({
       ...formData,
@@ -460,7 +445,6 @@ export default function CheckoutPage() {
     })
   }
   const { name, email, mobile, address, shippingType, paymentType } = formData
-
   const {
     nameMsg,
     emailMsg,
@@ -535,83 +519,173 @@ export default function CheckoutPage() {
     }
   }
 
+  // 下一步按鈕
   const handleStepIncrement = () => {
-    if (step === 1 || step === 3) {
+    if (step === 1 && cartItem.length !== 0) {
       setStep((prevStep) => prevStep + 1)
+    } else if (step === 1 && cartItem.length === 0) {
+      history.push('/shop')
     } else if (step === 2 && formValidation()) {
+      setStep((prevStep) => prevStep + 1)
+    } else if (step === 3) {
       setStep((prevStep) => prevStep + 1)
     }
   }
 
+  // 上一步按鈕
   const handleStepDecrement = () => {
     setErrors('')
     setStep((prevStep) => prevStep - 1)
   }
 
-  const CartContent = () => (
-    <div className={cartPageContainer}>
-      <div className="cartContainer">
-        <h2>Shopping Cart</h2>
-        <div className="cart__product">
-          <img src={images[0]} />
-          <div>
-            <h1 className="cart__product__title">
-              Kinetic Light Blue Green Earrings
-            </h1>
-            <p className="cart__product__price">$ 27.99</p>
+  const data = JSON.parse(localStorage.getItem('cartData'))
 
-            <p className="cart__product__size">Size: </p>
-            {/* <span>100*100 cm</span> */}
-            <select className="form-select" aria-label="Default select example">
-              {/* <option selected>Size</option> */}
-              <option value="1">15*15 cm</option>
-              <option value="2">30*30 cm</option>
-              <option value="3">100*100 cm</option>
-            </select>
-            <div className="cart__product__quantity">
-              <p>Quantity: </p>
-              <Counter />
-            </div>
-          </div>
-          <i className="fa fa-trash"></i>
-        </div>
+  useEffect(() => {
+    if (!data || data.length === 0) {
+      history.push('/shop')
+    } else if (data && data.length !== 0) {
+      dispatch(setCartProduct(data))
+    }
+    window.scrollTo(0, 0)
+  }, [])
 
-        <div className="cart__product">
-          <img src={images[2]} />
-          <div>
-            <h1 className="cart__product__title">
-              Kinetic Light Blue Green Earrings
-            </h1>
-            <p className="cart__product__price">$ 27.99</p>
+  useEffect(() => {
+    let total = 0
+    for (let i = 0; i < data.length; i++) {
+      let price = Number(data[i].price) * Number(data[i].quantity)
+      total += price
+    }
+    dispatch(setCartTotal(total))
+  }, [data])
 
-            <p className="cart__product__size">Size: </p>
-            {/* <span>100*100 cm</span> */}
-            <select className="form-select" aria-label="Default select example">
-              {/* <option selected>Size</option> */}
-              <option value="1">15*15 cm</option>
-              <option value="2">30*30 cm</option>
-              <option value="3">100*100 cm</option>
-            </select>
-            <div className="cart__product__quantity">
-              <p>Quantity: </p>
-              <Counter />
-            </div>
-          </div>
-          <i className="fa fa-trash"></i>
-        </div>
-      </div>
-      <div className="cart__subtotal">
-        <h2>Order Summary</h2>
+  function CartItem({ cartItem }) {
+    const [count, setCount] = useState(cartItem.quantity)
+    //Create handleDecrement event handler
+    let data = JSON.parse(localStorage.getItem('cartData'))
+    let duplicateData
+    const itemExists = data.some((data) => {
+      if (data.id === cartItem.id) {
+        duplicateData = data
+      }
+      return duplicateData
+    })
+
+    function handleAddQuantity() {
+      let maximum = 10
+      if (count < maximum) {
+        setCount((prevCount) => prevCount + 1)
+      } else {
+        return false
+      }
+
+      if (itemExists) {
+        let items = JSON.parse(localStorage.cartData)
+        for (let i = 0; i < items.length; i++) {
+          if (duplicateData.id === items[i].id) {
+            items[i].quantity += 1
+            break
+          }
+        }
+        // Create handleIncrement event handler
+        localStorage.setItem('cartData', JSON.stringify(items))
+        dispatch(setCartProduct(items))
+      }
+    }
+
+    function handleMinusQuantity() {
+      if (count > 1) {
+        setCount((prevCount) => prevCount - 1)
+      } else {
+        return false
+      }
+
+      if (itemExists) {
+        let items = JSON.parse(localStorage.cartData)
+        for (let i = 0; i < items.length; i++) {
+          if (duplicateData.id === items[i].id) {
+            items[i].quantity -= 1
+            break
+          }
+        }
+        localStorage.setItem('cartData', JSON.stringify(items))
+        dispatch(setCartProduct(items))
+      }
+    }
+
+    function deleteItem() {
+      const data = JSON.parse(localStorage.getItem('cartData'))
+      for (let i = 0; i < data.length; i++) {
+        if (cartItem.id === data[i].id) {
+          data.splice(i, 1)
+          localStorage.setItem('cartData', JSON.stringify(data))
+        }
+      }
+      dispatch(setCartProduct(data))
+    }
+
+    return (
+      <div className="cart__product">
+        <a href={`/#/product/${cartItem.category}/${cartItem.id}`}>
+          <img src={cartItem.image} />
+        </a>
         <div>
-          <h1>Subtotal</h1>
-          <h1>$ 475.00</h1>
+          <h1 className="cart__product__title">{cartItem.title}</h1>
+
+          <p className="cart__product__price">$ {cartItem.price}</p>
+          <p className="cart__product__size">Size: </p>
+          <select className="form-select" aria-label="Default select example">
+            <option selected>{cartItem.size}</option>
+          </select>
+          <div className="cart__product__quantity">
+            <p>Quantity: </p>
+            <div className="btn-group quantity" role="group">
+              <button type="button" onClick={handleMinusQuantity}>
+                -
+              </button>
+              <p className="quantity__count">{count}</p>
+              <button type="button" onClick={handleAddQuantity}>
+                +
+              </button>
+            </div>
+          </div>
         </div>
-        <button className="checkout-btn" onClick={handleStepIncrement}>
-          CHECKOUT
-        </button>
+        <i
+          className="fa fa-trash"
+          onClick={() => {
+            deleteItem()
+          }}
+        ></i>
       </div>
-    </div>
-  )
+    )
+  }
+
+  const CartContent = () => {
+    return (
+      <div className={cartPageContainer}>
+        <div className="cartContainer">
+          <h2>Shopping Cart</h2>
+          {cartItem &&
+            cartItem.length > 0 &&
+            cartItem.map((item) => <CartItem key={item.id} cartItem={item} />)}
+          {!cartItem ||
+            (cartItem.length === 0 && (
+              <p className="reminder">Cart is empty ʕ•ᴥ•ʔ</p>
+            ))}
+        </div>
+
+        <div className="cart__subtotal">
+          <h2>Order Summary</h2>
+          <div>
+            <h1>Subtotal</h1>
+            <h1>$ {subTotal}</h1>
+          </div>
+          <button className="checkout-btn" onClick={handleStepIncrement}>
+            CHECKOUT
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   const FinalContent = () => (
     <div className={finalPageContainer}>

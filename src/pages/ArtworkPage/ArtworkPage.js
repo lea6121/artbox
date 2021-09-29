@@ -12,7 +12,7 @@ const artworkPageContainer = css`
   width: 100vw;
   height: 1000px;
   font-family: Serif;
-  background-image: url('https://wallpaperaccess.com/full/896724.jpg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210007.webp?alt=media&token=f8701af1-d542-4804-945d-f64171d245ce');
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;

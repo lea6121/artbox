@@ -1,8 +1,7 @@
 import { css } from '@emotion/css'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-
 import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
@@ -14,9 +13,8 @@ import ProductPage from '../../pages/ProductPage'
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 import CheckoutPage from '../../pages/CheckoutPage'
-
-import { getAuthToken } from '../../utils'
-import { setUser, getUser } from '../../redux/reducers/userReducer'
+import WishlistPage from '../../pages/WishlistPage'
+import { setUserId } from '../../redux/reducers/userReducer'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const root = css`
@@ -39,15 +37,13 @@ function App() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      dispatch(setUser(user.uid))
-    } else {
-      console.log('has log out')
+      dispatch(setUserId(user.uid))
     }
   })
-  const user = useSelector((state) => state.users.user)
+  const userId = useSelector((state) => state.users.userId)
 
   return (
-    <div className={root} value={{ user, setUser }}>
+    <div className={root} value={{ userId, setUserId }}>
       <Router>
         <Header />
         <Switch>
@@ -77,6 +73,9 @@ function App() {
           </Route>
           <Route path="/checkout">
             <CheckoutPage />
+          </Route>
+          <Route path="/wishlist">
+            <WishlistPage />
           </Route>
         </Switch>
         <Footer />

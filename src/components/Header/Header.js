@@ -4,8 +4,8 @@ import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser } from '../../redux/reducers/userReducer'
-import { setAuthToken } from '../../utils'
+import { setUserId } from '../../redux/reducers/userReducer'
+// import { setAuthToken } from '../../utils'
 import { logoutGoogle } from '../../redux/reducers/userReducer'
 
 const header = css`
@@ -138,13 +138,10 @@ const header = css`
 export default function Header() {
   const dispatch = useDispatch()
   const history = useHistory()
-  const user = useSelector((store) => store.users.user)
+  const userId = useSelector((store) => store.users.userId)
 
   const handleLogout = () => {
     dispatch(logoutGoogle({ history }))
-    setAuthToken('')
-    dispatch(setUser(null))
-    history.push('/')
   }
 
   function LogoutBtn() {
@@ -206,7 +203,7 @@ export default function Header() {
             <i className="fas fa-store"></i>
             <div>Shop</div>
           </a>
-          {!user && (
+          {!userId && (
             <a href="./#/login">
               <div className="drop">
                 <i className="fas fa-user"></i>
@@ -214,13 +211,13 @@ export default function Header() {
               </div>
             </a>
           )}
-          {user && (
+          {userId && (
             <button>
               <div className="drop">
                 <i className="fas fa-user"></i>
                 <button>User</button>
                 <div className="dropbox">
-                  <a href="./#/user?">WISHLIST</a>
+                  <a href="./#/wishlist">WISHLIST</a>
                   <a href="./#/user?">訂單查詢</a>
                   <LogoutBtn />
                 </div>

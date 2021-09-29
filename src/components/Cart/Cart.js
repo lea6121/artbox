@@ -1,8 +1,9 @@
 import { css } from '@emotion/css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
+import { setCartProduct } from '../../redux/reducers/cartReducer'
 
 const cartContainer = css`
   position: relative;
@@ -97,7 +98,7 @@ const menuOverlay = css`
 
     .cart {
       padding: 20px;
-      font-family: Arial;
+      font-family: 'Helvetica';
       border-bottom: 1px solid rgba(0, 0, 0, 0.3);
       font-size: 14px;
       height: 73vh;
@@ -113,6 +114,12 @@ const menuOverlay = css`
 
       p {
         margin: 0;
+      }
+
+      &__reminder {
+        font-size: 22px;
+        text-align: center;
+        font-family: Arial;
       }
 
       &__item {
@@ -188,7 +195,7 @@ const menuOverlay = css`
 `
 
 export default function Cart() {
-  const user = useSelector((store) => store.users.user)
+  const userId = useSelector((store) => store.users.userId)
   const cartItem = useSelector((store) => store.carts.cartProduct)
   const dispatch = useDispatch()
   const history = useHistory()
@@ -198,11 +205,19 @@ export default function Cart() {
   }
   const data = JSON.parse(localStorage.getItem('cartData'))
 
+  useEffect(() => {
+    if (data && data.length !== 0) {
+      dispatch(setCartProduct(data))
+    }
+  }, [dispatch])
+
   function CheckoutBtn() {
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => {
-      if (!user) {
+      if (!userId) {
+        setShow(true)
+      } else if (cartItem.length === 0) {
         setShow(true)
       } else {
         history.push('/checkout')
@@ -214,14 +229,34 @@ export default function Cart() {
           CHECKOUT
         </button>
         <Modal show={show} onHide={handleClose}>
-          <Modal.Body>Please log in first.</Modal.Body>
+          <Modal.Body>
+            {cartItem.length === 0 ? (
+              <>
+                Your cart is empty. Add something first
+                <i
+                  className="far fa-grin-squint"
+                  style={{ marginLeft: '5px' }}
+                ></i>
+              </>
+            ) : (
+              <>
+                Please log in first
+                <i
+                  className="far fa-grin-squint"
+                  style={{ marginLeft: '5px' }}
+                ></i>
+              </>
+            )}
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleLogin}>
-              Confirm
-            </Button>
+            {cartItem.length > 0 && (
+              <Button variant="primary" onClick={handleLogin}>
+                Confirm
+              </Button>
+            )}
           </Modal.Footer>
         </Modal>
       </>
@@ -233,11 +268,10 @@ export default function Cart() {
       for (let i = 0; i < data.length; i++) {
         if (cartItem.id === data[i].id) {
           data.splice(i, 1)
-          console.log(data)
           localStorage.setItem('cartData', JSON.stringify(data))
         }
       }
-      window.location.reload()
+      dispatch(setCartProduct(data))
     }
 
     return (
@@ -256,7 +290,7 @@ export default function Cart() {
           </div>
           <div className="cart__quantity">
             <p>
-              {cartItem.quantity} * {cartItem.price}
+              {cartItem.quantity} * $ {cartItem.price}
             </p>
           </div>
         </div>
@@ -280,16 +314,20 @@ export default function Cart() {
         }
       >
         <i className="fas fa-shopping-cart"></i>
-        <p>{data.length}</p>
+        <p>{cartItem.length}</p>
       </div>
       <div className={`${menuOverlay} ${isMenuOpen ? 'show' : null}`}>
         <nav>
           <h1>Cart</h1>
 
           <div className="cart">
-            {data.map((item) => (
-              <CartItem key={item.id} cartItem={item} />
-            ))}
+            {!cartItem ||
+              (cartItem.length === 0 && (
+                <p className="cart__reminder">Cart is empty ʕ•ᴥ•ʔ</p>
+              ))}
+            {cartItem &&
+              cartItem.length > 0 &&
+              data.map((item) => <CartItem key={item.id} cartItem={item} />)}
           </div>
           {/* <a href="./#/cart">
             <button className="view-cart-btn">VIEW CART</button>

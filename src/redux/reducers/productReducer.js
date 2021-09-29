@@ -90,7 +90,6 @@ export const getSpecificProducts = (category) => (dispatch) => {
 export const getProduct = (id, category) => (dispatch) => {
   dispatch(setIsLoadingProducts(true))
   const dbRef = getDatabase()
-  console.log(id, category)
   const product = query(
     ref(dbRef, `products/${category}`),
     orderByChild('id'),

@@ -8,6 +8,12 @@ import 'react-multi-carousel/lib/styles.css'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
 import { getSpecificProducts } from '../../redux/reducers/productReducer'
+import { setCartProduct } from '../../redux/reducers/cartReducer'
+import {
+  getFavoriteProducts,
+  setFavoriteProduct,
+  removeFavoriteProduct
+} from '../../redux/reducers/userReducer'
 
 const shopPageContainer = css`
   width: 100vw;
@@ -157,23 +163,42 @@ const shopPageContainer = css`
 `
 
 const bannerImages = [
-  'https://cdn.shopify.com/s/files/1/2524/0922/files/1915.110_print_1728x.jpg?v=1622211081',
-  'https://cdn.shopify.com/s/files/1/2524/0922/files/1950_cropped_1728x.jpg?v=1588016027',
-  'https://cdn.shopify.com/s/files/1/2524/0922/files/1958.47_print_d6fd88b2-7342-4851-bcba-9d856ff2d0e3.jpg?v=1622209021'
+  'https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210008.jpg?alt=media&token=99609c8e-83aa-4f2f-8f9b-93314b7c955d',
+  'https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210009.jpeg?alt=media&token=e5cce024-28e5-4e91-810d-8304d1114a35',
+  'https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210010.jpg?alt=media&token=671c8d4f-29fd-4531-922f-49f8f68f1382'
 ]
 
 function Product({ product }) {
   const history = useHistory()
-  const [isActive, setActive] = useState('false')
+  const dispatch = useDispatch()
+  const userId = useSelector((store) => store.users.userId)
   const [modalShow, setModalShow] = useState(false)
-  const user = useSelector((store) => store.users.user)
-
+  const favoriteProductsId = useSelector(
+    (store) => store.users.favoriteProductsId
+  )
   const handleToggle = () => {
-    if (user) {
-      setActive(!isActive)
-    } else {
+    let productUrl = `product/${product.category}/${product.id}`
+
+    if (!userId) {
       alert('Please log in first.')
       history.push('/login')
+    }
+
+    if (userId) {
+      if (!favoriteProductsId.includes(product.id)) {
+        dispatch(
+          setFavoriteProduct(
+            userId,
+            product.id,
+            product.title,
+            product.images[0],
+            product.price,
+            productUrl
+          )
+        )
+      } else if (favoriteProductsId.includes(product.id)) {
+        dispatch(removeFavoriteProduct(userId, product.id))
+      }
     }
   }
 
@@ -191,12 +216,11 @@ function Product({ product }) {
     if (itemExists) {
       let items = JSON.parse(localStorage.cartData)
       for (let i = 0; i < items.length; i++) {
-        if (duplicateData.id === items[i].id) {
+        if (duplicateData.id === items[i].id && items[i].quantity < 10) {
           items[i].quantity += 1
           break
         }
       }
-      localStorage.setItem('cartData', JSON.stringify(items))
     } else {
       data.push({
         id: item.id,
@@ -205,11 +229,12 @@ function Product({ product }) {
         price: item.price,
         category: item.category,
         size: item.stock[0].size,
+        stock: item.stock.quantity,
         quantity: 1
       })
       localStorage.setItem('cartData', JSON.stringify(data))
+      dispatch(setCartProduct(data))
     }
-    window.location.reload()
     setModalShow(true)
   }
 
@@ -244,10 +269,11 @@ function Product({ product }) {
     <div className="item">
       <img className="item__image" src={product.images[0]} />
       <div className="item__cover">
-        <i
-          className={isActive ? 'far fa-heart' : 'fas fa-heart'}
-          onClick={handleToggle}
-        ></i>
+        {favoriteProductsId.includes(product.id) ? (
+          <i className="fas fa-heart" onClick={handleToggle}></i>
+        ) : (
+          <i className="far fa-heart" onClick={handleToggle}></i>
+        )}
         <a href={`/#/product/${product.category}/${product.id}`}>
           <button className="quick-view-btn">QUICK VIEW</button>
         </a>
@@ -263,7 +289,7 @@ function Product({ product }) {
         />
       </div>
       <div className="item__name">{product.title}</div>
-      <div className="item__price">{product.price}</div>
+      <div className="item__price">$ {product.price}</div>
     </div>
   )
 }
@@ -275,10 +301,15 @@ export default function ShopPage() {
   const isLoadingProductsMsg = useSelector(
     (store) => store.products.isLoadingProducts
   )
+  const userId = useSelector((store) => store.users.userId)
+
   useEffect(() => {
     dispatch(getSpecificProducts(params.category))
+    if (userId) {
+      dispatch(getFavoriteProducts(userId))
+    }
     window.scrollTo(0, 0)
-  }, [params.category, dispatch])
+  }, [params.category, userId])
 
   return (
     <div className={shopPageContainer}>
@@ -310,68 +341,6 @@ export default function ShopPage() {
             {products.map((print) => (
               <Product key={print.id} product={print} />
             ))}
-
-            {/* <div className="item">
-              <img className="item__image" src={images[0]} />
-              <div className="item__cover">
-                <a href="#/product">
-                  <button className="quick-view-btn">QUICK VIEW</button>
-                </a>
-                <button className="add-to-cart-btn">ADD TO CART</button>
-              </div>
-              <div className="item__name">I'M AN ARTWORK</div>
-              <div className="item__price">TWD. 590</div>
-            </div>
-
-            <div className="item">
-              <img className="item__image" src={images[1]} />
-
-              <div className="item__cover">
-                <a href="#">
-                  <button className="quick-view-btn">QUICK VIEW</button>
-                </a>
-                <button className="add-to-cart-btn">ADD TO CART</button>
-              </div>
-              <div className="item__name">I'M AN ARTWORK</div>
-              <div className="item__price">TWD. 590</div>
-            </div>
-
-            <div className="item">
-              <img className="item__image" src={images[2]} />
-              <div className="item__cover">
-                <a href="#">
-                  <button className="quick-view-btn">QUICK VIEW</button>
-                </a>
-                <button className="add-to-cart-btn">ADD TO CART</button>
-              </div>
-              <div className="item__name">I'M AN ARTWORK</div>
-              <div className="item__price">TWD. 590</div>
-            </div>
-
-            <div className="item">
-              <img className="item__image" src={images[3]} />
-              <div className="item__cover">
-                <a href="#">
-                  <button className="quick-view-btn">QUICK VIEW</button>
-                </a>
-                <button className="add-to-cart-btn">ADD TO CART</button>
-              </div>
-              <div className="item__name">I'M AN ARTWORK</div>
-              <div className="item__price">TWD. 590</div>
-            </div>
-
-            <div className="item">
-              <img className="item__image" src={images[0]} />
-
-              <div className="item__cover">
-                <a href="#">
-                  <button className="quick-view-btn">QUICK VIEW</button>
-                </a>
-                <button className="add-to-cart-btn">ADD TO CART</button>
-              </div>
-              <div className="item__name">I'M AN ARTWORK</div>
-              <div className="item__price">TWD. 590</div>
-            </div> */}
           </div>
         )}
 

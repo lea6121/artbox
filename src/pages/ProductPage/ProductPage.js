@@ -8,11 +8,16 @@ import { Carousel as SliderCarousel } from 'react-responsive-carousel'
 import Carousel from 'react-multi-carousel'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
-// import { setCartProduct } from '../../redux/reducers/cartReducer'
+import { setCartProduct } from '../../redux/reducers/cartReducer'
 import {
   getProduct,
   getSuggestProduct
 } from '../../redux/reducers/productReducer'
+import {
+  getFavoriteProducts,
+  setFavoriteProduct,
+  removeFavoriteProduct
+} from '../../redux/reducers/userReducer'
 
 const productPageContainer = css`
   font-family: Baskerville;
@@ -216,7 +221,7 @@ function Product({ product }) {
         </a>
       </div>
       <div className="item__name">{product.title}</div>
-      <div className="item__price">{product.price}</div>
+      <div className="item__price">$ {product.price}</div>
     </div>
   )
 }
@@ -225,32 +230,49 @@ export default function ProductPage() {
   const history = useHistory()
   const dispatch = useDispatch()
   const params = useParams()
-  const user = useSelector((store) => store.users.user)
+  const userId = useSelector((store) => store.users.userId)
   const product = useSelector((store) => store.products.product)
   const suggestProducts = useSelector((store) => store.products.suggestProducts)
   const isLoadingProductsMsg = useSelector(
     (store) => store.products.isLoadingProducts
   )
-  const [isActive, setActive] = useState('false')
   const [count, setCount] = useState(1)
   const [modalShow, setModalShow] = useState(false)
+  const favoriteProductsId = useSelector(
+    (store) => store.users.favoriteProductsId
+  )
 
   const handleToggle = () => {
-    if (user) {
-      setActive(!isActive)
-    } else {
+    let productUrl = `product/${product[0].category}/${product[0].id}`
+
+    if (!userId) {
       alert('Please log in first.')
       history.push('/login')
     }
-  }
 
-  console.log(product.images)
+    if (userId) {
+      if (!favoriteProductsId.includes(product[0].id)) {
+        dispatch(
+          setFavoriteProduct(
+            userId,
+            product[0].id,
+            product[0].title,
+            product[0].images[0],
+            product[0].price,
+            productUrl
+          )
+        )
+      } else if (favoriteProductsId.includes(product.id)) {
+        dispatch(removeFavoriteProduct(userId, product.id))
+      }
+    }
+  }
   function Counter() {
     // Set the initial count state to zero, 0
-    console.log(product[0].stock[0].quantity)
     // Create handleIncrement event handler
     const handleIncrement = () => {
-      if (count < product[0].stock[0].quantity) {
+      let maximum = 10
+      if (count < maximum) {
         setCount((prevCount) => prevCount + 1)
       }
     }
@@ -303,6 +325,7 @@ export default function ProductPage() {
         }
       }
       localStorage.setItem('cartData', JSON.stringify(items))
+      dispatch(setCartProduct(items))
     } else {
       data.push({
         id: item.id,
@@ -311,11 +334,12 @@ export default function ProductPage() {
         price: item.price,
         category: item.category,
         size: item.stock[0].size,
+        stock: item.stock.quantity,
         quantity: count
       })
       localStorage.setItem('cartData', JSON.stringify(data))
+      dispatch(setCartProduct(data))
     }
-    window.location.reload()
     setModalShow(true)
   }
 
@@ -373,11 +397,12 @@ export default function ProductPage() {
             <div className="product">
               <h1 className="product__title">{product[0].title}</h1>
               <div>
-                <p className="product__price">{product[0].price}</p>
-                <i
-                  className={isActive ? 'far fa-heart' : 'fas fa-heart'}
-                  onClick={handleToggle}
-                ></i>
+                <p className="product__price">$ {product[0].price}</p>
+                {favoriteProductsId.includes(product[0].id) ? (
+                  <i className="fas fa-heart" onClick={handleToggle}></i>
+                ) : (
+                  <i className="far fa-heart" onClick={handleToggle}></i>
+                )}
               </div>
               <p className="product__size">Size</p>
               <select

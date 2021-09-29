@@ -28,7 +28,7 @@ const collectionsPageContainer = css`
       position: relative;
       max-width: 100vw;
       height: 80vh;
-      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chinese_Painting_-_Flickr_-_Jaykhuang.jpg/1280px-Chinese_Painting_-_Flickr_-_Jaykhuang.jpg');
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210006.jpeg?alt=media&token=bd749c5b-258a-49f8-8d55-31868b5638e8');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: top;
@@ -191,15 +191,9 @@ const categories = [
 ]
 
 function Collection({ collection }) {
-  const location = useLocation()
-  // console.log(location)
   return (
     <>
-      <a
-        href={`/#/collection/${collection.id}`}
-        className="collection"
-        // to={`/collections/${collection.id}`}
-      >
+      <a href={`/#/collection/${collection.id}`} className="collection">
         {collection.images ? (
           <img
             className="collection__image"
@@ -296,7 +290,7 @@ export default function CollectionPage() {
     return (
       <div className="pagination-container">
         <div className="btn-group me-2" role="group">
-          {pageNumbers.slice(0, 5).map((value, index) => (
+          {pageNumbers.slice(0, 10).map((value, index) => (
             <button
               className="btn btn-outline-dark"
               key={value}

@@ -19,7 +19,7 @@ const homePageContainer = css`
       width: 100%;
       height: 100%;
       position: relative;
-      background-image: url('https://www.chinaoilpaintinggallery.com/image/oilpainting/claude-monet/camille-monet-at-the-window-argentuil.jpg');
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210001.jpeg?alt=media&token=9ff04126-0ba9-4d91-97d4-215752bf375a');
       background-repeat: repeat-x;
       background-size: contain;
       background-position: left;
@@ -178,7 +178,7 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/1024px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210002.jpeg?alt=media&token=603970b0-a8f6-4376-8dd2-25bd088c61e4"
                 alt="content"
               />
               <div className="content__mask">search collections.</div>
@@ -188,17 +188,17 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://live.staticflickr.com/1910/45456642921_b878d0fa2a_b.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210003.jpeg?alt=media&token=f03cbdb4-2d25-4ff6-b769-1219d77acdd2"
                 alt="content"
               />
               <div className="content__mask">about.</div>
             </div>
           </a>
-          <a href="./#/products/prints" className="contents__tag">
+          <a href="./#/shop" className="contents__tag">
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://live.staticflickr.com/1567/23650403730_3b766eec9f_b.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210004.jpeg?alt=media&token=58a3c13d-6eb5-4261-9593-cdce8f5e62d0"
                 alt="item"
               />
               <div className="content__mask">shop online store.</div>
@@ -212,7 +212,7 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="http://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/5992729/0/637630960939200000?v=1"
+                src="https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210005.jpeg?alt=media&token=115aeb9f-a3f4-41a1-a9fc-429dea2c60e0"
                 alt="content"
               />
               <div className="content__cover">

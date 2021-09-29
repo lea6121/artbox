@@ -169,8 +169,8 @@ export default function LoginPage() {
   const dispatch = useDispatch()
   const isLoadingMsg = useSelector((store) => store.users.isLoading)
   const errorMsg = useSelector((store) => store.users.loginError)
-  const user = useSelector((state) => state.users.user)
-  if (user !== null) {
+  const userId = useSelector((state) => state.users.userId)
+  if (userId !== null) {
     history.push('/')
   }
   function formValidation() {

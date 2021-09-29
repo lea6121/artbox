@@ -10,7 +10,7 @@ const loading = css`
   width: 100vw;
   height: 100%;
   z-index: 2;
-  background-image: url('https://2.bp.blogspot.com/-UFDt9YzEa5I/Vg6tACoYYLI/AAAAAAAAGZc/zpeRoLh3iUI/s1600/all%2Bsides.gif');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210000.gif?alt=media&token=3fc61fc1-7685-4a4c-ad27-8eeac3aff9dd');
   background-position: 50% 50%;
   background-size: 160px;
   background-repeat: no-repeat;
