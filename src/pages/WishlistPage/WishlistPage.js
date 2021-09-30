@@ -23,10 +23,9 @@ const wishlistPageContainer = css`
   .wishlist {
     position: relative;
     margin: 50px auto;
-    width: 1120px;
+    max-width: 1080px;
     background: white;
     padding: 0 50px 50px;
-    ${'' /* border: 1px solid rgba(0, 0, 0, 0.4); */}
     box-shadow: -7px -7px 0px 0px gold;
 
     ${
@@ -70,9 +69,10 @@ const wishlistPageContainer = css`
       text-align: center;
 
       h1 {
-        font-size: 38px;
+        font-size: 34px;
         text-align: left;
         padding: 0 10px;
+        font-weight:300;
       }
 
       a {
@@ -139,11 +139,13 @@ export default function WishlistPage() {
   useEffect(() => {
     if (userId) {
       dispatch(getFavoriteProducts(userId))
-    } else {
-      alert('Please log in first!')
-      history.push('/login')
     }
   }, [userId])
+
+  if (!userId) {
+    alert('Please log in first!')
+    history.push('/login')
+  }
 
   return (
     <div className={wishlistPageContainer}>
@@ -155,17 +157,15 @@ export default function WishlistPage() {
           <h1>MY WISHLIST.</h1>
         </div>
 
-        <div className="product">
-          <p></p>
-          <p className="product__image">Product Image</p>
-          <p className="product__title">Product Name</p>
-          <p className="product__price">Price</p>
-        </div>
-
-        {favoriteProducts.length === 0 && (
-          <p className="reminder">
-            Wishlist is empty ʕ•ᴥ•ʔ Add something new ?
-          </p>
+        {favoriteProducts.length === 0 ? (
+          <p className="reminder">List is empty ʕ•ᴥ•ʔ Add something new ?</p>
+        ) : (
+          <div className="product">
+            <p></p>
+            <p className="product__image">Product Image</p>
+            <p className="product__title">Product Name</p>
+            <p className="product__price">Price</p>
+          </div>
         )}
 
         {favoriteProducts.map((product) => (

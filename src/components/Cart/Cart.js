@@ -9,9 +9,9 @@ const cartContainer = css`
   position: relative;
 
   .mask {
-    position: absolute;
+    position: fixed;
     z-index: 3;
-    background: black;
+    background-color: rgba(0, 0, 0, 0.3);
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -124,10 +124,10 @@ const menuOverlay = css`
       }
 
       &__item {
-        margin: 0 auto 10px;
+        margin: 0 auto 15px;
         display: grid;
         grid-template-columns: 32% 58% 10%;
-        grid-gap: 3px 5px;
+        grid-gap: 10px;
         justify-content: center;
         align-items: center;
         max-height: 150px;

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import 'react-multi-carousel/lib/styles.css'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
-import { getUserOrders, setIsLoading } from '../../redux/reducers/userReducer'
+import { getUserOrders } from '../../redux/reducers/userReducer'
 
 const orderlistPageContainer = css`
   width: 100vw;
@@ -18,7 +18,7 @@ const orderlistPageContainer = css`
   .orderlist {
     position: relative;
     margin: 50px auto;
-    width: 1120px;
+    max-width: 1080px;
     background: white;
     padding: 0 50px 50px;
     border: 1px solid rgba(0, 0, 0, 0.4);
@@ -64,9 +64,10 @@ const orderlistPageContainer = css`
       text-align: center;
 
       h1 {
-        font-size: 38px;
+        font-size: 34px;
         text-align: left;
         padding: 0 10px;
+        font-weight: 100;
       }
 
       a {
@@ -154,22 +155,6 @@ const orderlistPageContainer = css`
   }
 `
 
-const menuOverlay = css`
-  z-index: 3;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  background-color: white;
-  height: 100vh;
-  width: 400px;
-  transform: translateX(100%);
-  transition: all 450ms ease-in-out;
-
-  &.show {
-    transform: translateX(0%);
-  }
-`
-
 function Product({ product }) {
   const totalPrice = product.price * product.quantity
   return (
@@ -230,18 +215,19 @@ export default function WishlistPage() {
   const userId = useSelector((store) => store.users.userId)
   const isLoadingMsg = useSelector((store) => store.users.isLoading)
   console.log(isLoadingMsg)
+
   useEffect(() => {
     if (userId) {
       dispatch(getUserOrders(userId))
-    } else {
-      alert('Please log in first!')
-      history.push('/login')
     }
   }, [userId])
 
-  if (userOrders) {
-    console.log(userOrders)
-  }
+  useEffect(() => {
+    if (!userId) {
+      alert('Please log in first!')
+      history.push('/login')
+    }
+  }, [])
 
   return (
     <div className={orderlistPageContainer}>
@@ -253,18 +239,16 @@ export default function WishlistPage() {
           <h1>MY ORDERS.</h1>
         </div>
 
-        <div className="order">
-          <p className="order__date">Order Date</p>
-          <p className="order__id">Order Id</p>
-          <p className="order__payment-type">Payment Type</p>
-          <p className="order__order-condition">Shipment</p>
-          <p className="order__total">Subtotal</p>
-        </div>
-
-        {userOrders.length === 0 && (
-          <p className="reminder">
-            Orderlist is empty ʕ•ᴥ•ʔ Buy something new ?
-          </p>
+        {userOrders.length === 0 ? (
+          <p className="reminder">List is empty ʕ•ᴥ•ʔ Buy something new ?</p>
+        ) : (
+          <div className="order">
+            <p className="order__date">Order Date</p>
+            <p className="order__id">Order Id</p>
+            <p className="order__payment-type">Payment Type</p>
+            <p className="order__order-condition">Shipment</p>
+            <p className="order__total">Subtotal</p>
+          </div>
         )}
 
         {userOrders.map((order) => (

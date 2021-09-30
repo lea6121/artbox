@@ -369,7 +369,7 @@ export default function CollectionPage() {
               </li>
             </div>
           )}
-          {(currentSearch || currentCategory) && (
+          {(currentSearch || currentCategory) && collections.length !== 0 && (
             <h1>The results for "{currentSearch || currentCategory}"</h1>
           )}
 
