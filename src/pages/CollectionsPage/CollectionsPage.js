@@ -1,14 +1,14 @@
 import { css } from '@emotion/css'
+import styled from 'styled-components'
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
 import {
   getCollections,
   getSpecificCollections,
-  searchCollections,
-  setCurrentPageNum
+  searchCollections
 } from '../../redux/reducers/collectionReducer'
 
 const collectionsPageContainer = css`
@@ -21,6 +21,11 @@ const collectionsPageContainer = css`
     left: 10px;
     /* display: none; */
   }
+  a:active {
+    background: rgba(36, 35, 35, 0.9);
+    color: white;
+  }
+
   .collection {
     &__banner {
       width: 100vw;
@@ -168,6 +173,27 @@ const collectionsPageContainer = css`
     text-align: center;
   }
 `
+
+const Nav = styled(Link)`
+  border-left: 1px solid black;
+  box-sizing: border-box;
+  padding: 35px 40px 35px 40px;
+  font-size: 20px;
+  text-align: center;
+  color: #010101;
+  display: flex;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  text-decoration: none;
+
+  ${(props) =>
+    props.$active &&
+    `
+    background: rgba(36, 35, 35, 0.9);
+    color: white;
+    `};
+`
+
 const categories = [
   'African Art ',
   'American Painting and Sculpture ',
@@ -219,9 +245,9 @@ function Collection({ collection }) {
   )
 }
 
-export default function CollectionPage() {
+export default function CollectionsPage() {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const params = useParams()
   const collections = useSelector((store) => store.collections.collections)
   const isLoadingCollectionsMsg = useSelector(
     (store) => store.collections.isLoadingCollections
@@ -230,14 +256,12 @@ export default function CollectionPage() {
   const currentCategory = useSelector(
     (store) => store.collections.currentCategory
   )
-  // const currentPage = useSelector((store) => store.collections.currentPage)
   const [value, setValue] = useState()
-  const [currentPage, setCurrentPage] = useState(1)
 
-  // const [currentSearch, setCurrentSearch] = useState('')
   const handleClick = (e) => {
     let category = e.target.innerText
     dispatch(getSpecificCollections(category, 0))
+    window.location.replace('#/collections/1')
     window.scrollTo(0, 700)
   }
 
@@ -249,7 +273,7 @@ export default function CollectionPage() {
     e.preventDefault()
     if (!value) return
     dispatch(searchCollections(value, 0))
-    // setCurrentSearch(value)
+    window.location.replace('#/collections/1')
     setValue('')
   }
 
@@ -264,9 +288,7 @@ export default function CollectionPage() {
   }
 
   function changePage(e) {
-    const currentPageNum = Number(e.target.innerText)
-    console.log(currentPageNum)
-    setCurrentPage(currentPageNum)
+    let currentPageNum = Number(e.target.innerText)
     if (currentSearch) {
       dispatch(searchCollections(currentSearch, (currentPageNum - 1) * 24))
     } else if (currentCategory) {
@@ -276,6 +298,9 @@ export default function CollectionPage() {
     } else {
       dispatch(getCollections((currentPageNum - 1) * 24))
     }
+
+    window.location.replace(`#/collections/${currentPageNum}`)
+
     window.scrollTo(0, 300)
   }
 
@@ -305,15 +330,15 @@ export default function CollectionPage() {
       </div>
     )
   }
-  useEffect(() => {
-    console.log(currentPage)
 
+  useEffect(() => {
+    // console.log(currentPage)
     if (currentSearch) {
-      dispatch(searchCollections(currentSearch, (currentPage - 1) * 24))
+      dispatch(searchCollections(currentSearch, (params.page - 1) * 24))
     } else if (currentCategory) {
-      dispatch(getSpecificCollections(currentCategory, (currentPage - 1) * 24))
+      dispatch(getSpecificCollections(currentCategory, (params.page - 1) * 24))
     } else {
-      dispatch(getCollections((currentPage - 1) * 24))
+      dispatch(getCollections((params.page - 1) * 24))
       window.scrollTo(0, 0)
     }
   }, [])
@@ -323,12 +348,7 @@ export default function CollectionPage() {
       {isLoadingCollectionsMsg && <Loading></Loading>}
       <div className="collection__banner">
         <h1>THE COLLECTION</h1>
-        {/* <p>
-          Explore thousands of artworks in the museum’s wide-ranging
-          collection—from our world-renowned icons to lesser-known gems from
-          every corner of the globe—as well as our books, writings, reference
-          materials, and other resources.
-        </p> */}
+
         <div className="input-group flex-nowrap">
           <br />
           <form onSubmit={handleFormSubmit}>

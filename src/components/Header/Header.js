@@ -187,7 +187,7 @@ export default function Header() {
           </a>
         </div>
         <nav className="icons">
-          <a href="./#/collections">
+          <a href="./#/collections/1">
             <i className="fas fa-images"></i>
             <div>Collections</div>
           </a>

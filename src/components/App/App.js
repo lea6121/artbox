@@ -48,7 +48,7 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route path="/collections">
+          <Route path="/collections/:page">
             <CollectionsPage />
           </Route>
           <Route path="/collection/:id">
