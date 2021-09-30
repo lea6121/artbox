@@ -25,7 +25,8 @@ const initialState = {
   loginError: '',
   logoutError: '',
   favoriteProducts: [],
-  favoriteProductsId: []
+  favoriteProductsId: [],
+  userOrders: []
 }
 
 export const userReducer = createSlice({
@@ -69,6 +70,9 @@ export const userReducer = createSlice({
     },
     setFavoriteProductsId: (state, action) => {
       state.favoriteProductsId = action.payload
+    },
+    setUserOrders: (state, action) => {
+      state.userOrders = action.payload
     }
   }
 })
@@ -83,7 +87,8 @@ export const {
   setLoginError,
   setLogoutError,
   setFavoriteProducts,
-  setFavoriteProductsId
+  setFavoriteProductsId,
+  setUserOrders
 } = userReducer.actions
 
 export const register = (data) => (dispatch) => {
@@ -91,13 +96,10 @@ export const register = (data) => (dispatch) => {
   createUserWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
       dispatch(setIsLoading(false))
-      const user = userCredential.user
-      const token = userCredential.user.accessToken
-      data.history.push('/')
+      // data.history.push('/')
     })
     .catch((error) => {
       dispatch(setIsLoading(false))
-      const errorCode = error.code
       const errorMessage = error.message
       return dispatch(setRegisterError(errorMessage))
     })
@@ -108,9 +110,6 @@ export const register = (data) => (dispatch) => {
         (userCredential) => {
           dispatch(setIsLoading(false))
           // Signed in
-          const user = userCredential.user
-          console.log(user.uid)
-          const token = userCredential.user.accessToken
           dispatch(setRegisterError(''))
           data.history.push('/')
         }
@@ -118,7 +117,6 @@ export const register = (data) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(setIsLoading(false))
-      const errorCode = error.code
       const errorMessage = error.message
       return dispatch(setLoginError(errorMessage))
     })
@@ -133,9 +131,9 @@ export const loginWithEmail = (data) => (dispatch) => {
           dispatch(setIsLoading(false))
           // Signed in
           const user = userCredential.user
-          // const token = userCredential.user.accessToken
-          // console.log('Login with email', token)
-          // console.log('Login with email', user)
+          console.log('Login with email', user)
+          console.log(user.uid)
+          dispatch(setUserId(user.id))
           dispatch(setRegisterError(''))
           data.history.push('/')
         }
@@ -143,9 +141,7 @@ export const loginWithEmail = (data) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(setIsLoading(false))
-      const errorCode = error.code
       const errorMessage = error.message
-      // console.log(errorMessage)
       return dispatch(setLoginError(errorMessage))
     })
 }
@@ -155,21 +151,14 @@ export const loginWithGoogle = (data) => (dispatch) => {
   signInWithPopup(auth, provider)
     .then((result) => {
       dispatch(setIsLoading(false))
-      const credential = GoogleAuthProvider.credentialFromResult(result)
-      // const token = credential.accessToken
       const user = result.user
-      // console.log('Login with google', token)
-      console.log('Login with google', user.uid)
       dispatch(setUserId(user.uid))
       data.history.push('/')
     })
     .catch((error) => {
       // Handle Errors here.
       dispatch(setIsLoading(false))
-      const errorCode = error.code
       const errorMessage = error.message
-      const email = error.email
-      const credential = GoogleAuthProvider.credentialFromError(error)
       return dispatch(setLoginError(errorMessage))
     })
 }
@@ -216,7 +205,6 @@ export const getFavoriteProducts = (userId) => (dispatch) => {
   const dbRef = getDatabase()
   const favoriteRef = ref(dbRef, `favorite-products/${userId}/`)
   onValue(favoriteRef, (snapshot) => {
-    dispatch(setIsLoading(false))
     let arr = []
     let arrayId = []
     snapshot.forEach(function (item) {
@@ -226,5 +214,43 @@ export const getFavoriteProducts = (userId) => (dispatch) => {
     dispatch(setFavoriteProducts(arr))
     dispatch(setFavoriteProductsId(arrayId))
   })
+  dispatch(setIsLoading(false))
 }
+
+export const setOrder = (userId, order, formData, subtotal) => () => {
+  const db = getDatabase()
+  let date = new Date()
+
+  const formatDate = (currentTime) => {
+    let formattedDate = `${currentTime.getFullYear()}-${
+      currentTime.getMonth() + 1
+    }-${currentTime.getDate()} ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`
+    return formattedDate
+  }
+
+  set(ref(db, 'orders/' + userId + '/' + Date.now()), {
+    orderId: Date.now(),
+    orderDate: formatDate(date),
+    orderLocalTime: date.toLocaleString(),
+    order,
+    subtotal,
+    formData,
+    shipment: 'Not yet shipped'
+  })
+}
+
+export const getUserOrders = (userId) => (dispatch) => {
+  const dbRef = getDatabase()
+  dispatch(setIsLoading(true))
+  const orderRef = ref(dbRef, `orders/${userId}/`)
+  onValue(orderRef, (snapshot) => {
+    let arr = []
+    snapshot.forEach(function (item) {
+      arr.push(item.val())
+    })
+    dispatch(setUserOrders(arr))
+    dispatch(setIsLoading(false))
+  })
+}
+
 export default userReducer.reducer

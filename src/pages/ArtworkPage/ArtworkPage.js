@@ -12,7 +12,7 @@ const artworkPageContainer = css`
   width: 100vw;
   height: 1000px;
   font-family: Serif;
-  background-image: url('https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210007.webp?alt=media&token=f8701af1-d542-4804-945d-f64171d245ce');
+  background-image: url('https://raw.githubusercontent.com/lea6121/img-storage/main/image/210007.webp');
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -26,7 +26,7 @@ const artworkContainer = css`
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 1280px;
-  padding: 10px 30px;
+  padding: 30px 30px 0px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
   display: grid;
@@ -134,17 +134,16 @@ const artworkContainer = css`
 
 export default function CollectionPage() {
   const dispatch = useDispatch()
-  const history = useHistory()
   const artwork = useSelector((store) => store.collections.artwork)
   const params = useParams()
   const isLoadingCollectionsMsg = useSelector(
     (store) => store.collections.isLoadingCollections
   )
   const [showCreator, setShowCreator] = useState(false)
-  const onclickShowCreatorBtn = () =>
+  const showCreatorBtn = () =>
     showCreator ? setShowCreator(false) : setShowCreator(true)
   const [showDescription, setShowDescription] = useState(false)
-  const onclickShowDescriptionBtn = () =>
+  const showDescriptionBtn = () =>
     showDescription ? setShowDescription(false) : setShowDescription(true)
 
   useEffect(() => {
@@ -184,7 +183,7 @@ export default function CollectionPage() {
               </SRLWrapper>
             ) : (
               <img
-                src="https://eagle-sensors.com/wp-content/uploads/unavailable-image.jpg"
+                src="https://github.com/lea6121/img-storage/blob/main/image/210011.jpeg?raw=true"
                 alt={artwork.title}
               />
             )}
@@ -220,7 +219,7 @@ export default function CollectionPage() {
                   artwork.creators.map(
                     (creator) =>
                       creator.biography && (
-                        <button onClick={onclickShowCreatorBtn}>+</button>
+                        <button onClick={showCreatorBtn}>+</button>
                       )
                   )}
               </div>
@@ -231,7 +230,7 @@ export default function CollectionPage() {
               <div className="artwork__description">
                 <div className="artwork__description__title">
                   <p>Description</p>
-                  <button onClick={onclickShowDescriptionBtn}>+</button>
+                  <button onClick={showDescriptionBtn}>+</button>
                 </div>
                 {showDescription ? <Description /> : null}
               </div>

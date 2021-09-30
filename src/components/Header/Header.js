@@ -191,14 +191,6 @@ export default function Header() {
             <i className="fas fa-images"></i>
             <div>Collections</div>
           </a>
-          {/* <a href="./#/shop?type=tickets">
-            <img
-              className="icon icon__ticket"
-              src="https://www.vippng.com/png/detail/414-4142418_png-file-ticket-vector-icon.png"
-              alt="icon"
-            />
-            <div>buy ticket</div>
-          </a> */}
           <a href="./#/shop">
             <i className="fas fa-store"></i>
             <div>Shop</div>
@@ -218,7 +210,7 @@ export default function Header() {
                 <button>User</button>
                 <div className="dropbox">
                   <a href="./#/wishlist">WISHLIST</a>
-                  <a href="./#/user?">訂單查詢</a>
+                  <a href="./#/orders">ORDER</a>
                   <LogoutBtn />
                 </div>
               </div>

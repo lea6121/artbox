@@ -1,7 +1,8 @@
 import { css } from '@emotion/css'
-// import { useEffect } from 'react'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { setUserId } from '../../redux/reducers/userReducer'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
@@ -14,8 +15,7 @@ import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 import CheckoutPage from '../../pages/CheckoutPage'
 import WishlistPage from '../../pages/WishlistPage'
-import { setUserId } from '../../redux/reducers/userReducer'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import OrdersPage from '../../pages/OrdersPage'
 
 const root = css`
   margin: 0 auto;
@@ -23,24 +23,22 @@ const root = css`
   position: relative;
   height: 100vh;
 `
-const auth = getAuth()
 
 function App() {
+  const auth = getAuth()
   const dispatch = useDispatch()
+  const userId = useSelector((state) => state.users.userId)
+  const expiredTime = 1000 * 60 * 60
 
-  // useEffect(() => {
-  //   // 有 token 才 call api
-  //   if (getAuthToken()) {
-  //     dispatch(getUser())
-  //   }
-  // }, [])
+  setTimeout(function () {
+    localStorage.removeItem('cartData')
+  }, expiredTime)
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       dispatch(setUserId(user.uid))
     }
   })
-  const userId = useSelector((state) => state.users.userId)
 
   return (
     <div className={root} value={{ userId, setUserId }}>
@@ -76,6 +74,9 @@ function App() {
           </Route>
           <Route path="/wishlist">
             <WishlistPage />
+          </Route>
+          <Route path="/orders">
+            <OrdersPage />
           </Route>
         </Switch>
         <Footer />

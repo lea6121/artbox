@@ -7,15 +7,16 @@ import { setCartProduct } from '../../redux/reducers/cartReducer'
 
 const cartContainer = css`
   position: relative;
-`
-const mask = css`
-  position: absolute;
-  z-index: 3;
-  background: rgba(0, 0, 0, 0.7);
-  width: 100vw;
-  height: -webkit-fill-available;
-  top: 0;
-  left: 0;
+
+  .mask {
+    position: absolute;
+    z-index: 3;
+    background: black;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+  }
 `
 const easeSlow = css`
   transition: all 460ms ease-in-out;
@@ -213,7 +214,14 @@ export default function Cart() {
 
   function CheckoutBtn() {
     const [show, setShow] = useState(false)
-    const handleClose = () => setShow(false)
+    const handleClose = () => {
+      if (!cartItem || cartItem.length === 0) {
+        history.push('/shop')
+        setShow(false)
+      }
+      setShow(false)
+    }
+
     const handleShow = () => {
       if (!userId) {
         setShow(true)
@@ -306,7 +314,7 @@ export default function Cart() {
 
   return (
     <div className={cartContainer}>
-      {isMenuOpen && <div className={`${mask}`}></div>}
+      {isMenuOpen && <div className="mask"></div>}
       <div
         className={`${menuBtn} ${isMenuOpen ? 'closer' : null}`}
         onClick={
@@ -321,10 +329,9 @@ export default function Cart() {
           <h1>Cart</h1>
 
           <div className="cart">
-            {!cartItem ||
-              (cartItem.length === 0 && (
-                <p className="cart__reminder">Cart is empty ʕ•ᴥ•ʔ</p>
-              ))}
+            {(!cartItem || cartItem.length === 0) && (
+              <p className="cart__reminder">Cart is empty ʕ•ᴥ•ʔ</p>
+            )}
             {cartItem &&
               cartItem.length > 0 &&
               data.map((item) => <CartItem key={item.id} cartItem={item} />)}

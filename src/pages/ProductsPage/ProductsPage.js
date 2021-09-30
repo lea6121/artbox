@@ -163,9 +163,9 @@ const shopPageContainer = css`
 `
 
 const bannerImages = [
-  'https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210008.jpg?alt=media&token=99609c8e-83aa-4f2f-8f9b-93314b7c955d',
-  'https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210009.jpeg?alt=media&token=e5cce024-28e5-4e91-810d-8304d1114a35',
-  'https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210010.jpg?alt=media&token=671c8d4f-29fd-4531-922f-49f8f68f1382'
+  'https://github.com/lea6121/img-storage/blob/main/image/210008.jpg?raw=true',
+  'https://github.com/lea6121/img-storage/blob/main/image/210009.jpeg?raw=true',
+  'https://github.com/lea6121/img-storage/blob/main/image/210010.jpg?raw=true'
 ]
 
 function Product({ product }) {

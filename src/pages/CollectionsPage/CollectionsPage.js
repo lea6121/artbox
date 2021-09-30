@@ -1,6 +1,6 @@
 import { css } from '@emotion/css'
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
@@ -28,7 +28,7 @@ const collectionsPageContainer = css`
       position: relative;
       max-width: 100vw;
       height: 80vh;
-      background-image: url('https://firebasestorage.googleapis.com/v0/b/artbox-b25a6.appspot.com/o/products_images%2F210006.jpeg?alt=media&token=bd749c5b-258a-49f8-8d55-31868b5638e8');
+      background-image: url('https://github.com/lea6121/img-storage/blob/main/image/210006.jpeg?raw=true');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: top;
@@ -96,10 +96,11 @@ const collectionsPageContainer = css`
         font-family: Georgia, 'Times New Roman', Times, serif;
 
         & > h1 {
+          font-family: serif;
           text-align: left;
           margin: 30px;
-          font-size: 28px;
-          font-style: italic;
+          font-size: 24px;
+          ${'' /* font-style: italic; */}
           color: rgba(0, 0, 0, 0.8);
         }
 
@@ -202,7 +203,7 @@ function Collection({ collection }) {
           />
         ) : (
           <img
-            src="https://eagle-sensors.com/wp-content/uploads/unavailable-image.jpg"
+            src="https://github.com/lea6121/img-storage/blob/main/image/210011.jpeg?raw=true"
             alt="no-img"
           />
         )}
@@ -220,6 +221,7 @@ function Collection({ collection }) {
 
 export default function CollectionPage() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const collections = useSelector((store) => store.collections.collections)
   const isLoadingCollectionsMsg = useSelector(
     (store) => store.collections.isLoadingCollections
@@ -303,9 +305,9 @@ export default function CollectionPage() {
       </div>
     )
   }
-
   useEffect(() => {
     console.log(currentPage)
+
     if (currentSearch) {
       dispatch(searchCollections(currentSearch, (currentPage - 1) * 24))
     } else if (currentCategory) {
@@ -367,9 +369,10 @@ export default function CollectionPage() {
               </li>
             </div>
           )}
-          {/* ) : (
+          {(currentSearch || currentCategory) && (
             <h1>The results for "{currentSearch || currentCategory}"</h1>
-          )} */}
+          )}
+
           {collections.length > 0 && (
             <div className="collections">
               {collections.map((collection) => (

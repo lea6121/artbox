@@ -16,8 +16,9 @@ const wishlistPageContainer = css`
   font-family: 'Gill Sans';
   font-weight: 300;
   border: 1px solid transparent;
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom: 1px solid white;
+ background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid white; 
+  }
 
   .wishlist {
     position: relative;
@@ -25,8 +26,8 @@ const wishlistPageContainer = css`
     width: 1120px;
     background: white;
     padding: 0 50px 50px;
-    ${'' /* border: 1px solid rgba(0, 0, 0, 0.2); */}
-    box-shadow: -10px -10px 0px 1px gold;
+    ${'' /* border: 1px solid rgba(0, 0, 0, 0.4); */}
+    box-shadow: -7px -7px 0px 0px gold;
 
     ${
       '' /* &__right-dot {
@@ -69,7 +70,7 @@ const wishlistPageContainer = css`
       text-align: center;
 
       h1 {
-        font-size: 48px;
+        font-size: 38px;
         text-align: left;
         padding: 0 10px;
       }

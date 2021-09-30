@@ -1,12 +1,7 @@
 import { css } from '@emotion/css'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router'
-import Loading from '../../components/Loading'
-import {
-  register,
-  loginWithGoogle,
-  setregisterError
-} from '../../redux/reducers/userReducer'
+import { register, loginWithGoogle } from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const registerPageContainer = css`
@@ -20,7 +15,6 @@ const registerPageContainer = css`
     margin: 40px auto;
     max-width: 460px;
     padding: 20px 50px 20px 50px;
-    ${'' /* border: 1px solid grey; */}
 
     h1 {
       font-weight: 500;
@@ -166,16 +160,15 @@ export default function RegisterPage() {
   }
   const [errors, setErrors] = useState('')
   const { emailMsg, passwordMsg } = errors
-
   const history = useHistory()
   const dispatch = useDispatch()
-  // const isLoadingMsg = useSelector((store) => store.users.isLoading)
   const errorMsg = useSelector((store) => store.users.registerError)
-  const user = useSelector((state) => state.users.user)
+  const userId = useSelector((state) => state.users.userId)
 
-  if (user !== null) {
+  if (userId !== null) {
     history.push('/')
   }
+
   const handleGoogle = () => {
     dispatch(loginWithGoogle({ history }))
   }
@@ -185,7 +178,8 @@ export default function RegisterPage() {
     let formIsValid = true
 
     // 信箱驗證
-    const isEmail = /^([\w]+)(.[\w]+)*@([\w]+)(.[\w]{2,3}){1,2}$/
+    const isEmail =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
     if (!isEmail.test(email)) {
       formIsValid = false
@@ -211,22 +205,12 @@ export default function RegisterPage() {
 
   const [showRegisterForm, setShowRegisterForm] = useState(false)
 
-  const onclickShowregisterFormBtn = () =>
+  const showRegisterFormBtn = () =>
     showRegisterForm ? setShowRegisterForm(false) : setShowRegisterForm(true)
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(setregisterError(null))
-  //   }
-  // }, [dispatch])
 
   return (
     <div className={registerPageContainer}>
-      {/* {isLoadingMsg && <Loading></Loading>} */}
       <div className="register-wrapper">
-        {/* <button className="cross-btn">
-          <i class="fas fa-times"></i>
-        </button> */}
         <h1>Sign Up</h1>
         <p>
           Already a member? <a href="./#/login">Log In</a>
@@ -289,7 +273,7 @@ export default function RegisterPage() {
             </div>
             <button
               className="register-with-email"
-              onClick={onclickShowregisterFormBtn}
+              onClick={showRegisterFormBtn}
             >
               Sign up with email
             </button>

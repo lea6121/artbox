@@ -2,11 +2,8 @@ import { css } from '@emotion/css'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setCartProduct,
-  setCartTotal
-  // calculateCartTotal
-} from '../../redux/reducers/cartReducer'
+import { setCartProduct, setCartTotal } from '../../redux/reducers/cartReducer'
+import { setOrder } from '../../redux/reducers/userReducer'
 
 const container = css`
   max-width: 1180px;
@@ -411,22 +408,26 @@ const orderDoneContent = css`
   }
 `
 
-const images = [
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286166_2_640x992.jpg?v=1628003773',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285927_2_768x576.jpg?v=1631141173',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285928_2_932c9418-9f9f-49c2-bdf2-f03cedd90194_640x640.jpg?v=1631141188',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/286167_2_1384cb5b-2b9c-404a-b5bf-ebd51f1a4bdb_768x576.jpg?v=1631141203',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284047_2_640x928.jpg?v=1629146779',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/65050_2_640x864.jpg?v=1620738968',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/285929_1_1280x576.jpg?v=1612930379',
-  'https://cdn.shopify.com/s/files/1/0475/3663/6059/products/284909_2_640x736.jpg?v=1619794059'
-]
+function FinalProductContent({ product }) {
+  const totalPrice = Number(product.price) * product.quantity
+
+  return (
+    <div className="product">
+      <img className="product__image" src={product.image} />
+      <p className="product__title">{product.title}</p>
+      <p className="product__size">{product.size}</p>
+      <p className="product__quantity">{product.quantity}</p>
+      <p className="product__price">$ {totalPrice}</p>
+    </div>
+  )
+}
 
 export default function CheckoutPage() {
   const dispatch = useDispatch()
   const history = useHistory()
   const cartItem = useSelector((store) => store.carts.cartProduct)
   const subTotal = useSelector((store) => store.carts.cartTotal)
+  const userId = useSelector((store) => store.users.userId)
 
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
@@ -465,7 +466,8 @@ export default function CheckoutPage() {
     }
 
     // 信箱驗證
-    const isEmail = /^([\w]+)(.[\w]+)*@([\w]+)(.[\w]{2,3}){1,2}$/
+    const isEmail =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
     if (!isEmail.test(email)) {
       formIsValid = false
@@ -504,7 +506,6 @@ export default function CheckoutPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
     const result = `
     The information:
     - Name：${name}
@@ -522,14 +523,29 @@ export default function CheckoutPage() {
   // 下一步按鈕
   const handleStepIncrement = () => {
     if (step === 1 && cartItem.length !== 0) {
+      window.scrollTo(0, 0)
       setStep((prevStep) => prevStep + 1)
     } else if (step === 1 && cartItem.length === 0) {
       history.push('/shop')
     } else if (step === 2 && formValidation()) {
       setStep((prevStep) => prevStep + 1)
+      window.scrollTo(0, 0)
     } else if (step === 3) {
+      window.scrollTo(0, 0)
+      if (cartItem.length !== 0 && subTotal) {
+        dispatch(setOrder(userId, cartItem, formData, subTotal))
+      }
       setStep((prevStep) => prevStep + 1)
     }
+  }
+
+  if (step === 4) {
+    localStorage.removeItem('cartData')
+    dispatch(setCartProduct(''))
+
+    setTimeout(() => {
+      history.push('/')
+    }, 5000)
   }
 
   // 上一步按鈕
@@ -551,16 +567,17 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     let total = 0
-    for (let i = 0; i < data.length; i++) {
-      let price = Number(data[i].price) * Number(data[i].quantity)
-      total += price
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        let price = Number(data[i].price) * Number(data[i].quantity)
+        total += price
+      }
     }
     dispatch(setCartTotal(total))
   }, [data])
 
   function CartItem({ cartItem }) {
     const [count, setCount] = useState(cartItem.quantity)
-    //Create handleDecrement event handler
     let data = JSON.parse(localStorage.getItem('cartData'))
     let duplicateData
     const itemExists = data.some((data) => {
@@ -694,19 +711,24 @@ export default function CheckoutPage() {
         <p className="product__title">Product Name</p>
         <p className="product__size">Size</p>
         <p className="product__quantity">Quantity</p>
-        <p className="product__price">Price</p>
+        <p className="product__price">Total</p>
       </div>
-      <div className="product">
+      {cartItem &&
+        cartItem.length > 0 &&
+        cartItem.map((item) => (
+          <FinalProductContent key={item.id} product={item} />
+        ))}
+      {/* <div className="product">
         <img className="product__image" src={images[0]} />
         <p className="product__title">Kinetic Light Blue Green Earrings</p>
         <p className="product__size">100*100 cm</p>
         <p className="product__quantity">1</p>
         <p className="product__price">$ 27.99</p>
-      </div>
+      </div> */}
 
       <div className="total">
         <p>Subtotal</p>
-        <p>$ 27.99</p>
+        <p>$ {subTotal}</p>
       </div>
 
       <div className="info">
