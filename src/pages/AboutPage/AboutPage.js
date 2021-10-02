@@ -56,6 +56,7 @@ const aboutPageContainer = css`
     }
 
     h2 {
+      font-size: 26px;
       font-weight: 600;
       margin-bottom: 20px;
       line-height: 3rem;

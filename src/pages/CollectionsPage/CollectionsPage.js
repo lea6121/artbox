@@ -60,6 +60,7 @@ const collectionsPageContainer = css`
         transform: translate(-50%, -50%);
         @media only screen and (max-width: 959px) {
           top: 48%;
+          max-width: 90%;
         }
       }
 
@@ -92,6 +93,7 @@ const collectionsPageContainer = css`
           font-size: 28px;
           list-style: none;
           margin-bottom: 30px;
+          padding-left: 0px;
 
           li {
             cursor: pointer;
@@ -190,7 +192,6 @@ const collectionsPageContainer = css`
     text-align: center;
     .btn {
       @media only screen and (max-width: 579px) {
-        ${'' /* font-size: 14px; */}
         padding: 5px;
       }
     }
@@ -223,7 +224,7 @@ const categories = [
 function Collection({ collection }) {
   return (
     <>
-      <a href={`/#/collection/${collection.id}`} className="collection">
+      <a href={`./#/collection/${collection.id}`} className="collection">
         {collection.images ? (
           <img
             className="collection__image"

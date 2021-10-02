@@ -241,6 +241,9 @@ const checkoutPageContainer = css`
         input {
           outline: none;
           padding: 0 5px;
+          @media only screen and (max-width: 768px) {
+            max-width: 70%;
+          }
         }
 
         p {
@@ -392,7 +395,7 @@ const finalPageContainer = css`
       padding: 20px;
 
       &:nth-child(2) {
-        color: rgba(0, 0, 0, 0.6);
+        color: rgba(0, 0, 0, 0.8);
       }
       @media only screen and (max-width: 768px) {
         font-size: 11px;
@@ -476,8 +479,10 @@ const orderDoneContent = css`
     padding: 18px 0;
     @media only screen and (max-width: 576px) {
       font-size: 18px;
-      padding: 18px 0 10px;
+      padding: 10px 10px;
+      margin: 0;
     }
+
     &:nth-child(1) {
       background: rgba(0, 0, 0, 0.8);
       font-size: 50px;
@@ -493,6 +498,12 @@ const orderDoneContent = css`
           margin-right: 0;
           margin-bottom: 10px;
         }
+      }
+    }
+    &:nth-child(2) {
+      @media only screen and (max-width: 576px) {
+        margin-top: 20px;
+        padding: 10px 10px;
       }
     }
   }
@@ -633,9 +644,9 @@ export default function CheckoutPage() {
     localStorage.removeItem('cartData')
     dispatch(setCartProduct(''))
 
-    setTimeout(() => {
-      history.push('/')
-    }, 5000)
+    // setTimeout(() => {
+    //   history.push('/')
+    // }, 10000)
   }
 
   // 上一步按鈕
