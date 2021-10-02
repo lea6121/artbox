@@ -8,7 +8,6 @@ import Loading from '../../components/Loading'
 import { getUserOrders } from '../../redux/reducers/userReducer'
 
 const orderlistPageContainer = css`
-  width: 100vw;
   height: auto;
   font-family: 'Gill Sans';
   font-weight: 300;
@@ -24,28 +23,8 @@ const orderlistPageContainer = css`
     border: 1px solid rgba(0, 0, 0, 0.4);
     box-shadow: 7px 7px 1px 0px rgba(0, 0, 0, 0.7);
 
-    ${
-      '' /* &__right-dot {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: rgba(0, 0, 0, 0.7);
-      top: 12px;
-      right: 12px;
-      border-radius: 50%;
-      box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
-    }
-
-    &__left-dot {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: rgba(0, 0, 0, 0.7);
-      top: 12px;
-      left: 12px;
-      border-radius: 50%;
-      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
-    } */
+    @media only screen and (max-width: 576px) {
+      padding: 0;
     }
 
     .reminder {
@@ -86,6 +65,11 @@ const orderlistPageContainer = css`
       align-items: center;
       font-size: 18px;
 
+      @media only screen and (max-width: 576px) {
+        font-size: 11px;
+        word-break: break-word;
+      }
+
       i {
         cursor: pointer;
       }
@@ -95,6 +79,10 @@ const orderlistPageContainer = css`
         max-width: 200px;
         max-height: 200px;
         object-fit: contain;
+        @media only screen and (max-width: 768px) {
+          max-width: 100px;
+          max-height: 100px;
+        }
       }
     }
 
@@ -102,6 +90,9 @@ const orderlistPageContainer = css`
       border-bottom: 1px solid black;
       font-weight: 500;
       font-size: 20px;
+      @media only screen and (max-width: 576px) {
+        font-size: 11px;
+      }
     }
 
     .order-products {
@@ -128,7 +119,9 @@ const orderlistPageContainer = css`
       position: relative;
       box-shadow: inset 0px -2px rgba(0, 0, 0, 0.7);
       transition: all 2s ease-in-out;
-
+      @media only screen and (max-width: 576px) {
+        padding: 0;
+      }
       .product {
         position: relative;
         display: grid;
@@ -140,6 +133,10 @@ const orderlistPageContainer = css`
         align-items: center;
         font-size: 18px;
 
+        @media only screen and (max-width: 576px) {
+          font-size: 11px;
+        }
+
         i {
           cursor: pointer;
         }
@@ -149,6 +146,10 @@ const orderlistPageContainer = css`
           max-width: 120px;
           max-height: 120px;
           object-fit: contain;
+          @media only screen and (max-width: 768px) {
+            max-width: 100px;
+            max-height: 100px;
+          }
         }
       }
     }
@@ -214,7 +215,6 @@ export default function WishlistPage() {
   const userOrders = useSelector((store) => store.users.userOrders)
   const userId = useSelector((store) => store.users.userId)
   const isLoadingMsg = useSelector((store) => store.users.isLoading)
-  console.log(isLoadingMsg)
 
   useEffect(() => {
     if (userId) {
@@ -224,7 +224,6 @@ export default function WishlistPage() {
 
   useEffect(() => {
     if (!userId) {
-      alert('Please log in first!')
       history.push('/login')
     }
   }, [])

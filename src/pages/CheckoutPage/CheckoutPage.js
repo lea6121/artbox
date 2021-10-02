@@ -18,7 +18,10 @@ const container = css`
     grid-gap: 10px 10px;
     font-size: 18px;
     color: rgba(0, 0, 0, 0.6);
-
+    @media only screen and (max-width: 768px) {
+      grid-gap: 10px 5px;
+      font-size: 16px;
+    }
     div {
       background: rgba(0, 0, 0, 0.1);
       padding: 14px;
@@ -31,7 +34,10 @@ const cartPageContainer = css`
   display: grid;
   grid-gap: 10px 50px;
   grid-template-columns: 65% 30%;
-
+  @media only screen and (max-width: 768px) {
+    display: block;
+    padding: 0 10px;
+  }
   h2 {
     padding: 30px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -51,9 +57,13 @@ const cartPageContainer = css`
     display: grid;
     grid-template-columns: 30% 60% 10%;
     align-items: center;
-    grid-gap: 0 20px;
+    grid-gap: 0 10px;
     font-size: 14px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    @media only screen and (max-width: 768px) {
+      grid-template-columns: 40% 50% 10%;
+      grid-gap: 0 5px;
+    }
 
     img {
       width: 100%;
@@ -159,6 +169,9 @@ const checkoutPageContainer = css`
   display: grid;
   max-width: 1180px;
   grid-gap: 10px 80px;
+  @media only screen and (max-width: 768px) {
+    padding: 0 10px;
+  }
 
   h2 {
     padding: 30px 0;
@@ -169,6 +182,9 @@ const checkoutPageContainer = css`
 
   .checkout-container {
     margin: 10px 30px;
+    @media only screen and (max-width: 768px) {
+      margin: 10px 0;
+    }
 
     .checkout {
       padding: 20px 0;
@@ -199,6 +215,15 @@ const checkoutPageContainer = css`
 
         form {
           margin: 0 50px;
+
+          @media only screen and (max-width: 576px) {
+            margin: 0;
+          }
+        }
+      }
+      .form-check {
+        @media only screen and (max-width: 576px) {
+          margin: 0;
         }
       }
 
@@ -209,6 +234,9 @@ const checkoutPageContainer = css`
         grid-gap: 5px 30px;
         grid-template-columns: 5% 35% 60%;
         align-items: center;
+        @media only screen and (max-width: 768px) {
+          display: block;
+        }
 
         input {
           outline: none;
@@ -221,6 +249,10 @@ const checkoutPageContainer = css`
 
         span {
           color: red;
+          @media only screen and (max-width: 768px) {
+            font-size: 12px;
+            display: block;
+          }
         }
       }
     }
@@ -238,11 +270,18 @@ const checkoutPageContainer = css`
     display: flex;
     justify-content: space-between;
     margin: 0 30px 0;
+    @media only screen and (max-width: 768px) {
+      margin: 0 10px 0;
+    }
 
     button {
-      width: 20%;
+      width: 200px;
       padding: 10px;
       font-size: 20px;
+      @media only screen and (max-width: 768px) {
+        width: 100px;
+        font-size: 12px;
+      }
     }
 
     .previous-btn {
@@ -253,8 +292,12 @@ const checkoutPageContainer = css`
       text-align: left;
 
       i {
-        margin: 0 30px 0 30px;
+        margin: 0 30px 0 26px;
         font-size: 16px;
+
+        @media only screen and (max-width: 768px) {
+          margin: 0 8px 0 8px;
+        }
       }
 
       &:hover {
@@ -270,6 +313,9 @@ const checkoutPageContainer = css`
       i {
         margin: 0 0 0 30px;
         font-size: 16px;
+        @media only screen and (max-width: 768px) {
+          margin: 0 0 0 10px;
+        }
       }
 
       &:hover {
@@ -284,6 +330,9 @@ const finalPageContainer = css`
   font-family: 'Gill Sans';
   font-weight: 100;
   font-size: 16px;
+  @media only screen and (max-width: 992px) {
+    margin: 60px 0;
+  }
 
   .product {
     display: grid;
@@ -292,10 +341,18 @@ const finalPageContainer = css`
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     align-items: center;
+    @media only screen and (max-width: 768px) {
+      margin: 20px 0;
+      grid-template-columns: 30% 23% 16% 16% 13%;
+      font-size: 14px;
+    }
 
     :nth-child(1) {
       font-size: 22px;
       font-weight: 500;
+      @media only screen and (max-width: 768px) {
+        font-size: 16px;
+      }
     }
 
     &__image {
@@ -303,6 +360,10 @@ const finalPageContainer = css`
       max-width: 200px;
       max-height: 180px;
       object-fit: contain;
+      @media only screen and (max-width: 768px) {
+        max-width: 100px;
+        max-height: 100px;
+      }
     }
   }
 
@@ -333,18 +394,29 @@ const finalPageContainer = css`
       &:nth-child(2) {
         color: rgba(0, 0, 0, 0.6);
       }
+      @media only screen and (max-width: 768px) {
+        font-size: 11px;
+      }
     }
   }
 
   .confirm-btns {
+    font-family: 'Gill Sans';
     display: flex;
     justify-content: space-between;
-    margin: 20px 10px 0;
+    margin: 0 10px 0;
+    @media only screen and (max-width: 768px) {
+      margin: 0 10px 0;
+    }
 
     button {
-      width: 20%;
+      width: 200px;
       padding: 10px;
       font-size: 20px;
+      @media only screen and (max-width: 768px) {
+        width: 100px;
+        font-size: 11px;
+      }
     }
 
     .previous-btn {
@@ -355,8 +427,12 @@ const finalPageContainer = css`
       text-align: left;
 
       i {
-        margin: 0 30px 0 30px;
+        margin: 0 30px 0 26px;
         font-size: 16px;
+
+        @media only screen and (max-width: 768px) {
+          margin: 0 8px 0 8px;
+        }
       }
 
       &:hover {
@@ -368,11 +444,15 @@ const finalPageContainer = css`
       border: none;
       background: rgba(255, 222, 3, 0.7);
       margin: 10px;
-      ${'' /* text-align: right; */}
-
+      @media only screen and (max-width: 768px) {
+        padding: 0;
+      }
       i {
-        margin: 0 0 0 20px;
+        margin: 0 0 0 30px;
         font-size: 16px;
+        @media only screen and (max-width: 768px) {
+          margin: 0 0 0 10px;
+        }
       }
 
       &:hover {
@@ -394,15 +474,25 @@ const orderDoneContent = css`
     font-weight: 300;
     font-size: 22px;
     padding: 18px 0;
-
+    @media only screen and (max-width: 576px) {
+      font-size: 18px;
+      padding: 18px 0 10px;
+    }
     &:nth-child(1) {
       background: rgba(0, 0, 0, 0.8);
       font-size: 50px;
       color: white;
       padding: 30px 20px;
-
+      @media only screen and (max-width: 576px) {
+        font-size: 30px;
+      }
       i {
         margin-right: 20px;
+        @media only screen and (max-width: 576px) {
+          display: block;
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -718,13 +808,6 @@ export default function CheckoutPage() {
         cartItem.map((item) => (
           <FinalProductContent key={item.id} product={item} />
         ))}
-      {/* <div className="product">
-        <img className="product__image" src={images[0]} />
-        <p className="product__title">Kinetic Light Blue Green Earrings</p>
-        <p className="product__size">100*100 cm</p>
-        <p className="product__quantity">1</p>
-        <p className="product__price">$ 27.99</p>
-      </div> */}
 
       <div className="total">
         <p>Subtotal</p>
@@ -944,14 +1027,8 @@ export default function CheckoutPage() {
       )}
       {step === 4 && (
         <div className={orderDoneContent}>
-          {/* <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/thank-you-for-your-order-design-template-d56ea122db50ee6c2fe9cef22da510a2_screen.jpg?ts=1608779634" /> */}
-          {/* <img src="https://brandlokstore.com/store/wp-content/uploads/2021/01/dffs.png" /> */}
           <h1>
             <i className="fas fa-check-circle"></i>
-            {/* <img
-              src="https://i.pinimg.com/originals/70/a5/52/70a552e8e955049c8587b2d7606cd6a6.gif"
-              loop="false"
-            /> */}
             Thank you for your order!
           </h1>
           <h1>Your order has been placed.</h1>

@@ -61,13 +61,9 @@ export const getAllProducts = () => (dispatch) => {
       if (snapshot.exists()) {
         dispatch(setIsLoadingProducts(false))
         dispatch(setAllProducts(snapshot.val()))
-      } else {
-        console.log('No data available')
       }
     })
-    .catch((error) => {
-      console.error(error)
-    })
+    .catch((error) => {})
 }
 
 export const getSpecificProducts = (category) => (dispatch) => {
@@ -134,7 +130,6 @@ export const getSuggestProduct = (category) => (dispatch) => {
       } while (p)
     }
     numbers.forEach((element) => suggestionArr.push(data[element]))
-    console.log('items', suggestionArr)
     dispatch(setIsLoadingProducts(false))
     dispatch(setSuggestProducts(suggestionArr))
   })

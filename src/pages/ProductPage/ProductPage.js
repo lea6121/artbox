@@ -14,7 +14,6 @@ import {
   getSuggestProduct
 } from '../../redux/reducers/productReducer'
 import {
-  getFavoriteProducts,
   setFavoriteProduct,
   removeFavoriteProduct
 } from '../../redux/reducers/userReducer'
@@ -57,7 +56,6 @@ const productPageContainer = css`
         width: 100%;
         height: 400px;
         padding-bottom: 10px;
-        ${'' /* border: 1px solid black; */}
       }
 
       div {
@@ -117,17 +115,20 @@ const productPageContainer = css`
 `
 
 const productContainer = css`
-  width: 80vw;
   margin: 60px auto;
+  max-width: 1180px;
   padding: 0 10px;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap: 10px 10px;
   align-items: center;
-  max-width: 100vw;
   overflow: hidden;
+  @media only screen and (max-width: 959px) {
+    display: block;
+  }
 
   img {
+    max-width: 100%;
     max-height: 400px;
     object-fit: contain;
   }
@@ -136,6 +137,9 @@ const productContainer = css`
     padding: 0 20px;
     display: flex;
     flex-direction: column;
+    @media only screen and (max-width: 959px) {
+      padding: 0 0;
+    }
 
     div:nth-child(2) {
       display: flex;
@@ -170,6 +174,12 @@ const productContainer = css`
       margin-top: 20px;
     }
 
+    .btn {
+      @media only screen and (max-width: 959px) {
+        padding: 5px;
+      }
+    }
+
     &__description {
       padding: 20px 0;
     }
@@ -184,8 +194,7 @@ const productContainer = css`
       transition: 1s ease-out;
 
       &:hover {
-        ${'' /* transform: scale(1.1); */}
-        background: rgba(0,0,0,0.6)
+        background: rgba(0, 0, 0, 0.6);
       }
     }
   }
@@ -246,7 +255,6 @@ export default function ProductPage() {
     let productUrl = `product/${product[0].category}/${product[0].id}`
 
     if (!userId) {
-      alert('Please log in first.')
       history.push('/login')
     }
 
@@ -268,8 +276,6 @@ export default function ProductPage() {
     }
   }
   function Counter() {
-    // Set the initial count state to zero, 0
-    // Create handleIncrement event handler
     const handleIncrement = () => {
       let maximum = 10
       if (count < maximum) {
@@ -277,7 +283,6 @@ export default function ProductPage() {
       }
     }
 
-    //Create handleDecrement event handler
     const handleDecrement = () => {
       if (count > 1) {
         setCount((prevCount) => prevCount - 1)
@@ -348,15 +353,17 @@ export default function ProductPage() {
       <Modal {...props} centered>
         <Modal.Header>
           <Modal.Title
-            id="contained-modal-title-vcenter"
-            style={{ 'font-family': 'Gill Sans', alignItems: 'center' }}
+            id="contained-modal-title-center"
+            style={{
+              'font-family': 'Gill Sans',
+              alignItems: 'center'
+            }}
           >
             <i
               className="fas fa-clipboard-check"
               style={{
                 margin: '0 10px',
-                color: 'green',
-                'font-size': '26px'
+                color: 'green'
               }}
             ></i>
             Add to cart successfully!
@@ -365,7 +372,8 @@ export default function ProductPage() {
             onClick={props.onHide}
             style={{
               background: 'rgba(0,0,0,0.8)',
-              'border-color': '#343a40'
+              'border-color': '#343a40',
+              'font-size': '18px'
             }}
           >
             Close
@@ -388,7 +396,11 @@ export default function ProductPage() {
       {product.length !== 0 && suggestProducts.length && (
         <>
           <div className={productContainer}>
-            <SliderCarousel showArrows={false} showStatus={false}>
+            <SliderCarousel
+              showArrows={false}
+              showStatus={false}
+              style={{ maxWidth: '100%' }}
+            >
               {product[0].images.map((image) => (
                 <img src={image} />
               ))}

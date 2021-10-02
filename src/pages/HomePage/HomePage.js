@@ -4,6 +4,7 @@ import trailer from '../../media/trailer.mp4'
 const homePageContainer = css`
   box-sizing: border-box;
   letter-spacing: 0.1rem;
+  margin: 0 auto;
 
   .banner {
     margin-top: 5px;
@@ -14,6 +15,10 @@ const homePageContainer = css`
     position: relative;
     max-width: 100vw;
     height: 100%;
+
+    @media only screen and (max-width: 1200px) {
+      display: block;
+    }
 
     section {
       width: 100%;
@@ -31,6 +36,11 @@ const homePageContainer = css`
       &:hover {
         transform: scale(1.02);
       }
+
+      @media only screen and (max-width: 1200px) {
+        display: block;
+        margin-bottom: 5px;
+      }
     }
 
     &__mask {
@@ -42,10 +52,23 @@ const homePageContainer = css`
       left: 0;
       background: rgba(255, 255, 255, 0.55);
       padding: 40px;
+      margin: 0 auto;
+      text-align: center;
+
+      @media only screen and (max-width: 1200px) {
+        padding: 20px;
+        position: static;
+        max-height: 300px;
+      }
 
       h3 {
         font-size: 34px;
-        padding: 70px 0 40px 0;
+        padding: 40px 0 40px 0;
+
+        @media only screen and (max-width: 1200px) {
+          font-size: 22px;
+          padding: 20px 0 10px 0;
+        }
       }
 
       h1 {
@@ -55,24 +78,31 @@ const homePageContainer = css`
         &:hover {
           text-decoration: underline;
         }
+
+        @media only screen and (max-width: 1200px) {
+          font-size: 30px;
+          padding-bottom: 10px;
+        }
       }
 
       p {
         font-size: 20px;
         margin: 30px auto;
+        @media only screen and (max-width: 1200px) {
+          margin: 0;
+          font-size: 15px;
+        }
       }
     }
 
     video {
       width: 100%;
       height: 100%;
-      /* transition: all 0.4s ease-in; */
       cursor: pointer;
     }
   }
 
   .contents-container {
-    width: 100vw;
     margin: 0;
 
     .contents {
@@ -85,15 +115,47 @@ const homePageContainer = css`
       font-style: italic;
       font-size: 24px;
 
+      @media only screen and (max-width: 959px) {
+        display: block;
+      }
+
       &__tag {
         text-align: center;
         overflow: hidden;
       }
 
       .content {
+        @media only screen and (max-width: 959px) {
+          margin: 10px;
+        }
+
         &__card {
           position: relative;
           height: 400px;
+          @media only screen and (min-width: 768px) and (max-width: 959px) {
+            max-height: 600px;
+            transition: all 0.8s ease-out;
+
+            &:hover {
+              transform: scale(1.02);
+            }
+          }
+          @media only screen and (min-width: 576px) and (max-width: 768px) {
+            max-height: 700px;
+            transition: all 0.8s ease-out;
+
+            &:hover {
+              transform: scale(1.02);
+            }
+          }
+          @media only screen and (max-width: 576px) {
+            max-height: 260px;
+            transition: all 0.8s ease-out;
+
+            &:hover {
+              transform: scale(1.02);
+            }
+          }
         }
 
         &__photo {
@@ -102,43 +164,62 @@ const homePageContainer = css`
           overflow: hidden;
           transform: scale(1, 1);
           transition: all 0.4s ease-out;
+
+          @media only screen and (max-width: 959px) {
+            max-height: 100%;
+            object-fit: cover;
+          }
+
           &:hover {
             transform: scale(1.2, 1.2);
+            @media only screen and (max-width: 959px) {
+              transform: scale(1, 1);
+            }
           }
         }
 
         &__mask {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
           padding: 8px 0;
           font-weight: 500;
           color: white;
           font-size: 36px;
-          background: rgba(0, 0, 0, 0.6);
-          position: absolute;
-          width: 100%;
-          top: 92%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          background: rgba(0, 0, 0, 1);
+          @media only screen and (max-width: 768px) {
+            font-size: 20px;
+            height: 50px;
+            top: 80%;
+          }
         }
 
         &__cover {
           position: absolute;
+          top: 0%;
           font-size: 38px;
           width: 100%;
           height: 100%;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: transparent;
           transition: all 0.4s ease-out;
+          color: transparent;
 
           h1 {
             position: absolute;
-            top: 50%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 60px;
+            font-size: 54px;
             font-family: 'Snell Roundhand';
             font-weight: 700;
+            transition: all 0.4s ease-out;
+
+            @media only screen and (max-width: 768px) {
+              font-size: 40px;
+            }
+
+            &:hover {
+              color: black;
+            }
           }
 
           &:hover {
@@ -174,7 +255,7 @@ export default function HomePage() {
 
       <div className="contents-container">
         <div className="contents">
-          <a href="./#/collections" className="contents__tag">
+          <a href="./#/collections/1" className="contents__tag">
             <div className="content__card">
               <img
                 className="content__photo"

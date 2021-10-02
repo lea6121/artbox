@@ -4,29 +4,43 @@ import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUserId } from '../../redux/reducers/userReducer'
-// import { setAuthToken } from '../../utils'
 import { logoutGoogle } from '../../redux/reducers/userReducer'
 
 const header = css`
   box-sizing: border-box;
 
   .header-top {
+    margin: 0 auto;
     background: white;
     position: relative;
     z-index: 3;
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
-    width: 100vw;
+    border-right: 1px solid rgba(0, 0, 0, 0.7);
+    border-left: 1px solid rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.7);
     display: flex;
     height: auto;
     justify-content: space-between;
     align-items: center;
     padding: 3px 20px;
 
+    @media only screen and (max-width: 576px) {
+      display: block;
+      padding: 0;
+      background: black;
+    }
+
     .tags {
       display: flex;
       align-items: center;
       width: 31%;
+
+      @media only screen and (max-width: 576px) {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        border-bottom: 1px solid white;
+        padding: 0 0;
+      }
 
       #site-logo {
         width: 60px;
@@ -45,6 +59,13 @@ const header = css`
           text-decoration: none;
           color: black;
         }
+        @media only screen and (max-width: 576px) {
+          color: white;
+          padding: 0 20px 0 0;
+          &:hover {
+            color: white;
+          }
+        }
       }
     }
 
@@ -52,6 +73,14 @@ const header = css`
       display: flex;
       align-items: center;
       letter-spacing: 0.05rem;
+
+      @media only screen and (max-width: 576px) {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        border-bottom: 1px solid black;
+        padding: 20px 0 10px;
+      }
 
       a {
         display: inline-block;
@@ -69,12 +98,16 @@ const header = css`
       }
 
       .icon {
-        display: block;
-        margin: 0 auto;
+        @media only screen and (max-width: 576px) {
+          color: white;
+        }
       }
 
       .fas {
         font-size: 26px;
+        @media only screen and (max-width: 576px) {
+          color: white;
+        }
       }
     }
 
@@ -189,17 +222,17 @@ export default function Header() {
         <nav className="icons">
           <a href="./#/collections/1">
             <i className="fas fa-images"></i>
-            <div>Collections</div>
+            <div className="icon">Collections</div>
           </a>
           <a href="./#/shop">
             <i className="fas fa-store"></i>
-            <div>Shop</div>
+            <div className="icon">Shop</div>
           </a>
           {!userId && (
             <a href="./#/login">
               <div className="drop">
                 <i className="fas fa-user"></i>
-                <button>Log In</button>
+                <button className="icon">Log In</button>
               </div>
             </a>
           )}
@@ -207,7 +240,7 @@ export default function Header() {
             <button>
               <div className="drop">
                 <i className="fas fa-user"></i>
-                <button>User</button>
+                <button className="icon">User</button>
                 <div className="dropbox">
                   <a href="./#/wishlist">WISHLIST</a>
                   <a href="./#/orders">ORDER</a>

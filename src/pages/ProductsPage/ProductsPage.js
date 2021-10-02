@@ -16,7 +16,6 @@ import {
 } from '../../redux/reducers/userReducer'
 
 const shopPageContainer = css`
-  width: 100vw;
   margin: 0 auto;
   font-family: Baskerville;
   height: auto;
@@ -75,6 +74,12 @@ const shopPageContainer = css`
       display: grid;
       grid-template-columns: 25% 25% 25% 25%;
       max-width: 100%;
+      @media only screen and (min-width: 576px) and (max-width: 959px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media only screen and (max-width: 576px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
     }
 
     .item {
@@ -83,6 +88,9 @@ const shopPageContainer = css`
       margin: 20px 5px;
       color: black;
       position: relative;
+      @media only screen and (max-width: 576px) {
+        margin: 0;
+      }
 
       img {
         object-fit: contain;
@@ -180,7 +188,6 @@ function Product({ product }) {
     let productUrl = `product/${product.category}/${product.id}`
 
     if (!userId) {
-      alert('Please log in first.')
       history.push('/login')
     }
 

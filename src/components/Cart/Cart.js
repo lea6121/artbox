@@ -54,6 +54,9 @@ const menuBtn = css`
     i,
     p {
       transform: translateX(-350px);
+      @media only screen and (max-width: 579px) {
+        transform: translateX(-210px);
+      }
     }
   }
 `
@@ -70,6 +73,9 @@ const menuOverlay = css`
 
   &.show {
     transform: translateX(0%);
+  }
+  @media only screen and (max-width: 579px) {
+    width: 250px;
   }
 
   nav {
@@ -100,7 +106,6 @@ const menuOverlay = css`
     .cart {
       padding: 20px;
       font-family: 'Helvetica';
-      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
       font-size: 14px;
       height: 73vh;
       overflow-y: auto;
@@ -143,6 +148,9 @@ const menuOverlay = css`
         div {
           padding: 3px 0;
         }
+        @media only screen and (max-width: 579px) {
+          font-size: 10px;
+        }
       }
 
       &__quantity {
@@ -152,7 +160,19 @@ const menuOverlay = css`
       }
     }
 
+    .btn-line {
+      position: fixed;
+      bottom: 70px;
+      width: 100%;
+      border: 1px solid solid;
+    }
+
     button {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0%);
+
       display: block;
       width: 70%;
       margin: 20px auto 10px;
@@ -233,6 +253,7 @@ export default function Cart() {
     }
     return (
       <>
+        <hr className="btn-line" />
         <button className="checkout-btn" variant="primary" onClick={handleShow}>
           CHECKOUT
         </button>

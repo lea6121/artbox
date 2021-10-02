@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Header from '../Header'
 import Footer from '../Footer'
 import HomePage from '../../pages/HomePage'
+import AboutPage from '../../pages/AboutPage'
 import CollectionsPage from '../../pages/CollectionsPage'
 import ArtworkPage from '../../pages/ArtworkPage'
 import ShopPage from '../../pages/ShopPage'
@@ -19,9 +20,8 @@ import OrdersPage from '../../pages/OrdersPage'
 
 const root = css`
   margin: 0 auto;
-  max-width: 100vw;
+  max-width: 1508px;
   position: relative;
-  height: 100vh;
 `
 
 function App() {
@@ -47,6 +47,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <HomePage />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
           </Route>
           <Route path="/collections/:page">
             <CollectionsPage />

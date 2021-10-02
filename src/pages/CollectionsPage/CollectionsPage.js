@@ -1,7 +1,6 @@
 import { css } from '@emotion/css'
-import styled from 'styled-components'
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
@@ -14,24 +13,18 @@ import {
 const collectionsPageContainer = css`
   box-sizing: border-box;
   font-family: Baskerville;
+  margin: 0 auto;
 
   #btn-back-to-top {
     position: fixed;
     bottom: 10px;
     left: 10px;
-    /* display: none; */
-  }
-  a:active {
-    background: rgba(36, 35, 35, 0.9);
-    color: white;
   }
 
   .collection {
     &__banner {
-      width: 100vw;
       margin: 0 0 50px;
       position: relative;
-      max-width: 100vw;
       height: 80vh;
       background-image: url('https://github.com/lea6121/img-storage/blob/main/image/210006.jpeg?raw=true');
       background-repeat: no-repeat;
@@ -50,6 +43,12 @@ const collectionsPageContainer = css`
         top: 34%;
         left: 50%;
         transform: translate(-50%, -50%);
+        @media only screen and (max-width: 576px) {
+          font-size: 32px;
+          background: black;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
       }
 
       .input-group {
@@ -59,6 +58,9 @@ const collectionsPageContainer = css`
         top: 46%;
         left: 50%;
         transform: translate(-50%, -50%);
+        @media only screen and (max-width: 959px) {
+          top: 48%;
+        }
       }
 
       form {
@@ -79,7 +81,12 @@ const collectionsPageContainer = css`
       display: grid;
       grid-gap: 0 30px;
       grid-template-columns: 20% auto;
-
+      @media only screen and (min-width: 579px) and (max-width: 992px) {
+        grid-template-columns: 40% auto;
+      }
+      @media only screen and (max-width: 579px) {
+        display: block;
+      }
       .left-section {
         ul {
           font-size: 28px;
@@ -103,9 +110,9 @@ const collectionsPageContainer = css`
         & > h1 {
           font-family: serif;
           text-align: left;
-          margin: 30px;
-          font-size: 24px;
-          ${'' /* font-style: italic; */}
+          margin: 30px 30px 30px 10px;
+          font-size: 26px;
+          font-style: italic;
           color: rgba(0, 0, 0, 0.8);
         }
 
@@ -119,6 +126,12 @@ const collectionsPageContainer = css`
           grid-gap: 30px 30px;
           align-items: stretch;
           text-align: center;
+          @media only screen and (min-width: 992px) and (max-width: 1200px) {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          @media only screen and (max-width: 992px) {
+            grid-template-columns: repeat(1, 1fr);
+          }
 
           .collection {
             text-decoration: none;
@@ -126,6 +139,10 @@ const collectionsPageContainer = css`
             border-bottom: 1px solid #a8a7a7;
             padding-bottom: 20px;
             text-align: start;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 8;
+            overflow: hidden;
 
             img {
               transition: all 0.6s ease-out;
@@ -140,7 +157,7 @@ const collectionsPageContainer = css`
 
             &__title {
               font-size: 18px;
-              margin: 20px 0;
+              margin: 20px 0 10px;
               letter-spacing: 0.05rem;
             }
 
@@ -171,27 +188,13 @@ const collectionsPageContainer = css`
   .pagination-container {
     margin: 20px auto;
     text-align: center;
+    .btn {
+      @media only screen and (max-width: 579px) {
+        ${'' /* font-size: 14px; */}
+        padding: 5px;
+      }
+    }
   }
-`
-
-const Nav = styled(Link)`
-  border-left: 1px solid black;
-  box-sizing: border-box;
-  padding: 35px 40px 35px 40px;
-  font-size: 20px;
-  text-align: center;
-  color: #010101;
-  display: flex;
-  transition: all 0.2s ease-in;
-  cursor: pointer;
-  text-decoration: none;
-
-  ${(props) =>
-    props.$active &&
-    `
-    background: rgba(36, 35, 35, 0.9);
-    color: white;
-    `};
 `
 
 const categories = [
@@ -248,6 +251,7 @@ function Collection({ collection }) {
 export default function CollectionsPage() {
   const dispatch = useDispatch()
   const params = useParams()
+  const page = Number(params.page)
   const collections = useSelector((store) => store.collections.collections)
   const isLoadingCollectionsMsg = useSelector(
     (store) => store.collections.isLoadingCollections
@@ -287,8 +291,8 @@ export default function CollectionsPage() {
     )
   }
 
-  function changePage(e) {
-    let currentPageNum = Number(e.target.innerText)
+  function changePage(value) {
+    let currentPageNum = Number(value)
     if (currentSearch) {
       dispatch(searchCollections(currentSearch, (currentPageNum - 1) * 24))
     } else if (currentCategory) {
@@ -300,7 +304,6 @@ export default function CollectionsPage() {
     }
 
     window.location.replace(`#/collections/${currentPageNum}`)
-
     window.scrollTo(0, 300)
   }
 
@@ -317,28 +320,125 @@ export default function CollectionsPage() {
     return (
       <div className="pagination-container">
         <div className="btn-group me-2" role="group">
-          {pageNumbers.slice(0, 10).map((value, index) => (
+          {page > 1 &&
+            pageNumbers.splice(0, 1).map((value, index) => (
+              <button
+                className={
+                  value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
+                }
+                key={value}
+                onClick={() => {
+                  changePage(1)
+                }}
+              >
+                {value}
+              </button>
+            ))}
+          {page >= 2 && (
             <button
               className="btn btn-outline-dark"
-              key={value}
-              onClick={changePage}
+              onClick={() => {
+                changePage(page - 1)
+              }}
             >
-              {value}
+              <i
+                className="fas fa-chevron-left"
+                style={{ fontSize: '6px' }}
+              ></i>
+              <i
+                className="fas fa-chevron-left"
+                style={{ fontSize: '6px', marginRight: '4px' }}
+              ></i>
+              Prev
             </button>
-          ))}
+          )}
+          {page <= pageNumbers.length - 9 || page > 6
+            ? pageNumbers.slice(page - 7, page + 4).map((value, index) => (
+                <button
+                  className={
+                    value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
+                  }
+                  key={value}
+                  onClick={() => {
+                    changePage(value)
+                  }}
+                >
+                  {value}
+                </button>
+              ))
+            : pageNumbers.slice(-10).map((value, index) => (
+                <button
+                  className={
+                    value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
+                  }
+                  key={value}
+                  onClick={() => {
+                    changePage(value)
+                  }}
+                >
+                  {value}
+                </button>
+              ))}
+          {page <= 6 &&
+            pageNumbers.slice(0, 10).map((value, index) => (
+              <button
+                className={
+                  value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
+                }
+                key={value}
+                onClick={() => {
+                  changePage(value)
+                }}
+              >
+                {value}
+              </button>
+            ))}
+
+          {page <= pageNumbers.length && (
+            <button
+              className="btn btn-outline-dark"
+              key={page - 1}
+              onClick={() => {
+                changePage(page + 1)
+              }}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ fontSize: '6px', marginLeft: '4px' }}
+              ></i>
+              <i
+                className="fas fa-chevron-right"
+                style={{ fontSize: '6px' }}
+              ></i>
+            </button>
+          )}
+          {page < pageNumbers.length - 4 &&
+            pageNumbers.slice(-1).map((value, index) => (
+              <button
+                className={
+                  value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
+                }
+                key={value}
+                onClick={() => {
+                  changePage(value)
+                }}
+              >
+                {value}
+              </button>
+            ))}
         </div>
       </div>
     )
   }
 
   useEffect(() => {
-    // console.log(currentPage)
     if (currentSearch) {
-      dispatch(searchCollections(currentSearch, (params.page - 1) * 24))
+      dispatch(searchCollections(currentSearch, (page - 1) * 24))
     } else if (currentCategory) {
-      dispatch(getSpecificCollections(currentCategory, (params.page - 1) * 24))
+      dispatch(getSpecificCollections(currentCategory, (page - 1) * 24))
     } else {
-      dispatch(getCollections((params.page - 1) * 24))
+      dispatch(getCollections((page - 1) * 24))
       window.scrollTo(0, 0)
     }
   }, [])
@@ -390,7 +490,7 @@ export default function CollectionsPage() {
             </div>
           )}
           {(currentSearch || currentCategory) && collections.length !== 0 && (
-            <h1>The results for "{currentSearch || currentCategory}"</h1>
+            <h1>Results for "{currentSearch || currentCategory}"</h1>
           )}
 
           {collections.length > 0 && (

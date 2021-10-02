@@ -131,8 +131,6 @@ export const loginWithEmail = (data) => (dispatch) => {
           dispatch(setIsLoading(false))
           // Signed in
           const user = userCredential.user
-          console.log('Login with email', user)
-          console.log(user.uid)
           dispatch(setUserId(user.id))
           dispatch(setRegisterError(''))
           data.history.push('/')
@@ -168,7 +166,6 @@ export const logoutGoogle = (data) => (dispatch) => {
     .then(() => {
       dispatch(setUserId(null))
       data.history.push('/')
-      console.log('log out ')
     })
     .catch((error) => {
       dispatch(setLogoutError(error))

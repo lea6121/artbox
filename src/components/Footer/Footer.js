@@ -2,13 +2,14 @@ import { css } from '@emotion/css'
 
 const footer = css`
   .footer {
-    width: 100vw;
     margin: 0 auto;
     background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 26px 0;
     letter-spacing: 0.05rem;
-
+    @media only screen and (max-width: 576px) {
+      padding: 10px;
+    }
     &__content {
       margin: 0 auto;
       font-size: 18px;
@@ -22,6 +23,7 @@ const footer = css`
       a {
         color: white;
         text-decoration: none;
+        margin: 0;
         &:hover {
           color: white;
         }
@@ -39,6 +41,26 @@ const footer = css`
       nav img {
         width: 25px;
       }
+
+      @media only screen and (max-width: 576px) {
+        display: block;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 10px 10px;
+        ul {
+          padding-left: 20px;
+        }
+        .about,
+        .shopping-info {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        nav {
+          display: flex;
+          justify-content: start;
+          margin: 10px 30px;
+        }
+      }
     }
 
     &__copyright {
@@ -48,6 +70,10 @@ const footer = css`
       font-size: 14px;
       font-family: Georgia, 'Times New Roman', Times, serif;
       font-style: italic;
+
+      @media only screen and (max-width: 576px) {
+        padding: 10px 10px;
+      }
     }
   }
 `
@@ -57,34 +83,28 @@ export default function Footer() {
       <footer>
         <div className="footer">
           <div className="footer__content">
-            <ul>
+            <ul className="about">
               <a href="./#/about">
                 <li>About Us</li>
               </a>
-              <a href="./">
-                <li>Contact</li>
-              </a>
-              <a href="./">
-                <li>FAQ</li>
-              </a>
+              <li>Contact</li>
+              <li>FAQ</li>
             </ul>
-            <ul>
-              <a href="./">
-                <li>Shipping & Returns</li>
-              </a>
-              <a href="./">
-                <li>Store Policy</li>
-              </a>
-              <a href="./">
-                <li>Payment Methods</li>
-              </a>
+            <ul className="shopping-info">
+              <li>Shipping & Returns</li>
+              <li>Store Policy</li>
+              <li>Payment Methods</li>
             </ul>
 
             <ul>
               <li>Tuesday to Sunday: 10:00 a.m.–5:00 p.m.</li>
               <li>Closed Monday</li>
-              <li>11150 East Boulevard Cleveland, Ohio 44106</li>
-              <li>216-421-7350 888-CMA-0033</li>
+              <li>
+                4950 W 59th St
+                <br />
+                Los Angeles, California(CA), 90056
+              </li>
+              <li>(323) 290-9783</li>
             </ul>
 
             <nav>

@@ -70,7 +70,6 @@ export const getCollections = (skip, collections) => (dispatch) => {
 export const getSpecificCollections = (department, skip) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
   getSpecificCollectionsAPI(department, skip).then((data) => {
-    console.log(data.info.total)
     dispatch(setCurrentCategory(department))
     dispatch(setCurrentSearch(''))
     dispatch(setTotalCollections(data.info.total))
@@ -82,7 +81,6 @@ export const getSpecificCollections = (department, skip) => (dispatch) => {
 export const searchCollections = (query, skip) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
   searchCollectionsAPI(query, skip).then((data) => {
-    console.log(data.info.total)
     dispatch(setTotalCollections(data.info.total))
     dispatch(setCurrentSearch(query))
     dispatch(setCurrentCategory(''))

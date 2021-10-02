@@ -1,5 +1,6 @@
 {
   "name": "artbox",
+  "homepage": "https://myusername.github.io/artbox",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

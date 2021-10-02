@@ -11,14 +11,12 @@ import {
 } from '../../redux/reducers/userReducer'
 
 const wishlistPageContainer = css`
-  width: 100vw;
   height: auto;
   font-family: 'Gill Sans';
   font-weight: 300;
   border: 1px solid transparent;
- background: rgba(0, 0, 0, 0.9);
-  border-bottom: 1px solid white; 
-  }
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid white;
 
   .wishlist {
     position: relative;
@@ -27,29 +25,8 @@ const wishlistPageContainer = css`
     background: white;
     padding: 0 50px 50px;
     box-shadow: -7px -7px 0px 0px gold;
-
-    ${
-      '' /* &__right-dot {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: rgba(0, 0, 0, 0.7);
-      top: 12px;
-      right: 12px;
-      border-radius: 50%;
-      box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
-    }
-
-    &__left-dot {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: rgba(0, 0, 0, 0.7);
-      top: 12px;
-      left: 12px;
-      border-radius: 50%;
-      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
-    } */
+    @media only screen and (max-width: 576px) {
+      padding: 0;
     }
 
     .reminder {
@@ -72,7 +49,7 @@ const wishlistPageContainer = css`
         font-size: 34px;
         text-align: left;
         padding: 0 10px;
-        font-weight:300;
+        font-weight: 300;
       }
 
       a {
@@ -91,7 +68,9 @@ const wishlistPageContainer = css`
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       align-items: center;
       font-size: 18px;
-
+      @media only screen and (max-width: 576px) {
+        font-size: 11px;
+      }
       i {
         cursor: pointer;
       }
@@ -101,8 +80,13 @@ const wishlistPageContainer = css`
         max-width: 200px;
         max-height: 200px;
         object-fit: contain;
+        @media only screen and (max-width: 768px) {
+          max-width: 100px;
+          max-height: 100px;
+        }
       }
     }
+
     .product:nth-child(2) {
       border-bottom: 1px solid black;
       font-weight: 500;
@@ -143,7 +127,6 @@ export default function WishlistPage() {
   }, [userId])
 
   if (!userId) {
-    alert('Please log in first!')
     history.push('/login')
   }
 
@@ -154,7 +137,7 @@ export default function WishlistPage() {
         {/* <div className="wishlist__left-dot"></div>
         <div className="wishlist__right-dot"></div> */}
         <div className="wishlist__title">
-          <h1>MY WISHLIST.</h1>
+          <h1>WISHLIST.</h1>
         </div>
 
         {favoriteProducts.length === 0 ? (

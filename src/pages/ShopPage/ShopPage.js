@@ -17,7 +17,6 @@ import {
 } from '../../redux/reducers/userReducer'
 
 const shopPageContainer = css`
-  width: 100vw;
   margin: 0 auto;
   font-family: Baskerville;
   height: auto;
@@ -211,7 +210,6 @@ export default function ShopPage() {
       let productUrl = `product/${product.category}/${product.id}`
 
       if (!userId) {
-        alert('Please log in first.')
         history.push('/login')
       }
 

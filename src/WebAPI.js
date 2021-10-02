@@ -1,7 +1,3 @@
-import { getAuthToken } from './utils'
-
-// const BASE_URL = 'https://api.artic.edu/api/v1'
-
 const BASE_URL = 'https://openaccess-api.clevelandart.org/api'
 const hasImage = 1
 let limit = 24
