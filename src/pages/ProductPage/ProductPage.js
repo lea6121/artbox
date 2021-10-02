@@ -225,7 +225,7 @@ function Product({ product }) {
     <div className="item">
       <img className="item__image" src={product.images[0]} />
       <div className="item__cover">
-        <a href={`/#/product/${product.category}/${product.id}`}>
+        <a href={`./#/product/${product.category}/${product.id}`}>
           <button className="quick-view-btn">QUICK VIEW</button>
         </a>
       </div>
