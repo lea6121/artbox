@@ -111,18 +111,21 @@ export const getSuggestProduct = (category) => (dispatch) => {
     const data = snapshot.val()
     let suggestionArr = []
     let numbers = []
-    let min, max, range, num
+    let min, max, range, num, isInclude
     min = 1
     max = data.length - 1
     range = 4
+
     for (let i = 0; i < range; i++) {
       do {
         num = Math.floor(Math.random() * (max - min + 1)) + min
-        if (!numbers.includes(num)) {
+        isInclude = numbers.includes(num)
+        if (!isInclude) {
           numbers.push(Number(num))
         }
-      } while (numbers.includes(num))
+      } while (isInclude)
     }
+
     numbers.forEach((element) => suggestionArr.push(data[element]))
     dispatch(setIsLoadingProducts(false))
     dispatch(setSuggestProducts(suggestionArr))
