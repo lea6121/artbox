@@ -4,14 +4,13 @@ import { useHistory } from 'react-router'
 import Loading from '../../components/Loading'
 import {
   loginWithGoogle,
-  loginWithEmail,
-  setLoginError
+  loginWithEmail
 } from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const loginPageContainer = css`
+  margin: 0 auto;
   min-height: 100vh;
-  width: 100vw;
   position: relative;
   text-align: center;
   font-family: serif;
@@ -92,12 +91,14 @@ const loginPageContainer = css`
           right: 100%;
           margin-right: 15px;
         }
+
         &:after {
           left: 100%;
           margin-left: 15px;
         }
       }
     }
+
     .login-container {
       margin: 0 auto;
       max-width: 330px;
@@ -156,13 +157,6 @@ export default function LoginPage() {
     password: ''
   })
   const { email, password } = formData
-
-  const updateFormData = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
   const [errors, setErrors] = useState('')
   const { emailMsg, passwordMsg } = errors
   const history = useHistory()
@@ -170,13 +164,35 @@ export default function LoginPage() {
   const isLoadingMsg = useSelector((store) => store.users.isLoading)
   const errorMsg = useSelector((store) => store.users.loginError)
   const userId = useSelector((state) => state.users.userId)
+  const updateFormData = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (formValidation()) {
+      dispatch(loginWithEmail({ email, password, history }))
+    }
+  }
+
+  const handleGoogle = () => {
+    dispatch(loginWithGoogle({ history }))
+  }
+
+  const [showLoginForm, setShowLoginForm] = useState(false)
+
+  const onclickShowLoginFormBtn = () =>
+    showLoginForm ? setShowLoginForm(false) : setShowLoginForm(true)
+
   if (userId !== null) {
     history.push('/')
   }
+
   function formValidation() {
     let errors = {}
     let formIsValid = true
-
     // 信箱驗證
     const isEmail =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -195,22 +211,6 @@ export default function LoginPage() {
     setErrors(errors)
     return formIsValid
   }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (formValidation()) {
-      dispatch(loginWithEmail({ email, password, history }))
-    }
-  }
-
-  const handleGoogle = () => {
-    dispatch(loginWithGoogle({ history }))
-  }
-
-  const [showLoginForm, setShowLoginForm] = useState(false)
-
-  const onclickShowLoginFormBtn = () =>
-    showLoginForm ? setShowLoginForm(false) : setShowLoginForm(true)
 
   useEffect(() => {
     window.scrollTo(0, 0)

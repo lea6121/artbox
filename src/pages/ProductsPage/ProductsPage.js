@@ -17,14 +17,8 @@ import {
 
 const shopPageContainer = css`
   margin: 0 auto;
-  font-family: Baskerville;
+  font-family: serif;
   height: auto;
-
-  #btn-back-to-top {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-  }
 
   .shop-banner {
     .carousel-root {
@@ -33,8 +27,9 @@ const shopPageContainer = css`
 
     img {
       width: 100%;
-      height: 100vh;
+      height: 90vh;
       padding-bottom: 10px;
+
       @media only screen and (max-width: 768px) {
         height: 50vh;
       }
@@ -77,9 +72,11 @@ const shopPageContainer = css`
       display: grid;
       grid-template-columns: 25% 25% 25% 25%;
       max-width: 100%;
+
       @media only screen and (min-width: 576px) and (max-width: 959px) {
         grid-template-columns: repeat(2, 1fr);
       }
+
       @media only screen and (max-width: 576px) {
         grid-template-columns: repeat(1, 1fr);
       }
@@ -91,6 +88,7 @@ const shopPageContainer = css`
       margin: 20px 5px;
       color: black;
       position: relative;
+
       @media only screen and (max-width: 576px) {
         margin: 0;
       }
@@ -187,6 +185,7 @@ function Product({ product }) {
   const favoriteProductsId = useSelector(
     (store) => store.users.favoriteProductsId
   )
+
   const handleToggle = () => {
     let productUrl = `product/${product.category}/${product.id}`
 
@@ -253,7 +252,7 @@ function Product({ product }) {
       <Modal {...props} centered>
         <Modal.Header>
           <Modal.Title
-            id="contained-modal-title-vcenter"
+            id="contained-modal-title-center"
             style={{ 'font-family': 'Gill Sans', alignItems: 'center' }}
           >
             <i
@@ -285,7 +284,7 @@ function Product({ product }) {
           <i className="far fa-heart" onClick={handleToggle}></i>
         )}
         <a href={`./#/product/${product.category}/${product.id}`}>
-          <button className="quick-view-btn">QUICK VIEW</button>
+          <button className="quick-view-btn">VIEW</button>
         </a>
         <button
           className="add-to-cart-btn"
@@ -304,7 +303,7 @@ function Product({ product }) {
   )
 }
 
-export default function ShopPage() {
+export default function ProductsPage() {
   const dispatch = useDispatch()
   const params = useParams()
   const products = useSelector((store) => store.products.specificProducts)
@@ -318,7 +317,7 @@ export default function ShopPage() {
     if (userId) {
       dispatch(getFavoriteProducts(userId))
     }
-    window.scrollTo(0, 0)
+    window.scrollTo(800, 800)
   }, [params.category, userId])
 
   return (
@@ -353,17 +352,6 @@ export default function ShopPage() {
             ))}
           </div>
         )}
-
-        <button
-          type="button"
-          className="btn btn-dark btn-floating btn-lg"
-          id="btn-back-to-top"
-          onClick={() => {
-            window.scrollTo(0, 0)
-          }}
-        >
-          <i className="fas fa-angle-up"></i>
-        </button>
 
         <Cart />
       </div>

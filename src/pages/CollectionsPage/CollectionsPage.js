@@ -11,8 +11,9 @@ import {
 } from '../../redux/reducers/collectionReducer'
 
 const collectionsPageContainer = css`
+  position: relative;
   box-sizing: border-box;
-  font-family: Baskerville;
+  font-family: serif;
   margin: 0 auto;
 
   #btn-back-to-top {
@@ -33,7 +34,6 @@ const collectionsPageContainer = css`
       background-attachment: fixed;
 
       h1 {
-        font-family: Serif;
         background: linear-gradient(#000000, #3e3e3e, rgb(172, 170, 170));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -42,9 +42,13 @@ const collectionsPageContainer = css`
         position: absolute;
         top: 34%;
         left: 50%;
+        width: 80%;
+        text-align: center;
         transform: translate(-50%, -50%);
         @media only screen and (max-width: 576px) {
+          top: 32%;
           font-size: 32px;
+          text-align: left;
           background: black;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -59,7 +63,6 @@ const collectionsPageContainer = css`
         left: 50%;
         transform: translate(-50%, -50%);
         @media only screen and (max-width: 959px) {
-          top: 48%;
           max-width: 90%;
         }
       }
@@ -107,10 +110,7 @@ const collectionsPageContainer = css`
       }
 
       .right-section {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-
         & > h1 {
-          font-family: serif;
           text-align: left;
           margin: 30px 30px 30px 10px;
           font-size: 26px;
@@ -119,7 +119,6 @@ const collectionsPageContainer = css`
         }
 
         .collections {
-          letter-spacing: 0.1rem;
           margin: 20px auto;
           padding: 10px 5px;
           display: grid;
@@ -158,15 +157,16 @@ const collectionsPageContainer = css`
             }
 
             &__title {
-              font-size: 18px;
+              font-size: 21px;
               margin: 20px 0 10px;
               letter-spacing: 0.05rem;
             }
 
             &__artist {
-              color: #3e3e3e;
+              color: rgba(0, 0, 0, 0.6);
               font-style: italic;
               font-size: 14px;
+              font-family: 'Gill Sans';
             }
           }
         }
@@ -190,9 +190,11 @@ const collectionsPageContainer = css`
   .pagination-container {
     margin: 20px auto;
     text-align: center;
+
     .btn {
-      @media only screen and (max-width: 579px) {
-        padding: 5px;
+      @media only screen and (max-width: 576px) {
+        padding: 3px;
+        font-size: 6px;
       }
     }
   }
@@ -203,13 +205,11 @@ const categories = [
   'American Painting and Sculpture ',
   'Art of the Americas ',
   'Chinese Art ',
-  'Contemporary Art ',
   'Decorative Art and Design ',
   'Drawings ',
   'Egyptian and Ancient Near Eastern Art ',
   'European Painting and Sculpture ',
   'Greek and Roman Art ',
-  // 'Indian and South East Asian Art ',
   'Islamic Art ',
   'Japanese Art ',
   'Korean Art ',
@@ -321,7 +321,7 @@ export default function CollectionsPage() {
     return (
       <div className="pagination-container">
         <div className="btn-group me-2" role="group">
-          {page > 1 &&
+          {page >= 1 &&
             pageNumbers.splice(0, 1).map((value, index) => (
               <button
                 className={
@@ -348,13 +348,12 @@ export default function CollectionsPage() {
               ></i>
               <i
                 className="fas fa-chevron-left"
-                style={{ fontSize: '6px', marginRight: '4px' }}
+                style={{ fontSize: '6px', marginRight: '2px' }}
               ></i>
-              Prev
             </button>
           )}
-          {page <= pageNumbers.length - 9 || page > 6
-            ? pageNumbers.slice(page - 7, page + 4).map((value, index) => (
+          {page <= pageNumbers.length - 2 || page > 6
+            ? pageNumbers.slice(page - 5, page + 2).map((value, index) => (
                 <button
                   className={
                     value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
@@ -367,7 +366,7 @@ export default function CollectionsPage() {
                   {value}
                 </button>
               ))
-            : pageNumbers.slice(-10).map((value, index) => (
+            : pageNumbers.slice(-5).map((value, index) => (
                 <button
                   className={
                     value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
@@ -380,8 +379,8 @@ export default function CollectionsPage() {
                   {value}
                 </button>
               ))}
-          {page <= 6 &&
-            pageNumbers.slice(0, 10).map((value, index) => (
+          {page <= 4 &&
+            pageNumbers.slice(0, 4).map((value, index) => (
               <button
                 className={
                   value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
@@ -395,7 +394,7 @@ export default function CollectionsPage() {
               </button>
             ))}
 
-          {page <= pageNumbers.length && (
+          {page <= pageNumbers.length - 1 && (
             <button
               className="btn btn-outline-dark"
               key={page - 1}
@@ -403,10 +402,9 @@ export default function CollectionsPage() {
                 changePage(page + 1)
               }}
             >
-              Next
               <i
                 className="fas fa-chevron-right"
-                style={{ fontSize: '6px', marginLeft: '4px' }}
+                style={{ fontSize: '6px', marginLeft: '2px' }}
               ></i>
               <i
                 className="fas fa-chevron-right"
@@ -504,7 +502,6 @@ export default function CollectionsPage() {
         </section>
       </div>
       <Pagination />
-
       <button
         type="button"
         className="btn btn-dark btn-floating btn-lg"

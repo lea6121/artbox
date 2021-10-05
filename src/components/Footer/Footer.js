@@ -2,14 +2,17 @@ import { css } from '@emotion/css'
 
 const footer = css`
   .footer {
+    border-top: 1px solid white;
     margin: 0 auto;
     background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 26px 0;
     letter-spacing: 0.05rem;
+
     @media only screen and (max-width: 576px) {
       padding: 10px;
     }
+
     &__content {
       margin: 0 auto;
       font-size: 18px;
@@ -24,6 +27,7 @@ const footer = css`
         color: white;
         text-decoration: none;
         margin: 0;
+
         &:hover {
           color: white;
         }
@@ -44,15 +48,19 @@ const footer = css`
 
       @media only screen and (max-width: 576px) {
         display: block;
-        grid-template-columns: repeat(3, 1fr);
         padding: 10px 10px;
+
         ul {
           padding-left: 20px;
+
+          li {
+            padding: 10px 5px;
+          }
         }
-        .about,
-        .shopping-info {
+
+        .about {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: 30% 40% 30%;
         }
 
         nav {
@@ -67,8 +75,8 @@ const footer = css`
       border-top: 1px solid white;
       padding-top: 20px;
       text-align: center;
-      font-size: 14px;
-      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 16px;
+      font-family: serif;
       font-style: italic;
 
       @media only screen and (max-width: 576px) {
@@ -87,18 +95,12 @@ export default function Footer() {
               <a href="./#/about">
                 <li>About Us</li>
               </a>
-              <li>Contact</li>
+              <li>Store Policy</li>
               <li>FAQ</li>
             </ul>
-            <ul className="shopping-info">
-              <li>Shipping & Returns</li>
-              <li>Store Policy</li>
-              <li>Payment Methods</li>
-            </ul>
-
             <ul>
-              <li>Tuesday to Sunday: 10:00 a.m.–5:00 p.m.</li>
               <li>Closed Monday</li>
+              <li>Tuesday to Sunday: 10:00 a.m.–5:00 p.m.</li>
               <li>
                 4950 W 59th St
                 <br />

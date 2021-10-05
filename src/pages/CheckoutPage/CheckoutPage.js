@@ -18,13 +18,15 @@ const container = css`
     grid-gap: 10px 10px;
     font-size: 18px;
     color: rgba(0, 0, 0, 0.6);
-    @media only screen and (max-width: 768px) {
-      grid-gap: 10px 5px;
-      font-size: 16px;
-    }
+
     div {
       background: rgba(0, 0, 0, 0.1);
       padding: 14px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      grid-gap: 10px 5px;
+      font-size: 16px;
     }
   }
 `
@@ -34,10 +36,12 @@ const cartPageContainer = css`
   display: grid;
   grid-gap: 10px 50px;
   grid-template-columns: 65% 30%;
+
   @media only screen and (max-width: 768px) {
     display: block;
     padding: 0 10px;
   }
+
   h2 {
     padding: 30px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -60,6 +64,7 @@ const cartPageContainer = css`
     grid-gap: 0 10px;
     font-size: 14px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
     @media only screen and (max-width: 768px) {
       grid-template-columns: 40% 50% 10%;
       grid-gap: 0 5px;
@@ -121,6 +126,7 @@ const cartPageContainer = css`
 
     i {
       cursor: pointer;
+
       &:hover {
         color: rgb(201, 36, 36);
       }
@@ -152,7 +158,6 @@ const cartPageContainer = css`
       width: 100%;
       margin: 20px auto 10px;
       padding: 10px;
-      font-family: Baskerville;
       font-size: 16px;
       border: none;
       color: white;
@@ -164,11 +169,11 @@ const cartPageContainer = css`
 
 const checkoutPageContainer = css`
   margin: 20px auto;
-  font-family: Baskerville;
   padding: 0 40px;
   display: grid;
   max-width: 1180px;
   grid-gap: 10px 80px;
+
   @media only screen and (max-width: 768px) {
     padding: 0 10px;
   }
@@ -182,6 +187,7 @@ const checkoutPageContainer = css`
 
   .checkout-container {
     margin: 10px 30px;
+
     @media only screen and (max-width: 768px) {
       margin: 10px 0;
     }
@@ -234,6 +240,7 @@ const checkoutPageContainer = css`
         grid-gap: 5px 30px;
         grid-template-columns: 5% 35% 60%;
         align-items: center;
+
         @media only screen and (max-width: 768px) {
           display: block;
         }
@@ -241,6 +248,7 @@ const checkoutPageContainer = css`
         input {
           outline: none;
           padding: 0 5px;
+
           @media only screen and (max-width: 768px) {
             max-width: 70%;
           }
@@ -252,6 +260,7 @@ const checkoutPageContainer = css`
 
         span {
           color: red;
+
           @media only screen and (max-width: 768px) {
             font-size: 12px;
             display: block;
@@ -259,6 +268,7 @@ const checkoutPageContainer = css`
         }
       }
     }
+
     .form-check {
       margin: 0 50px;
 
@@ -273,6 +283,7 @@ const checkoutPageContainer = css`
     display: flex;
     justify-content: space-between;
     margin: 0 30px 0;
+
     @media only screen and (max-width: 768px) {
       margin: 0 10px 0;
     }
@@ -281,6 +292,7 @@ const checkoutPageContainer = css`
       width: 200px;
       padding: 10px;
       font-size: 20px;
+
       @media only screen and (max-width: 768px) {
         width: 100px;
         font-size: 12px;
@@ -316,6 +328,7 @@ const checkoutPageContainer = css`
       i {
         margin: 0 0 0 30px;
         font-size: 16px;
+
         @media only screen and (max-width: 768px) {
           margin: 0 0 0 10px;
         }
@@ -333,6 +346,7 @@ const finalPageContainer = css`
   font-family: 'Gill Sans';
   font-weight: 100;
   font-size: 16px;
+
   @media only screen and (max-width: 992px) {
     margin: 60px 0;
   }
@@ -344,15 +358,17 @@ const finalPageContainer = css`
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     align-items: center;
+
     @media only screen and (max-width: 768px) {
       margin: 20px 0;
       grid-template-columns: 30% 23% 16% 16% 13%;
       font-size: 14px;
     }
 
-    :nth-child(1) {
+    &:nth-child(1) {
       font-size: 22px;
       font-weight: 500;
+
       @media only screen and (max-width: 768px) {
         font-size: 16px;
       }
@@ -363,6 +379,7 @@ const finalPageContainer = css`
       max-width: 200px;
       max-height: 180px;
       object-fit: contain;
+
       @media only screen and (max-width: 768px) {
         max-width: 100px;
         max-height: 100px;
@@ -397,6 +414,7 @@ const finalPageContainer = css`
       &:nth-child(2) {
         color: rgba(0, 0, 0, 0.8);
       }
+
       @media only screen and (max-width: 768px) {
         font-size: 11px;
       }
@@ -408,6 +426,7 @@ const finalPageContainer = css`
     display: flex;
     justify-content: space-between;
     margin: 0 10px 0;
+
     @media only screen and (max-width: 768px) {
       margin: 0 10px 0;
     }
@@ -416,6 +435,7 @@ const finalPageContainer = css`
       width: 200px;
       padding: 10px;
       font-size: 20px;
+
       @media only screen and (max-width: 768px) {
         width: 100px;
         font-size: 11px;
@@ -447,12 +467,15 @@ const finalPageContainer = css`
       border: none;
       background: rgba(255, 222, 3, 0.7);
       margin: 10px;
+
       @media only screen and (max-width: 768px) {
         padding: 0;
       }
+
       i {
         margin: 0 0 0 30px;
         font-size: 16px;
+
         @media only screen and (max-width: 768px) {
           margin: 0 0 0 10px;
         }
@@ -466,7 +489,7 @@ const finalPageContainer = css`
 `
 
 const orderDoneContent = css`
-  font-family: 'sans-serif';
+  font-family: 'Gill Sans';
   margin: 80px auto;
   padding-bottom: 20px;
   text-align: center;
@@ -477,6 +500,7 @@ const orderDoneContent = css`
     font-weight: 300;
     font-size: 22px;
     padding: 18px 0;
+
     @media only screen and (max-width: 576px) {
       font-size: 18px;
       padding: 10px 10px;
@@ -488,11 +512,14 @@ const orderDoneContent = css`
       font-size: 50px;
       color: white;
       padding: 30px 20px;
+
       @media only screen and (max-width: 576px) {
         font-size: 30px;
       }
+
       i {
         margin-right: 20px;
+
         @media only screen and (max-width: 576px) {
           display: block;
           margin-right: 0;
@@ -500,6 +527,7 @@ const orderDoneContent = css`
         }
       }
     }
+
     &:nth-child(2) {
       @media only screen and (max-width: 576px) {
         margin-top: 20px;
@@ -529,7 +557,7 @@ export default function CheckoutPage() {
   const cartItem = useSelector((store) => store.carts.cartProduct)
   const subTotal = useSelector((store) => store.carts.cartTotal)
   const userId = useSelector((store) => store.users.userId)
-
+  const data = JSON.parse(localStorage.getItem('cartData'))
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: '',
@@ -540,12 +568,6 @@ export default function CheckoutPage() {
     paymentType: ''
   })
   const [errors, setErrors] = useState('')
-  const updateFormData = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
   const { name, email, mobile, address, shippingType, paymentType } = formData
   const {
     nameMsg,
@@ -556,16 +578,62 @@ export default function CheckoutPage() {
     paymentTypeMsg
   } = errors
 
+  const updateFormData = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const result = `
+    The information:
+    - Name：${name}
+    - Email：${email}
+    - Mobile：${mobile}
+    - Address：${address}
+    - shipping：${shippingType}
+    - payment：${paymentType}`
+
+    if (formValidation()) {
+      alert(result)
+    }
+  }
+
+  // 上一步按鈕
+  const handleStepDecrement = () => {
+    setErrors('')
+    setStep((prevStep) => prevStep - 1)
+  }
+
+  // 下一步按鈕
+  const handleStepIncrement = () => {
+    if (step === 1 && cartItem.length !== 0) {
+      window.scrollTo(0, 0)
+      setStep((prevStep) => prevStep + 1)
+    } else if (step === 1 && cartItem.length === 0) {
+      history.push('/shop')
+    } else if (step === 2 && formValidation()) {
+      setStep((prevStep) => prevStep + 1)
+      window.scrollTo(0, 0)
+    } else if (step === 3) {
+      window.scrollTo(0, 0)
+      if (cartItem.length !== 0 && subTotal) {
+        dispatch(setOrder(userId, cartItem, formData, subTotal))
+      }
+      setStep((prevStep) => prevStep + 1)
+    }
+  }
+
   function formValidation() {
     let errors = {}
     let formIsValid = true
-
     // 名稱驗證
     if (name.trim() === '') {
       formIsValid = false
       errors['nameMsg'] = 'Please enter your name.'
     }
-
     // 信箱驗證
     const isEmail =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -605,57 +673,14 @@ export default function CheckoutPage() {
     return formIsValid
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const result = `
-    The information:
-    - Name：${name}
-    - Email：${email}
-    - Mobile：${mobile}
-    - Address：${address}
-    - shipping：${shippingType}
-    - payment：${paymentType}`
-
-    if (formValidation()) {
-      alert(result)
-    }
-  }
-
-  // 下一步按鈕
-  const handleStepIncrement = () => {
-    if (step === 1 && cartItem.length !== 0) {
-      window.scrollTo(0, 0)
-      setStep((prevStep) => prevStep + 1)
-    } else if (step === 1 && cartItem.length === 0) {
-      history.push('/shop')
-    } else if (step === 2 && formValidation()) {
-      setStep((prevStep) => prevStep + 1)
-      window.scrollTo(0, 0)
-    } else if (step === 3) {
-      window.scrollTo(0, 0)
-      if (cartItem.length !== 0 && subTotal) {
-        dispatch(setOrder(userId, cartItem, formData, subTotal))
-      }
-      setStep((prevStep) => prevStep + 1)
-    }
-  }
-
   if (step === 4) {
     localStorage.removeItem('cartData')
     dispatch(setCartProduct(''))
 
-    // setTimeout(() => {
-    //   history.push('/')
-    // }, 10000)
+    setTimeout(() => {
+      history.push('/')
+    }, 10000)
   }
-
-  // 上一步按鈕
-  const handleStepDecrement = () => {
-    setErrors('')
-    setStep((prevStep) => prevStep - 1)
-  }
-
-  const data = JSON.parse(localStorage.getItem('cartData'))
 
   useEffect(() => {
     if (!data || data.length === 0) {
@@ -678,9 +703,9 @@ export default function CheckoutPage() {
   }, [data])
 
   function CartItem({ cartItem }) {
-    const [count, setCount] = useState(cartItem.quantity)
-    let data = JSON.parse(localStorage.getItem('cartData'))
+    const data = JSON.parse(localStorage.getItem('cartData'))
     let duplicateData
+    const [count, setCount] = useState(cartItem.quantity)
     const itemExists = data.some((data) => {
       if (data.id === cartItem.id) {
         duplicateData = data
@@ -704,7 +729,6 @@ export default function CheckoutPage() {
             break
           }
         }
-        // Create handleIncrement event handler
         localStorage.setItem('cartData', JSON.stringify(items))
         dispatch(setCartProduct(items))
       }
@@ -718,7 +742,7 @@ export default function CheckoutPage() {
       }
 
       if (itemExists) {
-        let items = JSON.parse(localStorage.cartData)
+        const items = JSON.parse(localStorage.cartData)
         for (let i = 0; i < items.length; i++) {
           if (duplicateData.id === items[i].id) {
             items[i].quantity -= 1

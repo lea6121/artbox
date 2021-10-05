@@ -20,13 +20,12 @@ import OrdersPage from '../../pages/OrdersPage'
 
 const root = css`
   margin: 0 auto;
-  max-width: 1508px;
   position: relative;
 `
 
 function App() {
-  const auth = getAuth()
   const dispatch = useDispatch()
+  const auth = getAuth()
   const userId = useSelector((state) => state.users.userId)
   const expiredTime = 1000 * 60 * 60
 

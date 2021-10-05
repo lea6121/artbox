@@ -5,8 +5,8 @@ import { register, loginWithGoogle } from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const registerPageContainer = css`
+  margin: 0 auto;
   min-height: 100vh;
-  width: 100vw;
   position: relative;
   text-align: center;
   font-family: serif;
@@ -87,6 +87,7 @@ const registerPageContainer = css`
           right: 100%;
           margin-right: 15px;
         }
+
         &:after {
           left: 100%;
           margin-left: 15px;
@@ -151,32 +152,38 @@ export default function RegisterPage() {
     password: ''
   })
   const { email, password } = formData
-
-  const updateFormData = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
   const [errors, setErrors] = useState('')
   const { emailMsg, passwordMsg } = errors
   const history = useHistory()
   const dispatch = useDispatch()
   const errorMsg = useSelector((store) => store.users.registerError)
   const userId = useSelector((state) => state.users.userId)
+  const [showRegisterForm, setShowRegisterForm] = useState(false)
+  const showRegisterFormBtn = () =>
+    showRegisterForm ? setShowRegisterForm(false) : setShowRegisterForm(true)
+  const handleGoogle = () => {
+    dispatch(loginWithGoogle({ history }))
+  }
+  const updateFormData = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (formValidation()) {
+      dispatch(register({ email, password, history }))
+    }
+  }
 
   if (userId !== null) {
     history.push('/')
   }
 
-  const handleGoogle = () => {
-    dispatch(loginWithGoogle({ history }))
-  }
-
   function formValidation() {
     let errors = {}
     let formIsValid = true
-
     // 信箱驗證
     const isEmail =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -195,18 +202,6 @@ export default function RegisterPage() {
     setErrors(errors)
     return formIsValid
   }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (formValidation()) {
-      dispatch(register({ email, password, history }))
-    }
-  }
-
-  const [showRegisterForm, setShowRegisterForm] = useState(false)
-
-  const showRegisterFormBtn = () =>
-    showRegisterForm ? setShowRegisterForm(false) : setShowRegisterForm(true)
 
   return (
     <div className={registerPageContainer}>

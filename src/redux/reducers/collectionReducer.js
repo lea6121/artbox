@@ -1,6 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useDispatch, useSelector } from 'react-redux'
-
 import {
   getCollections as getCollectionsAPI,
   getSpecificCollections as getSpecificCollectionsAPI,
@@ -56,7 +54,7 @@ export const {
   setArtwork
 } = collectionReducer.actions
 
-export const getCollections = (skip, collections) => (dispatch) => {
+export const getCollections = (skip) => (dispatch) => {
   dispatch(setIsLoadingCollections(true))
   getCollectionsAPI(skip).then((data) => {
     dispatch(setTotalCollections(data.info.total))

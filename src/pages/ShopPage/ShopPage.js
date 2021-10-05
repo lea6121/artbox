@@ -18,7 +18,7 @@ import {
 
 const shopPageContainer = css`
   margin: 0 auto;
-  font-family: Baskerville;
+  font-family: serif;
   height: auto;
 
   #btn-back-to-top {
@@ -34,8 +34,9 @@ const shopPageContainer = css`
 
     img {
       width: 100%;
-      height: 100vh;
+      height: 90vh;
       padding-bottom: 10px;
+
       @media only screen and (max-width: 768px) {
         height: 50vh;
       }
@@ -161,7 +162,6 @@ const shopPageContainer = css`
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5
   },
@@ -209,6 +209,7 @@ export default function ShopPage() {
     const dispatch = useDispatch()
     const userId = useSelector((store) => store.users.userId)
     const [modalShow, setModalShow] = useState(false)
+
     const handleToggle = () => {
       let productUrl = `product/${product.category}/${product.id}`
 
@@ -235,8 +236,7 @@ export default function ShopPage() {
     }
 
     function handleAddToCart(item) {
-      let data = JSON.parse(localStorage.getItem('cartData')) || []
-
+      const data = JSON.parse(localStorage.getItem('cartData')) || []
       let duplicateData
       const itemExists = data.some((data) => {
         if (data.id === item.id) {
@@ -315,7 +315,7 @@ export default function ShopPage() {
               <i className="far fa-heart" onClick={handleToggle}></i>
             )}
             <a href={`./#/product/${product.category}/${product.id}`}>
-              <button className="quick-view-btn">QUICK VIEW</button>
+              <button className="quick-view-btn">VIEW</button>
             </a>
             <button
               className="add-to-cart-btn"
@@ -414,7 +414,6 @@ export default function ShopPage() {
             </a>
             <i className="fas fa-chevron-right"></i>
           </div>
-          (
           <Carousel responsive={responsive}>
             {products['games & puzzles'].map((gamesAndPuzzles) => (
               <Product key={gamesAndPuzzles.id} product={gamesAndPuzzles} />
@@ -422,17 +421,6 @@ export default function ShopPage() {
           </Carousel>
         </div>
       )}
-
-      <button
-        type="button"
-        className="btn btn-dark btn-floating btn-lg"
-        id="btn-back-to-top"
-        onClick={() => {
-          window.scrollTo(0, 0)
-        }}
-      >
-        <i className="fas fa-angle-up"></i>
-      </button>
 
       <Cart />
     </div>

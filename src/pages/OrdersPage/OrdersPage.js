@@ -24,7 +24,7 @@ const orderlistPageContainer = css`
     box-shadow: 7px 7px 1px 0px rgba(0, 0, 0, 0.7);
 
     @media only screen and (max-width: 576px) {
-      padding: 0;
+      padding: 10px;
     }
 
     .reminder {
@@ -79,6 +79,7 @@ const orderlistPageContainer = css`
         max-width: 200px;
         max-height: 200px;
         object-fit: contain;
+
         @media only screen and (max-width: 768px) {
           max-width: 100px;
           max-height: 100px;
@@ -90,6 +91,7 @@ const orderlistPageContainer = css`
       border-bottom: 1px solid black;
       font-weight: 500;
       font-size: 20px;
+
       @media only screen and (max-width: 576px) {
         font-size: 11px;
       }
@@ -119,9 +121,11 @@ const orderlistPageContainer = css`
       position: relative;
       box-shadow: inset 0px -2px rgba(0, 0, 0, 0.7);
       transition: all 2s ease-in-out;
+
       @media only screen and (max-width: 576px) {
         padding: 0;
       }
+
       .product {
         position: relative;
         display: grid;
@@ -143,9 +147,10 @@ const orderlistPageContainer = css`
 
         &__image {
           margin: 0 auto 1rem;
-          max-width: 120px;
-          max-height: 120px;
+          max-width: 200px;
+          max-height: 200px;
           object-fit: contain;
+
           @media only screen and (max-width: 768px) {
             max-width: 100px;
             max-height: 100px;
@@ -209,7 +214,7 @@ function Order({ order }) {
   )
 }
 
-export default function WishlistPage() {
+export default function OrdersPage() {
   const history = useHistory()
   const dispatch = useDispatch()
   const userOrders = useSelector((store) => store.users.userOrders)
@@ -232,8 +237,6 @@ export default function WishlistPage() {
     <div className={orderlistPageContainer}>
       {isLoadingMsg && <Loading />}
       <div className="orderlist">
-        {/* <div className="wishlist__left-dot"></div>
-        <div className="wishlist__right-dot"></div> */}
         <div className="orderlist__title">
           <h1>MY ORDERS.</h1>
         </div>

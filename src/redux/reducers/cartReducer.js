@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useDispatch, useSelector } from 'react-redux'
 
 const initialState = {
   isLoadingCartProducts: false,

@@ -5,11 +5,10 @@ const loading = css`
   top: 0;
   left: 0;
   right: 0;
-  left: 0;
   background: rgba(0, 0, 0, 1);
-  width: 100%;
+  max-width: 100vw;
   height: 100vh;
-  z-index: 2;
+  z-index: 5;
   background-image: url('https://github.com/lea6121/img-storage/blob/main/image/210000.gif?raw=true');
   background-position: 50% 50%;
   background-size: 160px;

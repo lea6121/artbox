@@ -8,6 +8,7 @@ import { logoutGoogle } from '../../redux/reducers/userReducer'
 
 const header = css`
   box-sizing: border-box;
+  font-family: Serif;
 
   .header-top {
     margin: 0 auto;
@@ -54,14 +55,16 @@ const header = css`
         padding: 0px 20px 0px 20px;
         display: flex;
         font-weight: 500;
-        font-family: Serif;
+
         &:hover {
           text-decoration: none;
           color: black;
         }
+
         @media only screen and (max-width: 576px) {
           color: white;
           padding: 0 20px 0 0;
+
           &:hover {
             color: white;
           }
@@ -89,7 +92,6 @@ const header = css`
         text-decoration: none;
         font-size: 18px;
         text-align: center;
-        font-family: Serif;
         transition: all 0.6s ease-in-out;
 
         &:hover {
@@ -105,6 +107,7 @@ const header = css`
 
       .fas {
         font-size: 26px;
+
         @media only screen and (max-width: 576px) {
           color: white;
         }
@@ -158,7 +161,6 @@ const header = css`
       color: rgba(0, 0, 0, 0.9);
       font-size: 18px;
       text-align: center;
-      font-family: Serif;
       transition: all 0.6s ease-in-out;
 
       &:hover {
@@ -172,7 +174,6 @@ export default function Header() {
   const dispatch = useDispatch()
   const history = useHistory()
   const userId = useSelector((store) => store.users.userId)
-
   const handleLogout = () => {
     dispatch(logoutGoogle({ history }))
   }
@@ -220,6 +221,10 @@ export default function Header() {
           </a>
         </div>
         <nav className="icons">
+          <a href="./#/about">
+            <i class="fas fa-info-circle"></i>
+            <div className="icon">About</div>
+          </a>
           <a href="./#/collections/1">
             <i className="fas fa-images"></i>
             <div className="icon">Collections</div>

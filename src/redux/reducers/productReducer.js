@@ -72,7 +72,6 @@ export const getSpecificProducts = (category) => (dispatch) => {
   const product = query(ref(dbRef, `products/${category}`), orderByChild('id'))
 
   onValue(product, (snapshot) => {
-    // const data = snapshot.val()
     let arr = []
     //有用 orderByChild 時要用 for 迴圈取資料
     snapshot.forEach(function (item) {
@@ -93,7 +92,6 @@ export const getProduct = (id, category) => (dispatch) => {
   )
 
   onValue(product, (snapshot) => {
-    // const data = snapshot.val()
     let arr = []
     //有用 orderByChild 時要用 for 迴圈取資料
     snapshot.forEach(function (item) {
@@ -112,22 +110,18 @@ export const getSuggestProduct = (category) => (dispatch) => {
   onValue(product, (snapshot) => {
     const data = snapshot.val()
     let suggestionArr = []
-    let numbers = [] // new empty array
-
-    var min, max, r, n, p
-
+    let numbers = []
+    let min, max, range, num
     min = 1
     max = data.length - 1
-    r = 4 // how many numbers you want to extract
-
-    for (let i = 0; i < r; i++) {
+    range = 4
+    for (let i = 0; i < range; i++) {
       do {
-        n = Math.floor(Math.random() * (max - min + 1)) + min
-        p = numbers.includes(n)
-        if (!p) {
-          numbers.push(Number(n))
+        num = Math.floor(Math.random() * (max - min + 1)) + min
+        if (!numbers.includes(num)) {
+          numbers.push(Number(num))
         }
-      } while (p)
+      } while (numbers.includes(num))
     }
     numbers.forEach((element) => suggestionArr.push(data[element]))
     dispatch(setIsLoadingProducts(false))

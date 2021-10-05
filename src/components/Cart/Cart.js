@@ -6,8 +6,6 @@ import { Modal, Button } from 'react-bootstrap'
 import { setCartProduct } from '../../redux/reducers/cartReducer'
 
 const cartContainer = css`
-  position: relative;
-
   .mask {
     position: fixed;
     z-index: 3;
@@ -38,7 +36,7 @@ const menuBtn = css`
   }
 
   p {
-    font-family: 'Helvetica';
+    font-family: 'Gill Sans';
     position: absolute;
     top: -14px;
     right: -6px;
@@ -63,6 +61,7 @@ const menuBtn = css`
 const menuOverlay = css`
   z-index: 3;
   position: fixed;
+  top: 0;
   bottom: 0;
   right: 0;
   background-color: white;
@@ -74,6 +73,7 @@ const menuOverlay = css`
   &.show {
     transform: translateX(0%);
   }
+
   @media only screen and (max-width: 579px) {
     width: 250px;
   }
@@ -84,11 +84,11 @@ const menuOverlay = css`
     h1 {
       height: 120px;
       margin: 0 0;
-      font-family: Baskerville;
+      font-family: serif;
       text-align: center;
       background: rgba(0, 0, 0, 0.8);
       color: white;
-      padding: 40px 0 28px;
+      padding: 30px 0;
       font-size: 48px;
     }
 
@@ -105,9 +105,10 @@ const menuOverlay = css`
 
     .cart {
       padding: 20px;
-      font-family: 'Helvetica';
+      font-family: 'Gill Sans';
+      font-weight: 300;
       font-size: 14px;
-      height: 73vh;
+      height: 65vh;
       overflow-y: auto;
 
       i {
@@ -145,9 +146,11 @@ const menuOverlay = css`
 
       &__details {
         padding: 0 3px;
+
         div {
           padding: 3px 0;
         }
+
         @media only screen and (max-width: 579px) {
           font-size: 10px;
         }
@@ -172,12 +175,10 @@ const menuOverlay = css`
       bottom: 0;
       left: 50%;
       transform: translate(-50%, 0%);
-
       display: block;
       width: 70%;
       margin: 20px auto 10px;
       padding: 18px;
-      font-family: Baskerville;
       font-size: 16px;
 
       a {
@@ -186,20 +187,6 @@ const menuOverlay = css`
           color: unset;
         }
       }
-    }
-
-    ${
-      '' /* .view-cart-btn {
-      border: 1px solid black;
-      color: black;
-      background: rgba(255, 255, 255, 0);
-      transition: all 0.5s ease-out;
-
-      &:hover {
-        color: white;
-        background: black;
-      }
-    } */
     }
 
     .checkout-btn {
@@ -216,21 +203,15 @@ const menuOverlay = css`
 `
 
 export default function Cart() {
-  const userId = useSelector((store) => store.users.userId)
-  const cartItem = useSelector((store) => store.carts.cartProduct)
   const dispatch = useDispatch()
   const history = useHistory()
+  const userId = useSelector((store) => store.users.userId)
+  const cartItem = useSelector((store) => store.carts.cartProduct)
+  const data = JSON.parse(localStorage.getItem('cartData'))
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const handleLogin = () => {
     history.push('/login')
   }
-  const data = JSON.parse(localStorage.getItem('cartData'))
-
-  useEffect(() => {
-    if (data && data.length !== 0) {
-      dispatch(setCartProduct(data))
-    }
-  }, [dispatch])
 
   function CheckoutBtn() {
     const [show, setShow] = useState(false)
@@ -333,6 +314,12 @@ export default function Cart() {
     )
   }
 
+  useEffect(() => {
+    if (data && data.length !== 0) {
+      dispatch(setCartProduct(data))
+    }
+  }, [])
+
   return (
     <div className={cartContainer}>
       {isMenuOpen && <div className="mask"></div>}
@@ -357,9 +344,6 @@ export default function Cart() {
               cartItem.length > 0 &&
               data.map((item) => <CartItem key={item.id} cartItem={item} />)}
           </div>
-          {/* <a href="./#/cart">
-            <button className="view-cart-btn">VIEW CART</button>
-          </a> */}
           <CheckoutBtn />
         </nav>
       </div>

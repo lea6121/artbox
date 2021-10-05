@@ -19,7 +19,7 @@ import {
 } from '../../redux/reducers/userReducer'
 
 const productPageContainer = css`
-  font-family: Baskerville;
+  font-family: serif;
   padding: 40px 0;
 
   .shop-container {
@@ -38,7 +38,6 @@ const productPageContainer = css`
       font-size: 22px;
       color: black;
       font-style: italic;
-      font-family: Georgia;
       i {
         margin-right: 10px;
       }
@@ -123,6 +122,7 @@ const productContainer = css`
   grid-gap: 10px 10px;
   align-items: center;
   overflow: hidden;
+
   @media only screen and (max-width: 959px) {
     display: block;
   }
@@ -137,6 +137,7 @@ const productContainer = css`
     padding: 0 20px;
     display: flex;
     flex-direction: column;
+
     @media only screen and (max-width: 959px) {
       padding: 0 0;
     }
@@ -202,7 +203,6 @@ const productContainer = css`
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5
   },
@@ -226,7 +226,7 @@ function Product({ product }) {
       <img className="item__image" src={product.images[0]} />
       <div className="item__cover">
         <a href={`./#/product/${product.category}/${product.id}`}>
-          <button className="quick-view-btn">QUICK VIEW</button>
+          <button className="quick-view-btn">VIEW</button>
         </a>
       </div>
       <div className="item__name">{product.title}</div>
@@ -245,11 +245,11 @@ export default function ProductPage() {
   const isLoadingProductsMsg = useSelector(
     (store) => store.products.isLoadingProducts
   )
-  const [count, setCount] = useState(1)
-  const [modalShow, setModalShow] = useState(false)
   const favoriteProductsId = useSelector(
     (store) => store.users.favoriteProductsId
   )
+  const [count, setCount] = useState(1)
+  const [modalShow, setModalShow] = useState(false)
 
   const handleToggle = () => {
     let productUrl = `product/${product[0].category}/${product[0].id}`
@@ -275,6 +275,7 @@ export default function ProductPage() {
       }
     }
   }
+
   function Counter() {
     const handleIncrement = () => {
       let maximum = 10
@@ -311,8 +312,7 @@ export default function ProductPage() {
   }
 
   function handleAddToCart(item) {
-    let data = JSON.parse(localStorage.getItem('cartData')) || []
-
+    const data = JSON.parse(localStorage.getItem('cartData')) || []
     let duplicateData
     const itemExists = data.some((data) => {
       if (data.id === item.id) {

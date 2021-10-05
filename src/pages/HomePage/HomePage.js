@@ -5,6 +5,7 @@ const homePageContainer = css`
   box-sizing: border-box;
   letter-spacing: 0.1rem;
   margin: 0 auto;
+  font-family: serif;
 
   .banner {
     margin-top: 5px;
@@ -16,7 +17,7 @@ const homePageContainer = css`
     max-width: 100vw;
     height: 100%;
 
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1408px) {
       display: block;
     }
 
@@ -32,12 +33,13 @@ const homePageContainer = css`
       text-align: center;
       font-family: 'Arial Black';
       transition: all 0.8s ease-out;
+      overflow: hidden;
 
       &:hover {
         transform: scale(1.02);
       }
 
-      @media only screen and (max-width: 1200px) {
+      @media only screen and (max-width: 1408px) {
         display: block;
         margin-bottom: 5px;
       }
@@ -55,31 +57,46 @@ const homePageContainer = css`
       margin: 0 auto;
       text-align: center;
 
-      @media only screen and (max-width: 1200px) {
+      @media only screen and (max-width: 1408px) {
         padding: 20px;
         position: static;
         max-height: 300px;
       }
 
       h3 {
-        font-size: 34px;
+        font-size: 32px;
         padding: 40px 0 40px 0;
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
 
-        @media only screen and (max-width: 1200px) {
+        @media only screen and (max-width: 1408px) {
+          position: static;
+          top: 0%;
+          left: 0%;
+          transform: translate(-0%, -0%);
           font-size: 22px;
           padding: 20px 0 10px 0;
+          width: 100%;
         }
       }
 
       h1 {
-        font-size: 43px;
+        width: 100%;
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
         color: rgb(16, 150, 132);
-
-        &:hover {
-          text-decoration: underline;
-        }
-
-        @media only screen and (max-width: 1200px) {
+        @media only screen and (max-width: 1408px) {
+          position: static;
+          top: 0%;
+          left: 0%;
+          transform: translate(-0%, -0%);
+          text-align: center;
           font-size: 30px;
           padding-bottom: 10px;
         }
@@ -87,10 +104,18 @@ const homePageContainer = css`
 
       p {
         font-size: 20px;
-        margin: 30px auto;
-        @media only screen and (max-width: 1200px) {
-          margin: 0;
+        width: 70%;
+        position: absolute;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @media only screen and (max-width: 1408px) {
+          position: static;
+          top: 0%;
+          left: 0%;
+          transform: translate(-0%, -0%);
           font-size: 15px;
+          width: 100%;
         }
       }
     }
@@ -110,7 +135,6 @@ const homePageContainer = css`
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 10px 5px;
-      font-family: Georgia, 'Times New Roman', Times, serif;
       max-width: 98vw;
       font-style: italic;
       font-size: 24px;
@@ -132,6 +156,7 @@ const homePageContainer = css`
         &__card {
           position: relative;
           height: 400px;
+
           @media only screen and (min-width: 768px) and (max-width: 959px) {
             max-height: 600px;
             transition: all 0.8s ease-out;
@@ -140,6 +165,7 @@ const homePageContainer = css`
               transform: scale(1.02);
             }
           }
+
           @media only screen and (min-width: 576px) and (max-width: 768px) {
             max-height: 700px;
             transition: all 0.8s ease-out;
@@ -148,6 +174,7 @@ const homePageContainer = css`
               transform: scale(1.02);
             }
           }
+
           @media only screen and (max-width: 576px) {
             max-height: 260px;
             transition: all 0.8s ease-out;
@@ -172,6 +199,7 @@ const homePageContainer = css`
 
           &:hover {
             transform: scale(1.2, 1.2);
+
             @media only screen and (max-width: 959px) {
               transform: scale(1, 1);
             }
@@ -187,6 +215,7 @@ const homePageContainer = css`
           color: white;
           font-size: 36px;
           background: rgba(0, 0, 0, 1);
+
           @media only screen and (max-width: 768px) {
             font-size: 20px;
             height: 50px;
@@ -262,7 +291,7 @@ export default function HomePage() {
                 src="https://github.com/lea6121/img-storage/blob/main/image/210002.jpeg?raw=true"
                 alt="content"
               />
-              <div className="content__mask">search collections.</div>
+              <div className="content__mask">Search collections.</div>
             </div>
           </a>
           <a href="./#/about" className="contents__tag">
@@ -272,7 +301,7 @@ export default function HomePage() {
                 src="https://github.com/lea6121/img-storage/blob/main/image/210003.jpeg?raw=true"
                 alt="content"
               />
-              <div className="content__mask">about.</div>
+              <div className="content__mask">About.</div>
             </div>
           </a>
           <a href="./#/shop" className="contents__tag">
@@ -282,7 +311,7 @@ export default function HomePage() {
                 src="https://github.com/lea6121/img-storage/blob/main/image/210004.jpeg?raw=true"
                 alt="item"
               />
-              <div className="content__mask">shop online store.</div>
+              <div className="content__mask">Shop online store.</div>
             </div>
           </a>
           <a
@@ -299,7 +328,7 @@ export default function HomePage() {
               <div className="content__cover">
                 <h1>Coming Soon</h1>
               </div>
-              <div className="content__mask">visit online exhibition.</div>
+              <div className="content__mask">Visit online exhibition.</div>
             </div>
           </a>
         </div>

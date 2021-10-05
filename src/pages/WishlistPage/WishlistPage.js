@@ -25,6 +25,7 @@ const wishlistPageContainer = css`
     background: white;
     padding: 0 50px 50px;
     box-shadow: -7px -7px 0px 0px gold;
+
     @media only screen and (max-width: 576px) {
       padding: 0;
     }
@@ -68,6 +69,7 @@ const wishlistPageContainer = css`
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       align-items: center;
       font-size: 18px;
+
       @media only screen and (max-width: 576px) {
         font-size: 11px;
       }
@@ -80,6 +82,7 @@ const wishlistPageContainer = css`
         max-width: 200px;
         max-height: 200px;
         object-fit: contain;
+
         @media only screen and (max-width: 768px) {
           max-width: 100px;
           max-height: 100px;
@@ -134,8 +137,6 @@ export default function WishlistPage() {
     <div className={wishlistPageContainer}>
       {isLoadingMsg && <Loading />}
       <div className="wishlist">
-        {/* <div className="wishlist__left-dot"></div>
-        <div className="wishlist__right-dot"></div> */}
         <div className="wishlist__title">
           <h1>WISHLIST.</h1>
         </div>
