@@ -4,7 +4,8 @@ import { useHistory } from 'react-router'
 import Loading from '../../components/Loading'
 import {
   loginWithGoogle,
-  loginWithEmail
+  loginWithEmail,
+  setLoginError
 } from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -213,6 +214,7 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
+    dispatch(setLoginError(''))
     window.scrollTo(0, 0)
   }, [dispatch])
 

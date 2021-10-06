@@ -1,7 +1,11 @@
 import { css } from '@emotion/css'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import { register, loginWithGoogle } from '../../redux/reducers/userReducer'
+import {
+  register,
+  loginWithGoogle,
+  setRegisterError
+} from '../../redux/reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const registerPageContainer = css`
@@ -202,6 +206,11 @@ export default function RegisterPage() {
     setErrors(errors)
     return formIsValid
   }
+
+  useEffect(() => {
+    dispatch(setRegisterError(''))
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className={registerPageContainer}>
