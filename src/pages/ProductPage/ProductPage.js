@@ -11,7 +11,8 @@ import Loading from '../../components/Loading'
 import { setCartProduct } from '../../redux/reducers/cartReducer'
 import {
   getProduct,
-  getSuggestProduct
+  getSuggestProduct,
+  getFavoriteProducts
 } from '../../redux/reducers/productReducer'
 import {
   setFavoriteProduct,
@@ -270,8 +271,8 @@ export default function ProductPage() {
             productUrl
           )
         )
-      } else if (favoriteProductsId.includes(product.id)) {
-        dispatch(removeFavoriteProduct(userId, product.id))
+      } else if (favoriteProductsId.includes(product[0].id)) {
+        dispatch(removeFavoriteProduct(userId, product[0].id))
       }
     }
   }

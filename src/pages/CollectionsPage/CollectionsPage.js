@@ -144,6 +144,7 @@ const collectionsPageContainer = css`
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 8;
             overflow: hidden;
+            align-items: center;
 
             img {
               transition: all 0.6s ease-out;
@@ -157,9 +158,8 @@ const collectionsPageContainer = css`
             }
 
             &__title {
-              font-size: 21px;
+              font-size: 20px;
               margin: 20px 0 10px;
-              letter-spacing: 0.05rem;
             }
 
             &__artist {
@@ -352,8 +352,8 @@ export default function CollectionsPage() {
               ></i>
             </button>
           )}
-          {page <= pageNumbers.length - 2 || page > 6
-            ? pageNumbers.slice(page - 5, page + 2).map((value, index) => (
+          {page < 7
+            ? pageNumbers.slice(0, 6).map((value, index) => (
                 <button
                   className={
                     value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
@@ -366,7 +366,7 @@ export default function CollectionsPage() {
                   {value}
                 </button>
               ))
-            : pageNumbers.slice(-5).map((value, index) => (
+            : pageNumbers.slice(page - 5, page + 2).map((value, index) => (
                 <button
                   className={
                     value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
@@ -379,20 +379,6 @@ export default function CollectionsPage() {
                   {value}
                 </button>
               ))}
-          {page <= 4 &&
-            pageNumbers.slice(0, 4).map((value, index) => (
-              <button
-                className={
-                  value === page ? ' btn btn-dark' : ' btn btn-outline-dark'
-                }
-                key={value}
-                onClick={() => {
-                  changePage(value)
-                }}
-              >
-                {value}
-              </button>
-            ))}
 
           {page <= pageNumbers.length - 1 && (
             <button
@@ -412,7 +398,8 @@ export default function CollectionsPage() {
               ></i>
             </button>
           )}
-          {page < pageNumbers.length - 4 &&
+
+          {page < pageNumbers.length - 2 &&
             pageNumbers.slice(-1).map((value, index) => (
               <button
                 className={

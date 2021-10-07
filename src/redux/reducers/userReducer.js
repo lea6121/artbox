@@ -96,7 +96,6 @@ export const register = (data) => (dispatch) => {
   createUserWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
       dispatch(setIsLoading(false))
-      // data.history.push('/')
     })
     .catch((error) => {
       dispatch(setIsLoading(false))
@@ -109,7 +108,6 @@ export const register = (data) => (dispatch) => {
       return signInWithEmailAndPassword(auth, data.email, data.password).then(
         (userCredential) => {
           dispatch(setIsLoading(false))
-          // Signed in
           dispatch(setRegisterError(''))
           data.history.push('/')
         }
@@ -117,8 +115,8 @@ export const register = (data) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(setIsLoading(false))
-      const errorMessage = error.message
-      return dispatch(setLoginError(errorMessage))
+      const errorCode = error.code
+      return dispatch(setLoginError(errorCode))
     })
 }
 
@@ -129,7 +127,6 @@ export const loginWithEmail = (data) => (dispatch) => {
       return signInWithEmailAndPassword(auth, data.email, data.password).then(
         (userCredential) => {
           dispatch(setIsLoading(false))
-          // Signed in
           const user = userCredential.user
           dispatch(setUserId(user.id))
           dispatch(setRegisterError(''))
@@ -139,8 +136,8 @@ export const loginWithEmail = (data) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(setIsLoading(false))
-      const errorMessage = error.message
-      return dispatch(setLoginError(errorMessage))
+      const errorCode = error.code
+      return dispatch(setLoginError(errorCode))
     })
 }
 
@@ -154,10 +151,9 @@ export const loginWithGoogle = (data) => (dispatch) => {
       data.history.push('/')
     })
     .catch((error) => {
-      // Handle Errors here.
       dispatch(setIsLoading(false))
-      const errorMessage = error.message
-      return dispatch(setLoginError(errorMessage))
+      const errorCode = error.code
+      return dispatch(setLoginError(errorCode))
     })
 }
 

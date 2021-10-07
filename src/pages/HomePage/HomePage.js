@@ -136,7 +136,6 @@ const homePageContainer = css`
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 10px 5px;
       max-width: 98vw;
-      font-style: italic;
       font-size: 24px;
 
       @media only screen and (max-width: 959px) {

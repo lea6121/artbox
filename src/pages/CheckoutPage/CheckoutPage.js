@@ -699,7 +699,7 @@ export default function CheckoutPage() {
         total += price
       }
     }
-    dispatch(setCartTotal(total))
+    dispatch(setCartTotal(total.toFixed(2)))
   }, [data])
 
   function CartItem({ cartItem }) {

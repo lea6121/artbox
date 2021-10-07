@@ -200,6 +200,8 @@ export default function ShopPage() {
     dispatch(getAllProducts())
     if (userId) {
       dispatch(getFavoriteProducts(userId))
+    } else {
+      dispatch(getFavoriteProducts([]))
     }
     window.scrollTo(0, 0)
   }, [userId])
