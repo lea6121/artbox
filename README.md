@@ -78,9 +78,11 @@
 
 - 提供使用者以一般 email 或 google 帳號註冊
 - Email 和密碼格式驗證，並將錯誤訊息呈現給使用者
-  **如不欲註冊可使用測試帳號登入使用**
-  Email: demo@gmail.com
-  Password: demo1234
+
+- 如不欲註冊可使用測試帳號登入使用：
+
+  - Email: demo@gmail.com
+  - Password: demo1234
 
   ![](https://github.com/lea6121/img-storage/blob/main/gifs/register.gif?raw=true)
 
