@@ -15,8 +15,6 @@ const header = css`
     background: white;
     position: relative;
     z-index: 3;
-    border-right: 1px solid rgba(0, 0, 0, 0.7);
-    border-left: 1px solid rgba(0, 0, 0, 0.7);
     border-bottom: 1px solid rgba(0, 0, 0, 0.7);
     display: flex;
     height: auto;

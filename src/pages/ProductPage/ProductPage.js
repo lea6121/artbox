@@ -260,7 +260,7 @@ export default function ProductPage() {
     }
 
     if (userId) {
-      if (!favoriteProductsId.includes(product[0].id)) {
+      if (favoriteProductsId && !favoriteProductsId.includes(product[0].id)) {
         dispatch(
           setFavoriteProduct(
             userId,
@@ -411,7 +411,8 @@ export default function ProductPage() {
               <h1 className="product__title">{product[0].title}</h1>
               <div>
                 <p className="product__price">$ {product[0].price}</p>
-                {favoriteProductsId.includes(product[0].id) ? (
+                {favoriteProductsId &&
+                favoriteProductsId.includes(product[0].id) ? (
                   <i className="fas fa-heart" onClick={handleToggle}></i>
                 ) : (
                   <i className="far fa-heart" onClick={handleToggle}></i>

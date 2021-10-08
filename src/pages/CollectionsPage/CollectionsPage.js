@@ -380,7 +380,7 @@ export default function CollectionsPage() {
                 </button>
               ))}
 
-          {page <= pageNumbers.length - 1 && (
+          {page < pageNumbers.length && (
             <button
               className="btn btn-outline-dark"
               key={page - 1}

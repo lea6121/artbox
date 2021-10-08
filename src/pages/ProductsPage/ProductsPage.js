@@ -194,7 +194,7 @@ function Product({ product }) {
     }
 
     if (userId) {
-      if (!favoriteProductsId.includes(product.id)) {
+      if (favoriteProductsId && !favoriteProductsId.includes(product.id)) {
         dispatch(
           setFavoriteProduct(
             userId,
@@ -278,7 +278,7 @@ function Product({ product }) {
     <div className="item">
       <img className="item__image" src={product.images[0]} />
       <div className="item__cover">
-        {favoriteProductsId.includes(product.id) ? (
+        {favoriteProductsId && favoriteProductsId.includes(product.id) ? (
           <i className="fas fa-heart" onClick={handleToggle}></i>
         ) : (
           <i className="far fa-heart" onClick={handleToggle}></i>

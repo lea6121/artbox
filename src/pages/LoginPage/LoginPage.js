@@ -206,7 +206,7 @@ export default function LoginPage() {
     if (password.trim() === '' || password.length < 8) {
       formIsValid = false
       errors['passwordMsg'] =
-        'Please enter your password. Passwords must be at least 8 characters long.'
+        'Please enter your password. Passwords suppose to be at least 8 characters long.'
     }
 
     setErrors(errors)

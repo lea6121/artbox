@@ -200,8 +200,6 @@ export default function ShopPage() {
     dispatch(getAllProducts())
     if (userId) {
       dispatch(getFavoriteProducts(userId))
-    } else {
-      dispatch(getFavoriteProducts([]))
     }
     window.scrollTo(0, 0)
   }, [userId])
@@ -220,7 +218,7 @@ export default function ShopPage() {
       }
 
       if (userId) {
-        if (!favoriteProductsId.includes(product.id)) {
+        if (favoriteProductsId && !favoriteProductsId.includes(product.id)) {
           dispatch(
             setFavoriteProduct(
               userId,
@@ -311,7 +309,7 @@ export default function ShopPage() {
         <div className="item">
           <img className="item__image" src={product.images[0]} />
           <div className="item__cover">
-            {favoriteProductsId.includes(product.id) ? (
+            {favoriteProductsId && favoriteProductsId.includes(product.id) ? (
               <i className="fas fa-heart" onClick={handleToggle}></i>
             ) : (
               <i className="far fa-heart" onClick={handleToggle}></i>

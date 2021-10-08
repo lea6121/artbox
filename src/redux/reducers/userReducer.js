@@ -161,10 +161,12 @@ export const logoutGoogle = (data) => (dispatch) => {
   signOut(auth)
     .then(() => {
       dispatch(setUserId(null))
+      dispatch(setFavoriteProducts(null))
+      dispatch(setFavoriteProductsId(null))
       data.history.push('/')
     })
     .catch((error) => {
-      dispatch(setLogoutError(error))
+      dispatch(setLogoutError(error.code))
     })
 }
 
