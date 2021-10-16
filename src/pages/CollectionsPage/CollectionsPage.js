@@ -263,10 +263,13 @@ function Collection({ collection, scrollPosition }) {
             alt={collection.title}
             effect="blur"
             src={collection.images.web.url}
-            onload="imgLoaded(this)"
           />
         ) : (
-          <img src={image210011} alt="Img unavailable" />
+          <LazyLoadImage
+            alt="Img unavailable"
+            effect="blur"
+            src={image210011}
+          />
         )}
 
         <div className="collection__title">{collection.title}</div>
