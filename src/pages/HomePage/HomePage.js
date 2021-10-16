@@ -1,5 +1,11 @@
 import { css } from '@emotion/css'
-import trailer from '../../media/trailer.mp4'
+import trailer from '../../assets/trailer.mp4'
+import image210001 from '../../assets/210001.jpeg'
+import image210002 from '../../assets/210002.jpeg'
+import image210003 from '../../assets/210003.jpeg'
+import image210004 from '../../assets/210004.jpeg'
+import image210005 from '../../assets/210005.jpeg'
+import image210012 from '../../assets/210012.jpeg'
 
 const homePageContainer = css`
   box-sizing: border-box;
@@ -25,7 +31,6 @@ const homePageContainer = css`
       width: 100%;
       height: 100%;
       position: relative;
-      background-image: url('https://github.com/lea6121/img-storage/blob/main/image/210001.jpeg?raw=true');
       background-repeat: repeat-x;
       background-size: contain;
       background-position: left;
@@ -263,7 +268,7 @@ export default function HomePage() {
   return (
     <div className={homePageContainer}>
       <div className="banner">
-        <section>
+        <section style={{ backgroundImage: `url(${image210001})` }}>
           <div className="banner__mask">
             <h3>Current Exhibitions</h3>
             <h1>CLAUDE MONET</h1>
@@ -275,7 +280,7 @@ export default function HomePage() {
         </section>
         <video
           src={trailer}
-          poster="https://uploads4.wikiart.org/images/claude-monet/the-sea-at-pourville.jpg!Large.jpg"
+          poster={image210012}
           preload="true"
           controls
         ></video>
@@ -287,19 +292,15 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://github.com/lea6121/img-storage/blob/main/image/210002.jpeg?raw=true"
-                alt="content"
+                src={image210002}
+                alt="Search collections."
               />
               <div className="content__mask">Search collections.</div>
             </div>
           </a>
           <a href="./#/about" className="contents__tag">
             <div className="content__card">
-              <img
-                className="content__photo"
-                src="https://github.com/lea6121/img-storage/blob/main/image/210003.jpeg?raw=true"
-                alt="content"
-              />
+              <img className="content__photo" src={image210003} alt="About." />
               <div className="content__mask">About.</div>
             </div>
           </a>
@@ -307,8 +308,8 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://github.com/lea6121/img-storage/blob/main/image/210004.jpeg?raw=true"
-                alt="item"
+                src={image210004}
+                alt="Shop online store."
               />
               <div className="content__mask">Shop online store.</div>
             </div>
@@ -321,8 +322,8 @@ export default function HomePage() {
             <div className="content__card">
               <img
                 className="content__photo"
-                src="https://github.com/lea6121/img-storage/blob/main/image/210005.jpeg?raw=true"
-                alt="content"
+                src={image210005}
+                alt="Visit online exhibition."
               />
               <div className="content__cover">
                 <h1>Coming Soon</h1>

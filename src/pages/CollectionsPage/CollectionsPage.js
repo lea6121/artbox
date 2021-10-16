@@ -1,7 +1,12 @@
 import { css } from '@emotion/css'
+import image210006 from '../../assets/210006.jpeg'
+import image210011 from '../../assets/210011.jpeg'
+import image210015 from '../../assets/210015.png'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import 'react-lazy-load-image-component/src/effects/blur.css'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Cart from '../../components/Cart'
 import Loading from '../../components/Loading'
 import {
@@ -27,7 +32,6 @@ const collectionsPageContainer = css`
       margin: 0 0 50px;
       position: relative;
       height: 80vh;
-      background-image: url('https://github.com/lea6121/img-storage/blob/main/image/210006.jpeg?raw=true');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: top;
@@ -80,7 +84,7 @@ const collectionsPageContainer = css`
 
     &__container {
       height: auto;
-      max-width: 93%;
+      max-width: 1380px;
       margin: 0 auto;
       display: grid;
       grid-gap: 0 30px;
@@ -135,34 +139,59 @@ const collectionsPageContainer = css`
           }
 
           .collection {
+            position: relative;
             text-decoration: none;
             color: #000000;
             border-bottom: 1px solid #a8a7a7;
             padding-bottom: 20px;
-            text-align: start;
+            text-align: center;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 8;
             overflow: hidden;
             align-items: center;
 
+            .placeholder {
+              position: absolute;
+              top: 0%;
+              left: 0%;
+              background-color: transparent;
+              background-size: 50% 50%;
+              background-repeat: no-repeat;
+              background-position: center;
+              height: 400px;
+              width: 100%;
+              -webkit-transition: opacity 0.5s;
+              -moz-transition: opacity 0.5s;
+              -ms-transition: opacity 0.5s;
+              transition: opacity 0.5s;
+              cursor: unset;
+            }
+
             img {
               transition: all 0.6s ease-out;
               border-radius: 5px;
-              height: 390px;
-              object-fit: contain;
+              min-height: 400px;
+              height: 400px;
               width: 100%;
+              object-fit: contain;
+              opacity: 1;
+
               &:hover {
                 transform: scale(1.1);
               }
             }
 
             &__title {
+              text-align: start;
+
               font-size: 20px;
               margin: 20px 0 10px;
             }
 
             &__artist {
+              text-align: start;
+
               color: rgba(0, 0, 0, 0.6);
               font-style: italic;
               font-size: 14px;
@@ -221,21 +250,23 @@ const categories = [
   'Textiles '
 ]
 
-function Collection({ collection }) {
+function Collection({ collection, scrollPosition }) {
   return (
     <>
       <a href={`./#/collection/${collection.id}`} className="collection">
+        <div
+          className="placeholder"
+          style={{ backgroundImage: `url(${image210015})` }}
+        ></div>
         {collection.images ? (
-          <img
-            className="collection__image"
-            src={collection.images.web.url}
+          <LazyLoadImage
             alt={collection.title}
+            effect="blur"
+            src={collection.images.web.url}
+            onload="imgLoaded(this)"
           />
         ) : (
-          <img
-            src="https://github.com/lea6121/img-storage/blob/main/image/210011.jpeg?raw=true"
-            alt="no-img"
-          />
+          <img src={image210011} alt="Img unavailable" />
         )}
 
         <div className="collection__title">{collection.title}</div>
@@ -267,7 +298,7 @@ export default function CollectionsPage() {
     let category = e.target.innerText
     dispatch(getSpecificCollections(category, 0))
     window.location.replace('#/collections/1')
-    window.scrollTo(0, 700)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleInputChange = (e) => {
@@ -305,7 +336,7 @@ export default function CollectionsPage() {
     }
 
     window.location.replace(`#/collections/${currentPageNum}`)
-    window.scrollTo(0, 300)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function Pagination() {
@@ -425,14 +456,17 @@ export default function CollectionsPage() {
       dispatch(getSpecificCollections(currentCategory, (page - 1) * 24))
     } else {
       dispatch(getCollections((page - 1) * 24))
-      window.scrollTo(0, 0)
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   return (
     <div className={collectionsPageContainer}>
       {isLoadingCollectionsMsg && <Loading></Loading>}
-      <div className="collection__banner">
+      <div
+        className="collection__banner"
+        style={{ backgroundImage: `url(${image210006})` }}
+      >
         <h1>THE COLLECTION</h1>
 
         <div className="input-group flex-nowrap">
@@ -494,7 +528,7 @@ export default function CollectionsPage() {
         className="btn btn-dark btn-floating btn-lg"
         id="btn-back-to-top"
         onClick={() => {
-          window.scrollTo(0, 0)
+          window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
       >
         <i className="fas fa-angle-up"></i>

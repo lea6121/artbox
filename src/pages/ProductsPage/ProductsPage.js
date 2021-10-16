@@ -21,6 +21,16 @@ const shopPageContainer = css`
   height: auto;
 
   .shop-banner {
+    position: relative;
+
+    .placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: grey;
+    }
     .carousel-root {
       margin: 0 auto;
     }
@@ -177,7 +187,7 @@ const bannerImages = [
   'https://github.com/lea6121/img-storage/blob/main/image/210010.jpg?raw=true'
 ]
 
-function Product({ product }) {
+function Product({ product, scrollPosition }) {
   const history = useHistory()
   const dispatch = useDispatch()
   const userId = useSelector((store) => store.users.userId)
@@ -274,6 +284,7 @@ function Product({ product }) {
       </Modal>
     )
   }
+
   return (
     <div className="item">
       <img className="item__image" src={product.images[0]} />
@@ -317,7 +328,7 @@ export default function ProductsPage() {
     if (userId) {
       dispatch(getFavoriteProducts(userId))
     }
-    window.scrollTo(800, 800)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [params.category, userId])
 
   return (
@@ -331,11 +342,7 @@ export default function ProductsPage() {
           width="100%"
           showThumbs={false}
           infiniteLoop={true}
-        >
-          <img src={bannerImages[0]} />
-          <img src={bannerImages[1]} />
-          <img src={bannerImages[2]} />
-        </SliderCarousel>
+        ></SliderCarousel>
       </div>
 
       <div className="shop-container">

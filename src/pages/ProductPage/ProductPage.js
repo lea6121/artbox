@@ -388,7 +388,7 @@ export default function ProductPage() {
     setCount(1)
     dispatch(getProduct(params.id, params.category))
     dispatch(getSuggestProduct(params.category))
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [params.id, params.category, dispatch])
 
   return (

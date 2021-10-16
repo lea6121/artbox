@@ -1,4 +1,5 @@
 import { css } from '@emotion/css'
+import image210014 from '../../assets/210014.jpeg'
 
 const aboutPageContainer = css`
   font-family: 'Gill Sans';
@@ -82,7 +83,7 @@ export default function AboutPage() {
       <div className="about">
         <div>
           <div className="about-profile__pic">
-            <img src="https://media.nbcchicago.com/2021/06/GettyImages-157189989.jpg?quality=85&strip=all&resize=1200%2C675" />
+            <img src={image210014} alt="museum" />
           </div>
           <h1>ABOUT US</h1>
 

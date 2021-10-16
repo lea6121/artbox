@@ -1,5 +1,8 @@
 import { css } from '@emotion/css'
 import 'react-multi-carousel/lib/styles.css'
+import image210008 from '../../assets/210008.jpeg'
+import image210009 from '../../assets/210009.jpeg'
+import image210010 from '../../assets/210010.jpeg'
 import { Modal, Button } from 'react-bootstrap'
 import Carousel from 'react-multi-carousel'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
@@ -179,11 +182,7 @@ const responsive = {
   }
 }
 
-const bannerImages = [
-  'https://github.com/lea6121/img-storage/blob/main/image/210008.jpg?raw=true',
-  'https://github.com/lea6121/img-storage/blob/main/image/210009.jpeg?raw=true',
-  'https://github.com/lea6121/img-storage/blob/main/image/210010.jpg?raw=true'
-]
+const bannerImages = [image210008, image210009, image210010]
 
 export default function ShopPage() {
   const dispatch = useDispatch()
@@ -201,7 +200,7 @@ export default function ShopPage() {
     if (userId) {
       dispatch(getFavoriteProducts(userId))
     }
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [userId])
 
   function Product({ product }) {

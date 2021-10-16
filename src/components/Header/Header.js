@@ -1,5 +1,6 @@
 import { css } from '@emotion/css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import logo from '../../assets/210000.gif'
 import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -208,11 +209,7 @@ export default function Header() {
       <div className="header-top">
         <div className="tags">
           <a href="./#">
-            <img
-              id="site-logo"
-              src="https://64.media.tumblr.com/add0f153b2b9d647ddd2773b8612fe3d/tumblr_ozqqsgf3Bl1u0ccv7o1_1280.gifv"
-              alt="site-logo"
-            />
+            <img id="site-logo" src={logo} alt="site-logo" />
           </a>
           <a href="./#" className="site-name">
             ArtBox
