@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/artbox/static/js/main.dbc0b55b.chunk.js",
-    "main.js.map": "/artbox/static/js/main.dbc0b55b.chunk.js.map",
+    "main.js": "/artbox/static/js/main.69ca2628.chunk.js",
+    "main.js.map": "/artbox/static/js/main.69ca2628.chunk.js.map",
     "runtime-main.js": "/artbox/static/js/runtime-main.1a0e09e2.js",
     "runtime-main.js.map": "/artbox/static/js/runtime-main.1a0e09e2.js.map",
     "static/css/2.ee353afc.chunk.css": "/artbox/static/css/2.ee353afc.chunk.css",
@@ -20,7 +20,7 @@
     "static/media/210008.273818dd.jpeg": "/artbox/static/media/210008.273818dd.jpeg",
     "static/media/210009.d0e21713.jpeg": "/artbox/static/media/210009.d0e21713.jpeg",
     "static/media/210010.aec84b51.jpeg": "/artbox/static/media/210010.aec84b51.jpeg",
-    "static/media/210012.51201192.jpeg": "/artbox/static/media/210012.51201192.jpeg",
+    "static/media/210012.1c937aad.png": "/artbox/static/media/210012.1c937aad.png",
     "static/media/210014.18a4646b.jpeg": "/artbox/static/media/210014.18a4646b.jpeg",
     "static/media/styles.css": "/artbox/static/media/revicons.e8746a62.woff",
     "static/media/trailer.925544b7.mp4": "/artbox/static/media/trailer.925544b7.mp4"
@@ -29,6 +29,6 @@
     "static/js/runtime-main.1a0e09e2.js",
     "static/css/2.ee353afc.chunk.css",
     "static/js/2.ccd4c249.chunk.js",
-    "static/js/main.dbc0b55b.chunk.js"
+    "static/js/main.69ca2628.chunk.js"
   ]
 }
