@@ -101,21 +101,21 @@ const artworkContainer = css`
 
       @media only screen and (max-width: 1216px) {
         margin-top: 20px;
-        font-size: 24px;
+        font-size: 22px;
       }
     }
 
     &__culture {
       padding: 10px 0;
       font-weight: 700;
-      font-size: 21px;
+      font-size: 20px;
     }
 
     &__description {
       &__title {
         padding: 10px 0;
         display: flex;
-        font-size: 21px;
+        font-size: 20px;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid rgba(0, 0, 0, 0.6);

@@ -269,6 +269,7 @@ const homePageContainer = css`
   }
 `
 export default function HomePage() {
+  window.scrollTo(0, 0)
   return (
     <div className={homePageContainer}>
       <div className="banner">

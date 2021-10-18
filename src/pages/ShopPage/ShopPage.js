@@ -3,6 +3,7 @@ import 'react-multi-carousel/lib/styles.css'
 import image210008 from '../../assets/210008.jpeg'
 import image210009 from '../../assets/210009.jpeg'
 import image210010 from '../../assets/210010.jpeg'
+import image210015 from '../../assets/210015.png'
 import { Modal, Button } from 'react-bootstrap'
 import Carousel from 'react-multi-carousel'
 import { Carousel as SliderCarousel } from 'react-responsive-carousel'
@@ -37,7 +38,7 @@ const shopPageContainer = css`
       position: absolute;
       top: 0%;
       left: 0%;
-      background-color: rgb(186, 147, 110);
+      background-color: rgba(0, 0, 0, 0.3);
       height: 88vh;
       width: 100%;
       @media only screen and (max-width: 768px) {
@@ -99,11 +100,28 @@ const shopPageContainer = css`
       color: black;
       position: relative;
 
+      .placeholder {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        background-color: transparent;
+        background-size: 50% 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 400px;
+        width: 100%;
+        transition: opacity 0.5s;
+        cursor: unset;
+      }
+
       img {
+        position: relative;
         object-fit: contain;
         width: 100%;
         height: 400px;
         padding-bottom: 10px;
+        opacity: 1;
+        z-index: 1;
       }
 
       div {
@@ -121,6 +139,7 @@ const shopPageContainer = css`
         left: 0;
         width: 100%;
         height: 100%;
+        z-index: 1;
 
         .fa-heart {
           position: absolute;
@@ -320,6 +339,10 @@ export default function ShopPage() {
     return (
       <>
         <div className="item">
+          <div
+            className="placeholder"
+            style={{ backgroundImage: `url(${image210015})` }}
+          ></div>
           <img className="item__image" src={product.images[0]} />
           <div className="item__cover">
             {favoriteProductsId && favoriteProductsId.includes(product.id) ? (
