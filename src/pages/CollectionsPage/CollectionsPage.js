@@ -32,10 +32,13 @@ const collectionsPageContainer = css`
       margin: 0 0 50px;
       position: relative;
       height: 80vh;
-      background-repeat: no-repeat;
       background-size: cover;
       background-position: top;
+      background-repeat: no-repeat;
       background-attachment: fixed;
+      -o-background-size: cover;
+      -moz-background-size: cover;
+      -webkit-background-size: cover;
 
       h1 {
         background: linear-gradient(#000000, #3e3e3e, rgb(172, 170, 170));
@@ -49,6 +52,7 @@ const collectionsPageContainer = css`
         width: 80%;
         text-align: center;
         transform: translate(-50%, -50%);
+
         @media only screen and (max-width: 576px) {
           top: 32%;
           font-size: 32px;
@@ -89,18 +93,21 @@ const collectionsPageContainer = css`
       display: grid;
       grid-gap: 0 30px;
       grid-template-columns: 20% auto;
+
       @media only screen and (min-width: 579px) and (max-width: 992px) {
         grid-template-columns: 40% auto;
       }
+
       @media only screen and (max-width: 579px) {
         display: block;
       }
+
       .left-section {
         ul {
           font-size: 28px;
           list-style: none;
           margin-bottom: 30px;
-          padding-left: 0px;
+          padding: 0 1rem;
 
           li {
             cursor: pointer;
@@ -131,9 +138,11 @@ const collectionsPageContainer = css`
           grid-gap: 30px 30px;
           align-items: stretch;
           text-align: center;
+
           @media only screen and (min-width: 992px) and (max-width: 1200px) {
             grid-template-columns: repeat(2, 1fr);
           }
+
           @media only screen and (max-width: 992px) {
             grid-template-columns: repeat(1, 1fr);
           }
@@ -184,7 +193,6 @@ const collectionsPageContainer = css`
 
             &__title {
               text-align: start;
-
               font-size: 20px;
               margin: 20px 0 10px;
             }
@@ -221,9 +229,13 @@ const collectionsPageContainer = css`
     text-align: center;
 
     .btn {
-      @media only screen and (max-width: 576px) {
-        padding: 3px;
-        font-size: 6px;
+      @media only screen and (max-width: 480px) {
+        padding: 6px;
+        font-size: 12px;
+      }
+      @media only screen and (max-width: 320px) {
+        padding: 4px;
+        font-size: 12px;
       }
     }
   }
@@ -301,7 +313,6 @@ export default function CollectionsPage() {
     let category = e.target.innerText
     dispatch(getSpecificCollections(category, 0))
     window.location.replace('#/collections/1')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleInputChange = (e) => {
@@ -314,6 +325,7 @@ export default function CollectionsPage() {
     dispatch(searchCollections(value, 0))
     window.location.replace('#/collections/1')
     setValue('')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function Category() {
@@ -337,7 +349,6 @@ export default function CollectionsPage() {
     } else {
       dispatch(getCollections((currentPageNum - 1) * 24))
     }
-
     window.location.replace(`#/collections/${currentPageNum}`)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

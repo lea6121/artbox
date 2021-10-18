@@ -610,15 +610,12 @@ export default function CheckoutPage() {
   // 下一步按鈕
   const handleStepIncrement = () => {
     if (step === 1 && cartItem.length !== 0) {
-      window.scrollTo(0, 0)
       setStep((prevStep) => prevStep + 1)
     } else if (step === 1 && cartItem.length === 0) {
       history.push('/shop')
     } else if (step === 2 && formValidation()) {
       setStep((prevStep) => prevStep + 1)
-      window.scrollTo(0, 0)
     } else if (step === 3) {
-      window.scrollTo(0, 0)
       if (cartItem.length !== 0 && subTotal) {
         dispatch(setOrder(userId, cartItem, formData, subTotal))
       }
@@ -668,7 +665,6 @@ export default function CheckoutPage() {
       formIsValid = false
       errors['paymentTypeMsg'] = 'Please choose the payment method.'
     }
-
     setErrors(errors)
     return formIsValid
   }
@@ -676,10 +672,6 @@ export default function CheckoutPage() {
   if (step === 4) {
     localStorage.removeItem('cartData')
     dispatch(setCartProduct(''))
-
-    setTimeout(() => {
-      history.push('/')
-    }, 10000)
   }
 
   useEffect(() => {
@@ -829,71 +821,75 @@ export default function CheckoutPage() {
     )
   }
 
-  const FinalContent = () => (
-    <div className={finalPageContainer}>
-      <div className="product">
-        <p className="product__image">Product Image</p>
-        <p className="product__title">Product Name</p>
-        <p className="product__size">Size</p>
-        <p className="product__quantity">Quantity</p>
-        <p className="product__price">Total</p>
-      </div>
-      {cartItem &&
-        cartItem.length > 0 &&
-        cartItem.map((item) => (
-          <FinalProductContent key={item.id} product={item} />
-        ))}
+  const FinalContent = () => {
+    window.scrollTo(0, 0)
 
-      <div className="total">
-        <p>Subtotal</p>
-        <p>$ {subTotal}</p>
-      </div>
+    return (
+      <div className={finalPageContainer}>
+        <div className="product">
+          <p className="product__image">Product Image</p>
+          <p className="product__title">Product Name</p>
+          <p className="product__size">Size</p>
+          <p className="product__quantity">Quantity</p>
+          <p className="product__price">Total</p>
+        </div>
+        {cartItem &&
+          cartItem.length > 0 &&
+          cartItem.map((item) => (
+            <FinalProductContent key={item.id} product={item} />
+          ))}
 
-      <div className="info">
-        <p>Email</p>
-        <p>{formData.email}</p>
-      </div>
-      <div className="info">
-        <p>Name</p>
-        <p>{formData.name}</p>
-      </div>
-      <div className="info">
-        <p>Mobile</p>
-        <p>{formData.mobile}</p>
-      </div>
-      <div className="info">
-        <p>Address</p>
-        <p>{formData.address}</p>
-      </div>
-      <div className="info">
-        <p>Payment Method</p>
-        <p>{formData.paymentType}</p>
-      </div>
-      <div className="info">
-        <p>Shipping Type</p>
-        <p>{formData.shippingType}</p>
-      </div>
-      <div className="info">
-        <p>Payment Condition</p>
-        <p>Not done</p>
-      </div>
+        <div className="total">
+          <p>Subtotal</p>
+          <p>$ {subTotal}</p>
+        </div>
 
-      <div className="confirm-btns">
-        <button className="previous-btn" onClick={handleStepDecrement}>
-          <i className="fas fa-chevron-left"></i>
-          Previous
-        </button>
+        <div className="info">
+          <p>Email</p>
+          <p>{formData.email}</p>
+        </div>
+        <div className="info">
+          <p>Name</p>
+          <p>{formData.name}</p>
+        </div>
+        <div className="info">
+          <p>Mobile</p>
+          <p>{formData.mobile}</p>
+        </div>
+        <div className="info">
+          <p>Address</p>
+          <p>{formData.address}</p>
+        </div>
+        <div className="info">
+          <p>Payment Method</p>
+          <p>{formData.paymentType}</p>
+        </div>
+        <div className="info">
+          <p>Shipping Type</p>
+          <p>{formData.shippingType}</p>
+        </div>
+        <div className="info">
+          <p>Payment Condition</p>
+          <p>Not done</p>
+        </div>
 
-        <button
-          type="submit"
-          className="next-btn"
-          onClick={handleStepIncrement}
-        >
-          Submit orders<i className="fas fa-chevron-right"></i>
-        </button>
+        <div className="confirm-btns">
+          <button className="previous-btn" onClick={handleStepDecrement}>
+            <i className="fas fa-chevron-left"></i>
+            Previous
+          </button>
+
+          <button
+            type="submit"
+            className="next-btn"
+            onClick={handleStepIncrement}
+          >
+            Submit orders<i className="fas fa-chevron-right"></i>
+          </button>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <div className={container}>

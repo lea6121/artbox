@@ -160,8 +160,9 @@ export default function CollectionPage() {
 
   useEffect(() => {
     dispatch(getArtwork(params.id))
-    window.scrollTo(0, 0)
   }, [params.id, dispatch])
+
+  window.scrollTo(0, 0)
 
   return (
     <div className={artworkPageContainer}>

@@ -11,8 +11,7 @@ import Loading from '../../components/Loading'
 import { setCartProduct } from '../../redux/reducers/cartReducer'
 import {
   getProduct,
-  getSuggestProduct,
-  getFavoriteProducts
+  getSuggestProduct
 } from '../../redux/reducers/productReducer'
 import {
   setFavoriteProduct,

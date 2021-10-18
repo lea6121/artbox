@@ -5,7 +5,7 @@ import image210002 from '../../assets/210002.jpeg'
 import image210003 from '../../assets/210003.jpeg'
 import image210004 from '../../assets/210004.jpeg'
 import image210005 from '../../assets/210005.jpeg'
-import image210012 from '../../assets/210012.jpeg'
+import image210012 from '../../assets/210012.png'
 
 const homePageContainer = css`
   box-sizing: border-box;
@@ -31,10 +31,13 @@ const homePageContainer = css`
       width: 100%;
       height: 100%;
       position: relative;
-      background-repeat: repeat-x;
+      background-repeat: repeat;
       background-size: contain;
       background-position: left;
       background-attachment: fixed;
+      -o-background-size: contain;
+      -moz-background-size: contain;
+      -webkit-background-size: contain;
       text-align: center;
       font-family: 'Arial Black';
       transition: all 0.8s ease-out;
@@ -211,13 +214,14 @@ const homePageContainer = css`
         }
 
         &__mask {
+          font-family: Georgia;
           position: absolute;
           bottom: 0;
           width: 100%;
           padding: 8px 0;
-          font-weight: 500;
+          font-style: italic;
           color: white;
-          font-size: 36px;
+          font-size: 32px;
           background: rgba(0, 0, 0, 1);
 
           @media only screen and (max-width: 768px) {
@@ -268,7 +272,7 @@ export default function HomePage() {
   return (
     <div className={homePageContainer}>
       <div className="banner">
-        <section style={{ backgroundImage: `url(${image210001})` }}>
+        <section style={{ backgroundImage: `url('${image210001}')` }}>
           <div className="banner__mask">
             <h3>Current Exhibitions</h3>
             <h1>CLAUDE MONET</h1>

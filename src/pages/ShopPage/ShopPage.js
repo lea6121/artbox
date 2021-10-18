@@ -31,6 +31,20 @@ const shopPageContainer = css`
   }
 
   .shop-banner {
+    position: relative;
+
+    .placeholder {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(186, 147, 110);
+      height: 88vh;
+      width: 100%;
+      @media only screen and (max-width: 768px) {
+        height: 48vh;
+      }
+    }
+
     .carousel-root {
       margin: 0 auto;
     }
@@ -39,7 +53,7 @@ const shopPageContainer = css`
       width: 100%;
       height: 90vh;
       padding-bottom: 10px;
-
+      opacity: 1;
       @media only screen and (max-width: 768px) {
         height: 50vh;
       }
@@ -276,7 +290,7 @@ export default function ShopPage() {
         <Modal {...props} centered>
           <Modal.Header>
             <Modal.Title
-              id="contained-modal-title-vcenter"
+              id="contained-modal-title-center"
               style={{ 'font-family': 'Gill Sans', alignItems: 'center' }}
             >
               <i
@@ -339,6 +353,7 @@ export default function ShopPage() {
       {isLoadingProductsMsg && <Loading />}
 
       <div className="shop-banner">
+        <div className="placeholder"></div>
         <SliderCarousel
           showStatus={false}
           showArrows={false}

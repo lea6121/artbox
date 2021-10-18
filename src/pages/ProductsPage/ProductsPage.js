@@ -1,4 +1,7 @@
 import { css } from '@emotion/css'
+import image210008 from '../../assets/210008.jpeg'
+import image210009 from '../../assets/210009.jpeg'
+import image210010 from '../../assets/210010.jpeg'
 import { Modal, Button } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
@@ -181,11 +184,7 @@ const shopPageContainer = css`
   }
 `
 
-const bannerImages = [
-  'https://github.com/lea6121/img-storage/blob/main/image/210008.jpg?raw=true',
-  'https://github.com/lea6121/img-storage/blob/main/image/210009.jpeg?raw=true',
-  'https://github.com/lea6121/img-storage/blob/main/image/210010.jpg?raw=true'
-]
+const bannerImages = [image210008, image210009, image210010]
 
 function Product({ product, scrollPosition }) {
   const history = useHistory()
@@ -342,7 +341,11 @@ export default function ProductsPage() {
           width="100%"
           showThumbs={false}
           infiniteLoop={true}
-        ></SliderCarousel>
+        >
+          <img src={bannerImages[0]} />
+          <img src={bannerImages[1]} />
+          <img src={bannerImages[2]} />
+        </SliderCarousel>
       </div>
 
       <div className="shop-container">
