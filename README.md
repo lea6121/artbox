@@ -4,7 +4,9 @@
 
 ### 簡介
 
-以 React, Firebase 及使用 fetch 串接 Open Source API 搭建之博物館網站，旨在陳列館藏、提供館藏查詢和博物館周邊商品販售。使用者身份可為訪客和會員。
+以 React, Firebase 及使用 fetch 串接 Open Source API 搭建之博物館網站，陳列館藏、提供館藏查詢和博物館周邊商品販售。使用者身份可為訪客和會員。
+作品初衷旨在讓藝術跳脫空間、場地及形式，更自由貼近生活。
+
 **_[DEMO 網址請點](https://lea6121.github.io/artbox/#/)_**
 
 ---

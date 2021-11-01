@@ -286,12 +286,12 @@ export default function Cart() {
 
     return (
       <div className="cart__item">
-        <a href={`/#/product/${cartItem.category}/${cartItem.id}`}>
+        <a href={`./#/product/${cartItem.category}/${cartItem.id}`}>
           <img className="cart__pic" src={cartItem.image} alt="want to buy" />
         </a>
         <div className="cart__details">
           <div>
-            <a href={`/#/product/${cartItem.category}/${cartItem.id}`}>
+            <a href={`./#/product/${cartItem.category}/${cartItem.id}`}>
               {cartItem.title}
             </a>
           </div>
