@@ -1,6 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 /src/firebaseConfig.js
+(github url) artbox-b25a6-default-rtdb-export.json
+(old url version)artbox-b25a6-default-rtdb-products-export.json
+(storage url) artbox-b25a6-default-rtdb-export.json
 
 # dependencies
 /node_modules
